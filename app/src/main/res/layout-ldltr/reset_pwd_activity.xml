@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
+
+    <data>
+
+        <variable
+            name="click"
+            type="com.fn.healfie.interfaces.BaseOnClick" />
+
+        <variable
+            name="register"
+            type="com.fn.healfie.module.RegisterModule" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/allBack">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="21dp"
+            android:onClick="@{() -> click.onSaveClick(@id/iv_back)}"
+            android:src="@mipmap/ic_back_normal"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_zc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="78dp"
+            android:text="重置密碼"
+            android:textColor="@color/textBlack"
+            android:textSize="34sp" />
+
+        <RelativeLayout
+            android:id="@+id/rl_name"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_below="@+id/tv_zc"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="35dp">
+
+            <ImageView
+                android:id="@+id/iv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_phone_normal" />
+
+
+            <EditText
+                android:layout_width="315dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/iv_phone"
+                android:background="@null"
+                android:hint="請輸入手機號"
+                android:inputType="number"
+                android:maxLength="11"
+                android:text="@={register.name}"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/iv_name_line"
+                android:layout_width="1dp"
+                android:layout_height="23dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="121dp"
+                android:background="@color/lineGray"
+                android:src="@mipmap/ic_phone_normal" />
+
+            <RelativeLayout
+                android:id="@+id/rl_get_code"
+                android:layout_width="91dp"
+                android:layout_height="23dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30dp"
+                android:onClick="@{() -> click.onSaveClick(@id/rl_get_code)}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@{register.codeSec}"
+                    android:textColor="@color/buttonBlue"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/ln_name"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/rl_name"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/lineGray">
+
+        </ImageView>
+
+        <RelativeLayout
+            android:id="@+id/rl_code"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_below="@+id/ln_name"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="25dp">
+
+            <ImageView
+                android:id="@+id/iv_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_safety_normal" />
+
+            <EditText
+                android:layout_width="315dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/iv_code"
+                android:background="@null"
+                android:hint="請輸入驗證碼"
+                android:inputType="number"
+                android:maxLength="6"
+                android:text="@={register.code}"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/ln_code"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/rl_code"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/lineGray">
+
+        </ImageView>
+
+        <RelativeLayout
+            android:id="@+id/rl_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_below="@+id/ln_code"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="25dp">
+
+            <ImageView
+                android:id="@+id/iv_pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_password_normol" />
+
+            <EditText
+                android:id="@+id/et_pwd"
+                android:layout_width="315dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/iv_pwd"
+                android:background="@null"
+                android:hint="請輸入6-20位密碼"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:password="@{register.pwdShow}"
+                android:text="@={register.password}"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/iv_see"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:onClick="@{() -> click.onSaveClick(@id/iv_see)}"
+                android:src='@{register.imageId}' />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/ln_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/rl_pwd"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/lineGray">
+
+        </ImageView>
+
+
+        <Button
+            android:id="@+id/btn_zc"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/ln_pwd"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="48dp"
+            android:background="@drawable/shape"
+            android:onClick="@{() -> click.onSaveClick(@id/btn_zc)}"
+            android:text="重置密碼"
+            android:textSize="18sp"
+            app:usercode='@{register.code}'
+            app:username='@{register.name}'
+            app:userpwd='@{register.password}' />
+    </RelativeLayout>
+</layout>
+
+

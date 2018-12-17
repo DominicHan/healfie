@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
+
+    <data>
+
+        <variable
+            name="click"
+            type="com.fn.healfie.interfaces.BaseOnClick" />
+
+        <variable
+            name="save"
+            type="com.fn.healfie.module.SaveNameModule" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/allBack">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="21dp"
+            android:onClick="@{() -> click.onSaveClick(@id/iv_back)}"
+            android:src="@mipmap/ic_back_normal"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_grxx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="78dp"
+            android:onClick="@{() -> click.onSaveClick(@id/tv_dl)}"
+            android:text="個人信息"
+            android:textColor="@color/textBlack"
+            android:textSize="27sp" />
+
+        <ImageView
+            android:id="@+id/iv_tx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_grxx"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="30dp"
+            android:onClick="@{() -> click.onSaveClick(@id/iv_tx)}"
+            app:image_url="@{save.imageUrl}" />
+
+        <RelativeLayout
+            android:id="@+id/rl_name"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_below="@+id/iv_tx"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="45dp">
+
+            <TextView
+                android:id="@+id/tv_xm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:textSize="14sp"
+                android:text="姓名:"
+                android:textColor="@color/textGray" />
+
+            <EditText
+                android:layout_width="315dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/tv_xm"
+                android:background="@null"
+                android:hint="請填寫您的姓名"
+                android:text="@={save.name}"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/ln_name"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/rl_name"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/lineGray"></ImageView>
+
+        <Button
+            android:id="@+id/btn_tj"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/ln_name"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/shape"
+            android:onClick="@{() -> click.onSaveClick(@id/btn_tj)}"
+            android:text="提交"
+            android:textSize="18sp"
+            app:username='@{save.name}' />
+    </RelativeLayout>
+</layout>
+
+

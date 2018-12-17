@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="buttonBlue">#0ba7c5</color>
+    <color name="textBlack">#333333</color>
+    <color name="lineGray">#cacbcc</color>
+    <color name="textGray">#666666</color>
+    <color name="buttonTextGray">#808080</color>
+    <color name="buttonGray">#e1e1ea</color>
+    <color name="white">#fff</color>
+    <color name="textGray9">#999999</color>
+    <color name="allBack">#f9f9fa</color>
+    <color name="recyclerviewRefreshColor">#ff0f9d58</color>
+    <color name="bottomBarGray">#d4d8dc</color>
+    <color name="bottomline">#cacbcc</color>
+    <color name="red">#e8605a</color>
+    <color name="textOrange">#fac14d</color>
+</resources>

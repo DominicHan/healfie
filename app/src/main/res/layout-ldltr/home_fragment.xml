@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="click"
+            type="com.fn.healfie.interfaces.BaseOnClick" />
+
+        <variable
+            name="home"
+            type="com.fn.healfie.module.HomeModule" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bottomline">
+
+        <RelativeLayout
+            android:id="@+id/rl_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <RelativeLayout
+                android:id="@+id/rl_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="26dp">
+
+                <TextView
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> click.onSaveClick(@id/tv_time)}"
+                    android:text="@{home.time}"
+                    android:textColor="@color/buttonBlue"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_marginTop="17dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/tv_time"
+                    android:src="@mipmap/ic_down_normal" />
+
+                <RelativeLayout
+                    android:layout_alignParentRight="true"
+                    android:layout_width="50dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/iv_nz"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginRight="5dp"
+                        android:src="@mipmap/ic_news_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:gravity="center"
+                        android:text="3"
+                        android:textSize="9sp"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="2dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:background="@drawable/red_shape"/>
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_dshjl"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:layout_below="@id/rl_time">
+
+                <LinearLayout
+                    android:layout_width="159dp"
+                    android:layout_height="27dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/gray_shape"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="待审核记录 "
+                        android:textColor="@color/buttonTextGray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:textColor="@color/red"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 条"
+                        android:textColor="@color/buttonTextGray"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_dshjl"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/rl_food"
+                    android:onClick="@{() -> click.onSaveClick(@id/rl_food)}"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <LinearLayout
+                        android:id="@+id/ln_food"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:layout_centerHorizontal="true"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/iv_food"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@{home.imageIdFirst}" />
+
+                        <TextView
+                            android:id="@+id/tv_food"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="14dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_centerHorizontal="true"
+                            android:text="Food"
+                            android:textColor='@{home.select==1?@color/buttonBlue:@color/textGray9}'
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@id/ln_food"
+                        app:order="@{home.first}"
+                        app:select="@{home.select}"
+                        android:background="@color/buttonBlue"
+                        android:layout_width="132dp"
+                        android:layout_height="2dp" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rl_medicine"
+                    android:layout_width="0dp"
+                    android:onClick="@{() -> click.onSaveClick(@id/rl_medicine)}"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:id="@+id/ln_medicine"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:layout_centerHorizontal="true"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@{home.imageIdLast}" />
+
+                        <TextView
+                            android:id="@+id/tv_medicine"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Medicine"
+                            android:layout_marginLeft="14dp"
+                            android:layout_centerHorizontal="true"
+                            android:textColor='@{home.select==2?@color/buttonBlue:@color/textGray9}'
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_centerHorizontal="true"
+                        app:order="@{home.last}"
+                        app:select="@{home.select}"
+                        android:layout_below="@id/ln_medicine"
+                        android:background="@color/buttonBlue"
+                        android:layout_width="132dp"
+                        android:layout_height="2dp" />
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+        <com.fn.healfie.component.MyViewPager
+                android:layout_below="@id/rl_top"
+                 android:id="@+id/ViewPagerLayout"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+             </com.fn.healfie.component.MyViewPager>
+    </RelativeLayout>
+</layout>
+
+

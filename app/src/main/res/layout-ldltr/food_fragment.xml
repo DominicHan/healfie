@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="click"
+            type="com.fn.healfie.interfaces.BaseOnClick" />
+
+        <!--<variable-->
+            <!--name="login"-->
+            <!--type="com.fn.healfie.module.LoginModule" />-->
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/allBack">
+        
+        <RelativeLayout
+            android:id="@+id/rl_nodata"
+            android:layout_height="112dp"
+            android:layout_width="297dp"
+            android:visibility="gone"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:background="@mipmap/img11">
+            <ImageView
+                android:id="@+id/iv_jl"
+                android:layout_marginLeft="44dp"
+                android:layout_marginTop="35dp"
+                android:src="@mipmap/ic_jilu_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="35dp"
+                android:layout_toRightOf="@id/iv_jl"
+                android:id="@+id/tv_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:text="您還沒有添加健康記錄信息，"
+                android:textColor="@color/white"/>
+            <TextView
+                android:layout_marginLeft="17dp"
+                android:layout_toRightOf="@id/iv_jl"
+                android:layout_marginBottom="35dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:text="快去添加吧！"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/lv_food"
+            android:scrollbars="none"
+            android:layout_width="match_parent"
+            android:divider="#00000000"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:background="@color/allBack">
+        </ListView>
+
+        <ImageView
+            android:onClick="@{() -> click.onSaveClick(@id/iv_add)}"
+            android:id="@+id/iv_add"
+            android:layout_marginRight="18dp"
+            android:layout_marginBottom="13dp"
+            android:src="@mipmap/ic_add_normal"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:onClick="@{() -> click.onSaveClick(@id/iv_top)}"
+            android:id="@+id/iv_top"
+            android:layout_marginRight="18dp"
+            android:layout_marginBottom="13dp"
+            android:src="@mipmap/ic_topback_normal"
+            android:layout_above="@id/iv_add"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</layout>
+
+

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:background="@color/allBack"
+        android:minHeight="96dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="86dp"
+            android:background="@drawable/white_shape">
+
+            <com.fn.healfie.component.RoundImageView
+                android:id="@+id/rv_image"
+                android:layout_width="66dp"
+                android:layout_height="67dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="#00000000"
+                android:scaleType="matrix" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_toRightOf="@id/rv_image"
+                android:text="Milk"
+                android:textColor="@color/textBlack"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_title"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/rv_image"
+                android:text="11:35"
+                android:textColor="@color/textGray9"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_kj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:text="100KJ"
+                android:textColor="@color/textOrange"
+                android:textSize="22sp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>
+
+

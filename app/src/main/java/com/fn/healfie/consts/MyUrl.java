@@ -1,0 +1,49 @@
+package com.fn.healfie.consts;
+
+/**
+ * Created by Administrator on 2018/11/1.
+ */
+
+public class MyUrl {
+    /**
+     * from @zhaojian
+     * content 开发环境
+     */
+    private static String BASE = "http://13.229.151.83:8081/healfie";
+
+    /**
+     * from @zhaojian
+     * content 获取短信验证码
+     */
+    public static String VERIFICATION = BASE + "/api/verification";
+
+    /**
+     * from @zhaojian
+     * content 註冊
+     */
+    public static String REGISTER = BASE + "/api/register";
+
+    /**
+     * from @zhaojian
+     * content 會員信息編輯
+     */
+    public static String MEMBERINFO = BASE + "/api/member/info";
+
+    /**
+     * from @zhaojian
+     * content 修改密碼
+     */
+    public static String CHANGEPASSWORD = BASE + "/api/change/password";
+
+    /**
+     * from @zhaojian
+     * content 登录
+     */
+    public static String LOGIN = BASE + "/api/login";
+
+    /**
+     * from @zhaojian
+     * content 藥品食品列表
+     */
+    public static String RECORD = BASE + "/api/record";
+}
