@@ -10,9 +10,12 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
+import com.elvishew.xlog.LogLevel;
+import com.elvishew.xlog.XLog;
 import com.fn.healfie.R;
 import com.fn.healfie.databinding.MainActivityBinding;
 import com.fn.healfie.utils.StatusBarUtil;
+
 
 /**
  * from @zhaojian
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         StatusBarUtil.StatusBarLightMode(this);
         getSupportActionBar().hide();
+        XLog.init(LogLevel.ERROR);
         MainActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.main_activity);
         /**
          * from @zhaojian

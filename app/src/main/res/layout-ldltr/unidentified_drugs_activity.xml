@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
+
+    <data>
+
+        <variable
+            name="click"
+            type="com.fn.healfie.interfaces.BaseOnClick" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/allBack">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="21dp"
+            android:onClick="@{() -> click.onSaveClick(@id/iv_back)}"
+            android:src="@mipmap/ic_back_normal"
+            android:textSize="18sp" />
+
+        <com.fn.healfie.component.RoundImageView
+            android:id="@+id/rv_image"
+            android:layout_width="345dp"
+            android:layout_height="205dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="75dp"
+            android:background="#00000000"
+            android:scaleType="fitXY" />
+        <TextView
+            android:id="@+id/tv_content"
+            android:text="沒能識別出您拍照的藥品，您可以"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/rv_image"
+            android:textColor="@color/textGray9"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_zjsw"
+            android:layout_width="150dp"
+            android:layout_height="45dp"
+            android:layout_below="@id/tv_content"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/shape"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:onClick="@{() -> click.onSaveClick(@id/btn_zjsw)}"
+            android:text="自建藥品"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btn_ssgd"
+            android:layout_width="150dp"
+            android:layout_height="45dp"
+            android:layout_below="@id/btn_zjsw"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/shape"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:onClick="@{() -> click.onSaveClick(@id/btn_ssgd)}"
+            android:text="搜索更多藥品"
+            android:textSize="15sp" />
+    </RelativeLayout>
+</layout>
+
+

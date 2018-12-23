@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.fn.healfie.R;
 import com.fn.healfie.SplashActivity;
 import com.fn.healfie.consts.PrefeKey;
+import com.fn.healfie.drugs.food.UnidentifiedDrugsActivity;
 import com.fn.healfie.food.UnidentifiedFoodActivity;
 import com.fn.healfie.login.LoginActivity;
 import com.fn.healfie.main.MainActivity;
@@ -38,7 +39,7 @@ public class PhotoProcessActivity extends Activity implements View.OnClickListen
     private ImageView camera_flip_view;
     Timer timer;
     TimerTask task;
-
+    String froms;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +47,7 @@ public class PhotoProcessActivity extends Activity implements View.OnClickListen
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.photo_activity);
         path = getIntent().getStringExtra(CameraActivity.CAMERA_PATH_VALUE1);
+        froms = getIntent().getStringExtra(CameraActivity.From);
         initView();
         initData();
     }
@@ -63,10 +65,17 @@ public class PhotoProcessActivity extends Activity implements View.OnClickListen
         task = new TimerTask() {
             @Override
             public void run() {
-                Intent intent = new Intent(PhotoProcessActivity.this, UnidentifiedFoodActivity.class);
-                intent.putExtra(CameraActivity.CAMERA_PATH_VALUE1, path);
-                startActivity(intent);
-                finish();
+                if(froms.equals("DrugsFragment")){
+                    Intent intent = new Intent(PhotoProcessActivity.this, UnidentifiedDrugsActivity.class);
+                    intent.putExtra(CameraActivity.CAMERA_PATH_VALUE1, path);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Intent intent = new Intent(PhotoProcessActivity.this, UnidentifiedFoodActivity.class);
+                    intent.putExtra(CameraActivity.CAMERA_PATH_VALUE1, path);
+                    startActivity(intent);
+                    finish();
+                }
             }
         };
         timer = new Timer();

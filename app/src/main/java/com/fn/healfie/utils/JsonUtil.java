@@ -2,6 +2,9 @@ package com.fn.healfie.utils;
 
 import com.fn.healfie.model.BaseBean;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.List;
 
 
 /**
@@ -36,4 +39,5 @@ public class JsonUtil {
         Gson gson = new Gson();
         return gson.toJson(clazz);
     }
+
 }

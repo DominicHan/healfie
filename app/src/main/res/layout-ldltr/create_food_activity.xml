@@ -54,6 +54,7 @@
             android:background="@color/allBack"
             android:divider="#00000000"
             app:adapter="@{adapter}"
+            android:transcriptMode="alwaysScroll"
             android:scrollbars="none"></ListView>
 
     </LinearLayout>

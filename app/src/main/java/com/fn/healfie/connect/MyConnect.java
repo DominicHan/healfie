@@ -107,18 +107,23 @@ public class MyConnect {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
                 callBack.error("");
             }
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
+                String authorization = response.header("authorization");
+                Log.e(TAG, "onResponse: " + authorization);
                 final String responseStr = response.body().string();
                 Log.e(TAG, "onResponse: " + responseStr);
                 BaseBean bean = JsonUtil.getBean(responseStr, BaseBean.class);
                 if (bean.getStatus() != null && bean.getStatus().equals("401")) {
                     bean.setResultCode("-10010");
+                    callBack.success(JsonUtil.getJson(bean));
+                    return;
                 }
-                callBack.success(JsonUtil.getJson(bean));
+                callBack.success(responseStr);
             }
         });
     }
@@ -132,7 +137,6 @@ public class MyConnect {
         }
         url = url + "?";
         for (String key : map.keySet()) {
-            Log.e(TAG, "getData: key==" + key + "  value==" + map.get(key));
             url = url + key + "=" + map.get(key) + "&";
         }
         Log.e(TAG, "postData: url" + url);

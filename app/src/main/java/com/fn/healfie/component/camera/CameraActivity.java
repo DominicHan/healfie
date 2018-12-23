@@ -39,9 +39,11 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fn.healfie.R;
+import com.fn.healfie.main.DrugsFragment;
 import com.fn.healfie.utils.StatusBarUtil;
 
 public class CameraActivity extends Activity implements View.OnTouchListener, OnClickListener {
@@ -50,7 +52,7 @@ public class CameraActivity extends Activity implements View.OnTouchListener, On
     public static final String CAMERA_PATH_VALUE2 = "PATH";
     public static final String CAMERA_TYPE = "CAMERA_TYPE";
     public static final String CAMERA_RETURN_PATH = "return_path";
-
+    public static final String From = "from";
     private int PHOTO_SIZE_W = 2000;
     private int PHOTO_SIZE_H = 2000;
     public static final int CAMERA_TYPE_1 = 1;
@@ -64,9 +66,9 @@ public class CameraActivity extends Activity implements View.OnTouchListener, On
     private int mCurrentCameraId = 0; // 1是前置 0是后置
     private SurfaceView mSurfaceView;
     private CameraGrid mCameraGrid;
-
+    String froms;
     private int type = 1;    //引用的矩形框
-
+    private TextView tv_pz;
     private Button mBtnSearch;
     private Button mBtnTakePhoto;
 
@@ -80,6 +82,7 @@ public class CameraActivity extends Activity implements View.OnTouchListener, On
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);//拍照过程屏幕一直处于高亮
         setContentView(R.layout.camera_home);
         type = getIntent().getIntExtra(CAMERA_TYPE, CAMERA_TYPE_2);
+        froms = getIntent().getStringExtra(From);
         initView();
         InitData();
 
@@ -90,6 +93,7 @@ public class CameraActivity extends Activity implements View.OnTouchListener, On
         flashBtn = (ImageView) findViewById(R.id.flash_view);
         mSurfaceView = (SurfaceView) findViewById(R.id.surfaceView);
         mCameraGrid = (CameraGrid) findViewById(R.id.camera_grid);
+        tv_pz = findViewById(R.id.tv_pz);
 //		mBtnSearch = (Button) findViewById(R.id.search);
 //		mBtnTakePhoto = (Button) findViewById(R.id.takephoto);
     }
@@ -103,6 +107,11 @@ public class CameraActivity extends Activity implements View.OnTouchListener, On
         preview.setKeepScreenOn(true);
         mSurfaceView.setOnTouchListener(this);
         mCameraGrid.setType(type);
+        if(froms.equals("DrugsFragment")){
+            tv_pz.setText("將處方拍照後進行識別");
+        }else{
+            tv_pz.setText("將食物拍照後進行識別");
+        }
     }
 
 
@@ -319,6 +328,7 @@ public class CameraActivity extends Activity implements View.OnTouchListener, On
                 Intent intent = new Intent();
                 intent.setClass(CameraActivity.this, PhotoProcessActivity.class);
                 intent.putExtra(CAMERA_PATH_VALUE1, path);
+                intent.putExtra(From, froms);
                 startActivityForResult(intent, PROCESS);
             } else {
                 Toast.makeText(getApplication(), "拍照失敗，請稍後重試！",

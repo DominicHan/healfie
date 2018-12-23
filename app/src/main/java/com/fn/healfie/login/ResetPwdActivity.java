@@ -207,6 +207,7 @@ public class ResetPwdActivity extends BaseActivity implements BaseOnClick {
         MyConnect connect = new MyConnect();
         HashMap<String, String> map = new HashMap<>();
         map.put("phoneNumber", module.getName());
+        map.put("cityCode", "+86");
         connect.getData(MyUrl.VERIFICATION, map, new ConnectBack() {
             @Override
             public void success(String json) {

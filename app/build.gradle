@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.fn.healfie"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -32,4 +32,5 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.6.0'
     implementation 'com.google.code.gson:gson:2.2.4'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.elvishew:xlog:1.6.1'
 }

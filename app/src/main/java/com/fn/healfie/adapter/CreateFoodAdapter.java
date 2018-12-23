@@ -15,11 +15,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.fn.healfie.BR;
 import com.fn.healfie.R;
 import com.fn.healfie.component.RoundImageView;
+import com.fn.healfie.component.pickdatetime.DatePickDialog;
+import com.fn.healfie.component.pickdatetime.OnSureListener;
+import com.fn.healfie.component.pickdatetime.bean.DateParams;
 import com.fn.healfie.databinding.CreateFoodButtonItemBinding;
 import com.fn.healfie.databinding.CreateFoodLittleinputItemBinding;
 import com.fn.healfie.databinding.CreateFoodMoreinputItemBinding;
@@ -30,6 +34,9 @@ import com.fn.healfie.interfaces.BaseOnClick;
 import com.fn.healfie.model.CreateFoodBean;
 import com.fn.healfie.model.FoodBean;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,11 +47,13 @@ public class CreateFoodAdapter extends BaseAdapter {
     private List<CreateFoodBean> listTag = null;
     private Context context;
     private CreateFoodActivity activity;
+    private BaseOnClick back;
 
-    public CreateFoodAdapter(Context context, List<CreateFoodBean> objects, CreateFoodActivity activity) {
+    public CreateFoodAdapter(Context context, List<CreateFoodBean> objects, CreateFoodActivity activity,BaseOnClick back) {
         this.listTag = objects;
         this.context = context;
         this.activity = activity;
+        this.back = back;
     }
 
     @Override
@@ -62,6 +71,48 @@ public class CreateFoodAdapter extends BaseAdapter {
         } else {
             return 5;
         }
+    }
+
+    public void openDate(int first, int last, final CreateFoodBean bean){
+        Calendar todayCal = Calendar.getInstance();
+        Calendar startCal = Calendar.getInstance();
+        Calendar endCal = Calendar.getInstance();
+        endCal.add(Calendar.YEAR, 6);
+
+        new DatePickDialog.Builder()
+                .setTypes(first,last)
+                .setCurrentDate(todayCal.getTime())
+                .setStartDate(startCal.getTime())
+                .setEndDate(endCal.getTime())
+                .setOnSureListener(new OnSureListener() {
+                    @Override
+                    public void onSure(Date date) {
+                        String message = new SimpleDateFormat("HH:mm").format(date);
+                        bean.setValue(message);
+                    }
+                })
+                .show(context);
+    }
+
+    public void openYear(int first,int center, int last, final CreateFoodBean bean){
+        Calendar todayCal = Calendar.getInstance();
+        Calendar startCal = Calendar.getInstance();
+        Calendar endCal = Calendar.getInstance();
+        endCal.add(Calendar.YEAR, 6);
+
+        new DatePickDialog.Builder()
+                .setTypes(first,center,last)
+                .setCurrentDate(todayCal.getTime())
+                .setStartDate(startCal.getTime())
+                .setEndDate(endCal.getTime())
+                .setOnSureListener(new OnSureListener() {
+                    @Override
+                    public void onSure(Date date) {
+                        String message = new SimpleDateFormat("yyyy-MM-dd").format(date);
+                        bean.setValue(message);
+                    }
+                })
+                .show(context);
     }
 
     @Override
@@ -192,7 +243,16 @@ public class CreateFoodAdapter extends BaseAdapter {
 
         @Override
         public void onSaveClick(int id) {
-            Log.e("111111111111", "onSaveClick: ");
+            Log.e("111111111111", "onSaveClick: "+bean.getKey());
+            if(bean.getKey().equals("進食日期 :")){
+                openYear(DateParams.TYPE_YEAR, DateParams.TYPE_MONTH, DateParams.TYPE_DAY,bean);
+            }
+            if(bean.getKey().equals("進食時間 :")){
+                openDate(DateParams.TYPE_HOUR, DateParams.TYPE_MINUTE,bean);
+            }
+            if(bean.getKey().equals("確定")){
+                back.onSaveClick(1);
+            }
         }
     }
 

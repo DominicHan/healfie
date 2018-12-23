@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
+
+    <data>
+
+        <variable
+            name="click"
+            type="com.fn.healfie.interfaces.BaseOnClick" />
+
+        <variable
+            name="search"
+            type="com.fn.healfie.module.SearchModule" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="68dp">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="21dp"
+                android:onClick="@{() -> click.onSaveClick(@id/iv_back)}"
+                android:src="@mipmap/ic_back_normal"
+                android:textSize="18sp" />
+        </RelativeLayout>
+        <EditText
+            android:id="@+id/et_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:background="@null"
+            android:paddingLeft="20dp"
+            android:gravity="left"
+            android:hint='請輸入藥物名'
+            android:text="@={search.name}"
+            android:textColor="#333333"
+            android:textSize="18sp" />
+        <LinearLayout
+            android:layout_marginTop="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#cacacc"></LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_gravity="center"
+            android:textSize="15sp"
+            android:text='@{search.name.equals("")?"暫無最近添加記錄,您可以新建藥物":"沒有\""+search.name+"\"這種食物,您可以新建藥物"}'
+            android:textColor="#999999"/>
+        <Button
+            android:id="@+id/btn_zjsw"
+            android:layout_width="150dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shape"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:onClick="@{() -> click.onSaveClick(@id/btn_zjsw)}"
+            android:text="自建藥物"
+            android:textSize="15sp" />
+    </LinearLayout>
+</layout>
+
+

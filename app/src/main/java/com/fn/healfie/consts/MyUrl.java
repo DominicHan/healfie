@@ -46,4 +46,16 @@ public class MyUrl {
      * content 藥品食品列表
      */
     public static String RECORD = BASE + "/api/record";
+
+    /**
+     * from @zhaojian
+     * content 创建食物
+     */
+    public static String FOOD = BASE + "/api/food";
+
+    /**
+     * from @zhaojian
+     * content 获取图片
+     */
+    public static String SHOWIMAGE = BASE + "/api/show/image";
 }

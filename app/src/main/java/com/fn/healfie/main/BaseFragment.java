@@ -11,12 +11,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.elvishew.xlog.XLog;
 import com.fn.healfie.component.loading.CustomProgressDialog;
 import com.fn.healfie.connect.MyConnect;
 import com.fn.healfie.consts.MyUrl;
@@ -28,6 +30,7 @@ import com.fn.healfie.model.RegisterBean;
 import com.fn.healfie.utils.JsonUtil;
 import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.ToastUtil;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -69,6 +72,10 @@ public abstract class BaseFragment extends Fragment {
             initData();
         }
     };
+
+    public void loge(String content) {
+        XLog.e(content);
+    }
 
     @Override
     public void onDestroy() {

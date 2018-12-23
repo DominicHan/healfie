@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
+    <data>
+
+        <variable
+            name="click"
+            type="com.fn.healfie.interfaces.BaseOnClick" />
+
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/allBack"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:background="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="106dp">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="21dp"
+                android:onClick="@{() -> click.onSaveClick(@id/iv_back)}"
+                android:src="@mipmap/ic_back_normal"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="60dp"
+                android:text="添加關注人"
+                android:textColor="@color/textBlack"
+                android:textSize="27sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_add_name"
+            android:onClick='@{() -> click.onSaveClick(@id/rl_add_name)}'
+            android:layout_width="match_parent"
+            android:background="@drawable/white_shapetop"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_height="57dp">
+
+            <TextView
+                android:textColor="#333333"
+                android:textSize="15sp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:text="通過會員名添加"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:src="@mipmap/ic_back1_normal"
+                android:layout_marginRight="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:background="#f0f2f5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_add_img"
+            android:onClick='@{() -> click.onSaveClick(@id/rl_add_img)}'
+            android:layout_width="match_parent"
+            android:background="@drawable/white_shapebottom"
+            android:layout_marginHorizontal="10dp"
+            android:layout_height="57dp">
+
+            <TextView
+                android:textColor="#333333"
+                android:textSize="15sp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:text="通過掃描二維碼添加"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:src="@mipmap/ic_back1_normal"
+                android:layout_marginRight="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>
+
+

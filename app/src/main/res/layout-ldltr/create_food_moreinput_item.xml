@@ -23,6 +23,7 @@
         <RelativeLayout
             android:id="@+id/rl_input"
             android:layout_width="match_parent"
+            android:minHeight="57dp"
             android:layout_height="57dp">
 
             <TextView

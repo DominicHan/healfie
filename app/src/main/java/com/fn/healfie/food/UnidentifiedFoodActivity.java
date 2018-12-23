@@ -97,6 +97,9 @@ public class UnidentifiedFoodActivity extends BaseActivity implements BaseOnClic
                 startActivity(intents);
                 break;
             case R.id.btn_ssgd:
+                Intent intent = new Intent(UnidentifiedFoodActivity.this, SearchFoodActivity.class);
+                intent.putExtra(CameraActivity.CAMERA_PATH_VALUE1, path);
+                startActivity(intent);
                 break;
         }
     }
