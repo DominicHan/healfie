@@ -92,6 +92,13 @@
 
         </activity>
         <activity
+            android:name=".food.FoodScendInfoActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
             android:name=".drugs.food.UnidentifiedDrugsActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateHidden|adjustResize"
@@ -121,6 +128,13 @@
         </activity>
         <activity
             android:name=".contact.SearchNameActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".contact.AddContactInfoActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:screenOrientation="portrait">

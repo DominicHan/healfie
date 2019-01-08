@@ -39,7 +39,51 @@ public class MyConnect {
         }
         Log.e(TAG, "postData: url" + url);
         FormBody formBody = add.build();
-        final Request request = new Request.Builder().url(url).post(formBody).build();
+        Request.Builder builder = new Request.Builder().url(url).post(formBody);
+        for (String key : map.keySet()) {
+            if(key.equals("authorization")){
+                builder.addHeader(key, map.get(key));
+            }
+        }
+        Request request = builder.build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "onFailure: -----------");
+                callBack.error("");
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String authorization = response.header("authorization");
+                Log.e(TAG, "onResponse: " + authorization);
+                final String responseStr = response.body().string();
+                Log.e(TAG, "onResponse: " + responseStr);
+                callBack.success(responseStr);
+            }
+        });
+
+
+    }
+
+    public void deleteData(String url, HashMap<String, String> map, final ConnectBack callBack) {
+        Log.e(TAG, "postData: post");
+        FormBody.Builder add = new FormBody.Builder();
+        for (String key : map.keySet()) {
+            add.add(key, map.get(key));
+            Log.e(TAG, "postData: key==" + key + "  value==" + map.get(key));
+        }
+        Log.e(TAG, "postData: url" + url);
+        FormBody formBody = add.build();
+        Request.Builder builder = new Request.Builder().url(url).delete(formBody);
+        for (String key : map.keySet()) {
+            if(key.equals("authorization")){
+                builder.addHeader(key, map.get(key));
+            }
+        }
+        Request request = builder.build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -108,6 +152,7 @@ public class MyConnect {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
+                Log.e( "onFailure: ", e.toString());
                 callBack.error("");
             }
 
@@ -129,17 +174,12 @@ public class MyConnect {
     }
 
     public void putData(String url, HashMap<String, String> map, final ConnectBack callBack) {
-        Log.e(TAG, "postData: post");
+        Log.e(TAG, "putData: put");
         FormBody.Builder add = new FormBody.Builder();
         for (String key : map.keySet()) {
             add.add(key, map.get(key));
-            Log.e(TAG, "postData: key==" + key + "  value==" + map.get(key));
+            Log.e(TAG, "putData: key==" + key + "  value==" + map.get(key));
         }
-        url = url + "?";
-        for (String key : map.keySet()) {
-            url = url + key + "=" + map.get(key) + "&";
-        }
-        Log.e(TAG, "postData: url" + url);
         FormBody formBody = add.build();
         final Request request = new Request.Builder().url(url).put(formBody).build();
         Call call = client.newCall(request);

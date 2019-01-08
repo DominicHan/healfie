@@ -24,6 +24,12 @@ import com.fn.healfie.databinding.CreateFoodLittleinputItemBinding;
 import com.fn.healfie.databinding.CreateFoodMoreinputItemBinding;
 import com.fn.healfie.databinding.CreateFoodOneinputItemBinding;
 import com.fn.healfie.databinding.CreateFoodSelectItemBinding;
+import com.fn.healfie.databinding.FoodScendInfoBottomItemBinding;
+import com.fn.healfie.databinding.FoodScendInfoLittleItemBinding;
+import com.fn.healfie.databinding.FoodScendInfoNameItemBinding;
+import com.fn.healfie.databinding.FoodScendInfoQuanxianItemBinding;
+import com.fn.healfie.databinding.FoodScendInfoTimeItemBinding;
+import com.fn.healfie.databinding.FoodScendInfoYingyangItemBinding;
 import com.fn.healfie.food.CreateFoodActivity;
 import com.fn.healfie.food.FoodScendInfoActivity;
 import com.fn.healfie.interfaces.BaseOnClick;
@@ -57,62 +63,22 @@ public class FoodScendInfoAdapter extends BaseAdapter {
             return 0;
         } else if (position == 1) {
             return 1;
-        } else if (position == 2 || position == 3 || position == 4) {
+        } else if (position == 2 || position == 3 ) {
             return 2;
-        } else if (position == 7 || position == 8 || position == 9 || position == 10) {
+        } else if (position == 4) {
             return 3;
-        } else if (position == 6 || position == 5) {
+        } else if (position == 5) {
             return 4;
-        } else {
+        }else if(position == 6||position == 7||position == 8||position == 9){
             return 5;
+        } else {
+            return 6;
         }
-    }
-
-    public void openDate(int first, int last, final CreateFoodBean bean){
-        Calendar todayCal = Calendar.getInstance();
-        Calendar startCal = Calendar.getInstance();
-        Calendar endCal = Calendar.getInstance();
-        endCal.add(Calendar.YEAR, 6);
-
-        new DatePickDialog.Builder()
-                .setTypes(first,last)
-                .setCurrentDate(todayCal.getTime())
-                .setStartDate(startCal.getTime())
-                .setEndDate(endCal.getTime())
-                .setOnSureListener(new OnSureListener() {
-                    @Override
-                    public void onSure(Date date) {
-                        String message = new SimpleDateFormat("HH:mm").format(date);
-                        bean.setValue(message);
-                    }
-                })
-                .show(context);
-    }
-
-    public void openYear(int first,int center, int last, final CreateFoodBean bean){
-        Calendar todayCal = Calendar.getInstance();
-        Calendar startCal = Calendar.getInstance();
-        Calendar endCal = Calendar.getInstance();
-        endCal.add(Calendar.YEAR, 6);
-
-        new DatePickDialog.Builder()
-                .setTypes(first,center,last)
-                .setCurrentDate(todayCal.getTime())
-                .setStartDate(startCal.getTime())
-                .setEndDate(endCal.getTime())
-                .setOnSureListener(new OnSureListener() {
-                    @Override
-                    public void onSure(Date date) {
-                        String message = new SimpleDateFormat("yyyy-MM-dd").format(date);
-                        bean.setValue(message);
-                    }
-                })
-                .show(context);
     }
 
     @Override
     public int getViewTypeCount() {
-        return 6;
+        return 7;
     }
 
 
@@ -134,11 +100,12 @@ public class FoodScendInfoAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageHolder imageholder;
-        CreateFoodOneinputItemBinding createfoodoneinputitembinding;
-        CreateFoodMoreinputItemBinding createfoodmoreinputitembinding;
-        CreateFoodSelectItemBinding createfoodselectitembinding;
-        CreateFoodLittleinputItemBinding createfoodlittleinputitembinding;
-        CreateFoodButtonItemBinding createfoodbuttonitembinding;
+        FoodScendInfoNameItemBinding foodscendinfonameitembinding;
+        FoodScendInfoTimeItemBinding createfoodmoreinputitembinding;
+        FoodScendInfoQuanxianItemBinding createfoodselectitembinding;
+        FoodScendInfoLittleItemBinding createfoodlittleinputitembinding;
+        FoodScendInfoBottomItemBinding createfoodbuttonitembinding;
+        FoodScendInfoYingyangItemBinding foodscendinfoyingyangitembinding;
         int type = getItemViewType(position);
         if (type == 0) {
             if (convertView == null) {
@@ -151,53 +118,46 @@ public class FoodScendInfoAdapter extends BaseAdapter {
             imageholder.refreshUi(listTag.get(position));
         } else if (type == 1) {
             if (convertView == null) {
-                createfoodoneinputitembinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.create_food_oneinput_item, parent, false);
-                convertView = createfoodoneinputitembinding.getRoot();
+                foodscendinfonameitembinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.food_scend_info_name_item, parent, false);
+                convertView = foodscendinfonameitembinding.getRoot();
             } else {
-                createfoodoneinputitembinding = DataBindingUtil.getBinding(convertView);
+                foodscendinfonameitembinding = DataBindingUtil.getBinding(convertView);
             }
-            createfoodoneinputitembinding.setVariable(BR.food, getItem(position));
+            foodscendinfonameitembinding.setVariable(BR.food, getItem(position));
         } else if (type == 2) {
             if (convertView == null) {
-                createfoodmoreinputitembinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.create_food_moreinput_item, parent, false);
+               createfoodmoreinputitembinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.food_scend_info_time_item, parent, false);
                 convertView = createfoodmoreinputitembinding.getRoot();
             } else {
                 createfoodmoreinputitembinding = DataBindingUtil.getBinding(convertView);
             }
-            if (listTag.get(position).getKey().equals("預估熱量 :")) {
+            if (listTag.get(position).getKey().equals("進食日期 :")) {
                 createfoodmoreinputitembinding.rlInput.setBackgroundResource(R.drawable.white_shapetop);
                 createfoodmoreinputitembinding.ivBottom.setVisibility(View.VISIBLE);
-                createfoodmoreinputitembinding.rlBack.setVisibility(View.GONE);
-            } else if (listTag.get(position).getKey().equals("進食日期 :")) {
-                createfoodmoreinputitembinding.rlInput.setBackgroundColor(context.getResources().getColor(R.color.white));
-                createfoodmoreinputitembinding.ivBottom.setVisibility(View.VISIBLE);
-                createfoodmoreinputitembinding.rlBack.setVisibility(View.VISIBLE);
             } else {
                 createfoodmoreinputitembinding.rlInput.setBackgroundResource(R.drawable.white_shapebottom);
                 createfoodmoreinputitembinding.ivBottom.setVisibility(View.GONE);
-                createfoodmoreinputitembinding.rlBack.setVisibility(View.VISIBLE);
             }
             createfoodmoreinputitembinding.setVariable(BR.food, getItem(position));
-            createfoodmoreinputitembinding.setVariable(BR.click, new OnClick(listTag.get(position)));
-        } else if (type == 4) {
+        } else if (type == 3) {
             if (convertView == null) {
-                createfoodselectitembinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.create_food_select_item, parent, false);
+               createfoodselectitembinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.food_scend_info_quanxian_item, parent, false);
                 convertView = createfoodselectitembinding.getRoot();
             } else {
                 createfoodselectitembinding = DataBindingUtil.getBinding(convertView);
             }
-            if (listTag.get(position).getKey().equals("查看權限")) {
-                createfoodselectitembinding.ivRight.setImageResource(R.mipmap.ic_back1_normal);
-                createfoodselectitembinding.rlAll.setPadding(context.getResources().getDimensionPixelSize(R.dimen.ten), context.getResources().getDimensionPixelSize(R.dimen.ten), context.getResources().getDimensionPixelSize(R.dimen.ten), context.getResources().getDimensionPixelSize(R.dimen.ten));
-            } else {
-                createfoodselectitembinding.ivRight.setImageResource(R.mipmap.ic_back2_normal);
-                createfoodselectitembinding.rlAll.setPadding(context.getResources().getDimensionPixelSize(R.dimen.ten), 0, context.getResources().getDimensionPixelSize(R.dimen.ten), context.getResources().getDimensionPixelSize(R.dimen.five));
-            }
             createfoodselectitembinding.setVariable(BR.food, getItem(position));
-            createfoodselectitembinding.setVariable(BR.click, new OnClick(listTag.get(position)));
-        } else if (type == 3) {
+        }else if(type == 4){
             if (convertView == null) {
-                createfoodlittleinputitembinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.create_food_littleinput_item, parent, false);
+                foodscendinfoyingyangitembinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.food_scend_info_yingyang_item, parent, false);
+                convertView = foodscendinfoyingyangitembinding.getRoot();
+            } else {
+                foodscendinfoyingyangitembinding = DataBindingUtil.getBinding(convertView);
+            }
+            foodscendinfoyingyangitembinding.setVariable(BR.food, getItem(position));
+        } else if (type == 5) {
+            if (convertView == null) {
+                createfoodlittleinputitembinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.food_scend_info_little_item, parent, false);
                 convertView = createfoodlittleinputitembinding.getRoot();
             } else {
                 createfoodlittleinputitembinding = DataBindingUtil.getBinding(convertView);
@@ -212,19 +172,15 @@ public class FoodScendInfoAdapter extends BaseAdapter {
                 createfoodlittleinputitembinding.rlInput.setBackgroundColor(context.getResources().getColor(R.color.white));
                 createfoodlittleinputitembinding.ivBottom.setVisibility(View.VISIBLE);
             }
-            SpannableString ss = new SpannableString("點擊輸入");//定义hint的值
-            AbsoluteSizeSpan ass = new AbsoluteSizeSpan(13, true);//设置字体大小 true表示单位是sp
-            ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            createfoodlittleinputitembinding.etInput.setHint(new SpannedString(ss));
             createfoodlittleinputitembinding.setVariable(BR.food, getItem(position));
         } else {
             if (convertView == null) {
-                createfoodbuttonitembinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.create_food_button_item, parent, false);
+               createfoodbuttonitembinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.food_scend_info_bottom_item, parent, false);
                 convertView = createfoodbuttonitembinding.getRoot();
             } else {
                 createfoodbuttonitembinding = DataBindingUtil.getBinding(convertView);
             }
-            createfoodbuttonitembinding.setVariable(BR.click, new OnClick(listTag.get(position)));
+
         }
         return convertView;
     }
@@ -238,16 +194,7 @@ public class FoodScendInfoAdapter extends BaseAdapter {
 
         @Override
         public void onSaveClick(int id) {
-            Log.e("111111111111", "onSaveClick: "+bean.getKey());
-            if(bean.getKey().equals("進食日期 :")){
-                openYear(DateParams.TYPE_YEAR, DateParams.TYPE_MONTH, DateParams.TYPE_DAY,bean);
-            }
-            if(bean.getKey().equals("進食時間 :")){
-                openDate(DateParams.TYPE_HOUR, DateParams.TYPE_MINUTE,bean);
-            }
-            if(bean.getKey().equals("確定")){
-                back.onSaveClick(1);
-            }
+
         }
     }
 

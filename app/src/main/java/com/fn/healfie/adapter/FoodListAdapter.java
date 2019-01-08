@@ -1,43 +1,26 @@
 package com.fn.healfie.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.fn.healfie.BR;
-import com.fn.healfie.BaseActivity;
 import com.fn.healfie.R;
-import com.fn.healfie.component.RoundImageView;
-import com.fn.healfie.component.pickdatetime.DatePickDialog;
-import com.fn.healfie.component.pickdatetime.OnSureListener;
-import com.fn.healfie.component.pickdatetime.bean.DateParams;
+
 import com.fn.healfie.consts.MyUrl;
 import com.fn.healfie.consts.PrefeKey;
-import com.fn.healfie.databinding.CreateFoodButtonItemBinding;
-import com.fn.healfie.databinding.CreateFoodLittleinputItemBinding;
-import com.fn.healfie.databinding.CreateFoodMoreinputItemBinding;
-import com.fn.healfie.databinding.CreateFoodOneinputItemBinding;
-import com.fn.healfie.databinding.CreateFoodSelectItemBinding;
+
 import com.fn.healfie.databinding.FoodListItemBinding;
 import com.fn.healfie.databinding.FoodTimeItemBinding;
-import com.fn.healfie.drugs.food.CreateDrugsActivity;
 import com.fn.healfie.interfaces.BaseOnClick;
-import com.fn.healfie.model.CreateFoodBean;
 import com.fn.healfie.model.FoodBean;
 import com.fn.healfie.utils.PrefeUtil;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -117,6 +100,7 @@ public class FoodListAdapter extends BaseAdapter {
     }
 
     public String getUrl(String img, String bucket) {
+        Log.e("getUrl: ", MyUrl.SHOWIMAGE + "?bucket=" + bucket + "&imageObject=" + img + "&authorization=" + PrefeUtil.getString(context, PrefeKey.TOKEN, ""));
         return MyUrl.SHOWIMAGE + "?bucket=" + bucket + "&imageObject=" + img + "&authorization=" + PrefeUtil.getString(context, PrefeKey.TOKEN, "");
     }
 
@@ -129,8 +113,7 @@ public class FoodListAdapter extends BaseAdapter {
 
         @Override
         public void onSaveClick(int id) {
-            Log.e("111111111111", "onSaveClick: ");
-
+            back.onSaveClick(bean.getId());
         }
     }
 

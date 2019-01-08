@@ -58,4 +58,11 @@ public class MyUrl {
      * content 获取图片
      */
     public static String SHOWIMAGE = BASE + "/api/show/image";
+
+    /**
+     * from @zhaojian
+     * content 搜索聯繫人
+     */
+    public static String FRIENDSEARCH = BASE + "/api/friend/search";
+
 }

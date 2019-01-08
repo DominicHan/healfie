@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="food"
+            type="com.fn.healfie.model.CreateFoodBean" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/allBack"
+        android:paddingHorizontal="10dp"
+        android:paddingBottom="10dp">
+
+        <RelativeLayout
+            android:id="@+id/rl_input"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:background="@drawable/white_shapebottom">
+
+            <TextView
+                android:layout_marginLeft="30dp"
+                android:layout_centerVertical="true"
+                android:textSize="23sp"
+                android:textColor="@color/textBlack"
+                android:text="@{food.key}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_rl"
+                android:layout_centerVertical="true"
+                android:textSize="23sp"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/textOrange"
+                android:text="@{food.value}"
+                android:layout_marginRight="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:src="@mipmap/ic_hot_normal"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/tv_rl"
+                android:layout_marginRight="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>
+
+

@@ -148,7 +148,7 @@ public class DrugsFragment extends BaseFragment implements BaseOnClick {
         map.put("authorization", PrefeUtil.getString(activity, PrefeKey.TOKEN, ""));
         map.put("page", page + "");
         map.put("limit", limit + "");
-        map.put("type", "1");
+        map.put("type", "2");
         connect.getData(MyUrl.RECORD, map, new ConnectBack() {
             @Override
             public void success(String json) {

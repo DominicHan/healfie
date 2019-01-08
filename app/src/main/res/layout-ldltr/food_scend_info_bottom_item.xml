@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="click"
+            type="com.fn.healfie.interfaces.BaseOnClick" />
+
+        <variable
+            name="food"
+            type="com.fn.healfie.model.CreateFoodBean" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/allBack"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:paddingRight="10dp">
+
+        <RelativeLayout
+            android:id="@+id/rl_input"
+            android:layout_width="match_parent"
+            android:minHeight="57dp"
+            android:background="@color/allBack"
+            android:layout_height="57dp">
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>
+
+

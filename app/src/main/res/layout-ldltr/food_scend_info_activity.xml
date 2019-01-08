@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
+
+    <data>
+
+        <variable
+            name="click"
+            type="com.fn.healfie.interfaces.BaseOnClick" />
+
+        <import type="com.fn.healfie.adapter.FoodScendInfoAdapter" />
+
+        <variable
+            name="adapter"
+            type="FoodScendInfoAdapter" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="106dp">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="21dp"
+                android:onClick="@{() -> click.onSaveClick(@id/iv_back)}"
+                android:src="@mipmap/ic_back_normal"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/iv_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="21dp"
+                android:onClick="@{() -> click.onSaveClick(@id/iv_setting)}"
+                android:src="@mipmap/ic_set_normal"
+                android:layout_alignParentRight="true"
+                android:textSize="18sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="60dp"
+                android:text="食物詳情"
+                android:textColor="@color/textBlack"
+                android:textSize="27sp" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/lv_food"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/allBack"
+            android:divider="#00000000"
+            app:adapter="@{adapter}"
+            android:transcriptMode="alwaysScroll"
+            android:scrollbars="none"></ListView>
+
+    </LinearLayout>
+</layout>
+
+

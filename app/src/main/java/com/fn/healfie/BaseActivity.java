@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.telephony.TelephonyManager;
 
+import com.elvishew.xlog.XLog;
 import com.fn.healfie.component.loading.CustomProgressDialog;
 import com.fn.healfie.connect.MyConnect;
 import com.fn.healfie.consts.MyUrl;
@@ -32,6 +33,10 @@ public class BaseActivity extends Activity {
             mCustomProgressDialog = new CustomProgressDialog(this, this);
         }
         mCustomProgressDialog.dismiss("");
+    }
+
+    public void loge(String content) {
+        XLog.e(content);
     }
     /**
      * from @zhaojian

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
+
+    <data>
+
+        <variable
+            name="click"
+            type="com.fn.healfie.interfaces.BaseOnClick" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/allBack"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="106dp">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="21dp"
+                android:onClick="@{() -> click.onSaveClick(@id/iv_back)}"
+                android:src="@mipmap/ic_back_normal"
+                android:textSize="18sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="60dp"
+                android:text="聯繫人詳情"
+                android:textColor="@color/textBlack"
+                android:textSize="27sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/allBack"
+            android:padding="10dp">
+
+            <RelativeLayout
+                android:id="@+id/rl_input"
+                android:layout_width="match_parent"
+                android:layout_height="93dp"
+                android:background="@drawable/white_shape5">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_marginLeft="36dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="30sp"
+                    android:textColor="@color/textBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <com.fn.healfie.component.RoundImageView
+                    android:id="@+id/rv_image"
+                    android:layout_width="66dp"
+                    android:layout_height="67dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="#00000000"
+                    android:scaleType="matrix" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/allBack"
+            android:paddingHorizontal="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:background="@drawable/white_shape5">
+
+                <EditText
+                    android:paddingLeft="40dp"
+                    android:id="@+id/et_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint='请输入备注信息'
+                    android:textColor="@color/textBlack"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/allBack"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:background="@drawable/white_shape5">
+
+                <TextView
+                    android:layout_marginLeft="40dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="15sp"
+                    android:text="聯繫人權限"
+                    android:textColor="@color/textBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/tv_right"
+                    android:src="@mipmap/ic_back1_normal"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:textSize="15sp"
+                    android:text="一般聯繫人"
+                    android:textColor="@color/textBlack"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@id/tv_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/allBack"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_centerVertical="true"
+                android:textSize="13sp"
+                android:text="*"
+                android:textColor="@color/red"
+                android:layout_marginRight="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:textSize="13sp"
+                android:layout_marginLeft="10dp"
+                android:text='一般聯繫人可見權限為 "一般聯繫人" 的記錄'
+                android:textColor="@color/textGray9"
+                android:layout_marginRight="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <Button
+            android:id="@+id/btn_fsgzsq"
+            android:onClick="@{() -> click.onSaveClick(@id/btn_fsgzsq)}"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/shape"
+            android:textColor="#fff"
+            android:text="發送關注申請"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</layout>
+
+

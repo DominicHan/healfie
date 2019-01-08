@@ -42,6 +42,7 @@ public class AddContactActivity extends BaseActivity implements BaseOnClick {
         StatusBarUtil.StatusBarLightMode(this);
         binding = DataBindingUtil.setContentView(this, R.layout.add_contact_activity);
         binding.setVariable(BR.click, this);
+
     }
 
     /**

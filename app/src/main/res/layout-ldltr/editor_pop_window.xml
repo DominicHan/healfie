@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#66000000">
+
+    <Button
+        android:id="@+id/btn_quxiao"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:textSize="15sp"
+        android:text="取消"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="10dp"
+        android:textColor="@color/textBlack"
+        android:background="@drawable/white_shape5"/>
+    <Button
+        android:id="@+id/btn_shanchu"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:textSize="15sp"
+        android:text="刪除"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="67dp"
+        android:layout_marginHorizontal="10dp"
+        android:textColor="@color/red"
+        android:background="@drawable/white_shapebottom"/>
+
+    <Button
+        android:id="@+id/btn_bianji"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:textSize="15sp"
+        android:text="編輯"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="125dp"
+        android:layout_marginHorizontal="10dp"
+        android:textColor="@color/textBlack"
+        android:background="@drawable/white_shapetop"/>
+
+
+</RelativeLayout>

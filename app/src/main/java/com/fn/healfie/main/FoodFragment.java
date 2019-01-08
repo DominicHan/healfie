@@ -22,6 +22,7 @@ import com.fn.healfie.connect.MyConnect;
 import com.fn.healfie.consts.MyUrl;
 import com.fn.healfie.consts.PrefeKey;
 import com.fn.healfie.databinding.FoodFragmentBinding;
+import com.fn.healfie.food.FoodScendInfoActivity;
 import com.fn.healfie.interfaces.BaseOnClick;
 import com.fn.healfie.interfaces.ConnectBack;
 import com.fn.healfie.interfaces.ConnectLoginBack;
@@ -171,6 +172,9 @@ public class FoodFragment extends BaseFragment implements BaseOnClick {
         FoodListAdapter adapter = new FoodListAdapter(context, list, new BaseOnClick() {
             @Override
             public void onSaveClick(int id) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), FoodScendInfoActivity.class);
+                intent.putExtra("foodId", id+"");
+                startActivity(intent);
             }
         });
         mBinding.setAdapter(adapter);

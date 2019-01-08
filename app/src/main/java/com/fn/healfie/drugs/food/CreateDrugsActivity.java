@@ -1,11 +1,16 @@
 package com.fn.healfie.drugs.food;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Base64;
+import android.util.Log;
 
 import com.fn.healfie.BR;
 import com.fn.healfie.BaseActivity;
@@ -13,14 +18,27 @@ import com.fn.healfie.R;
 import com.fn.healfie.adapter.CreateDrugsAdapter;
 import com.fn.healfie.adapter.CreateFoodAdapter;
 import com.fn.healfie.component.camera.CameraActivity;
+import com.fn.healfie.connect.MyConnect;
+import com.fn.healfie.consts.MyUrl;
+import com.fn.healfie.consts.PrefeKey;
 import com.fn.healfie.databinding.CreateDrugsActivityBinding;
 import com.fn.healfie.databinding.CreateFoodActivityBinding;
 import com.fn.healfie.interfaces.BaseOnClick;
+import com.fn.healfie.interfaces.ConnectBack;
+import com.fn.healfie.interfaces.ConnectLoginBack;
+import com.fn.healfie.login.LoginActivity;
 import com.fn.healfie.model.CreateFoodBean;
+import com.fn.healfie.model.FoodBackBean;
+import com.fn.healfie.model.RegisterBean;
+import com.fn.healfie.utils.JsonUtil;
+import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.StatusBarUtil;
 import com.fn.healfie.utils.ToastUtil;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * from @zhaojian
@@ -32,12 +50,56 @@ public class CreateDrugsActivity extends BaseActivity implements BaseOnClick {
     Activity activity = this;
     ArrayList<CreateFoodBean> list;
     String path;
+    String from;
     CreateDrugsActivityBinding binding;
     Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
+                    FoodBackBean bean = JsonUtil.getBean(msg.obj.toString(), FoodBackBean.class);
+                    if (bean.getResultCode().equals("200")) {
+                        if (from.equals("info")) {
+                            ToastUtil.showToast(activity, "編輯成功");
+                        } else {
+                            ToastUtil.showToast(activity, "添加成功");
+                        }
+                        finish();
+                    } else if (bean.getResultCode().equals("-10010")) {
+                        showDialog();
+                        sendLogin(new ConnectLoginBack() {
+                            @Override
+                            public void success(String json, String header) {
+                                hideDialog();
+                                RegisterBean registerBean = JsonUtil.getBean(json, RegisterBean.class);
+                                if (registerBean.getResultCode().equals("200")) {
+                                    PrefeUtil.saveString(activity, PrefeKey.TOKEN, registerBean.getItem().getAuthorization());
+                                    myHandler.sendEmptyMessage(2);
 
+                                } else {
+                                    Intent intent = new Intent(activity, LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }
+
+                            @Override
+                            public void error(String json) {
+                                hideDialog();
+                                Intent intent = new Intent(activity, LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+                    } else {
+                        ToastUtil.errorToast(activity, bean.getResultCode());
+                    }
+                    break;
+                case 2:
+                    if (from.equals("info")) {
+//                        changeData();
+                    } else {
+                        sendData();
+                    }
                     break;
             }
             super.handleMessage(msg);
@@ -57,7 +119,7 @@ public class CreateDrugsActivity extends BaseActivity implements BaseOnClick {
             public void onSaveClick(int id) {
                 for (int i = 0;i<list.size();i++){
                     if(list.get(i).getValue().equals("")){
-                        ToastUtil.showToast(activity,"請輸入"+list.get(i).getKey());
+                        ToastUtil.showToast(activity,"請輸入"+list.get(i).getKey().split(":"));
                         return;
                     }
 
@@ -67,6 +129,109 @@ public class CreateDrugsActivity extends BaseActivity implements BaseOnClick {
             }
         });
         binding.setAdapter(adapter);
+    }
+
+    private void sendData() {
+        MyConnect connect = new MyConnect();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("authorization", PrefeUtil.getString(activity, PrefeKey.TOKEN, ""));
+        map.put("showLimit", "1");
+        map.put("isOtherAdd", "0");
+        map.put("src", "2");
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getValue().equals("")) {
+                ToastUtil.showToast(activity, "請輸入" + list.get(i).getKey());
+                return;
+            } else {
+                switch (list.get(i).getKey()) {
+                    case "image":
+                        Bitmap bm = BitmapFactory.decodeFile(path);
+                        Bitmap mSrcBitmap = Bitmap.createScaledBitmap(bm, 720, 1280, true);
+                        bm.recycle();
+                        bm = null;
+                        map.put("image", bitmapToBase64(mSrcBitmap));
+                        break;
+                    case "食物名":
+                        map.put("name", list.get(i).getValue());
+                        break;
+                    case "預估熱量 :":
+                        break;
+                    case "進食日期 :":
+                        map.put("eatDate", list.get(i).getValue());
+                        break;
+                    case "卡路里":
+                        map.put("calorie", list.get(i).getValue());
+                        break;
+                    case "進食時間 :":
+                        map.put("eatTime", list.get(i).getValue()+":00");
+                        break;
+                    case "脂肪總量":
+                        map.put("fat", list.get(i).getValue());
+                        break;
+                    case "鈉":
+                        map.put("sodium", list.get(i).getValue());
+                        break;
+                    case "碳水化合物":
+                        map.put("carbohydrate", list.get(i).getValue());
+                        break;
+                }
+            }
+        }
+        showDialog();
+        connect.postData(MyUrl.FOOD, map, new ConnectBack() {
+            @Override
+            public void success(String json) {
+                loge(json);
+                Message msg = new Message();
+                msg.what = 1;
+                msg.obj = json;
+                myHandler.sendMessage(msg);
+                hideDialog();
+            }
+
+            @Override
+            public void error(String json) {
+                Log.e( "error: ",json );
+                hideDialog();
+                ToastUtil.errorToast(activity, "-1022");
+            }
+        });
+    }
+
+    /**
+     * bitmap转为base64
+     * @param bitmap
+     * @return
+     */
+    public static String bitmapToBase64(Bitmap bitmap) {
+
+        String result = null;
+        ByteArrayOutputStream baos = null;
+        try {
+            if (bitmap != null) {
+                baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+
+                baos.flush();
+                baos.close();
+
+                byte[] bitmapBytes = baos.toByteArray();
+                result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (baos != null) {
+                    baos.flush();
+                    baos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+
     }
 
     private void initData() {
@@ -98,8 +263,7 @@ public class CreateDrugsActivity extends BaseActivity implements BaseOnClick {
     public void onSaveClick(int id) {
         switch (id) {
             case R.id.iv_back:
-
-//                finish();
+                finish();
                 break;
         }
     }
