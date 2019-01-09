@@ -7,11 +7,11 @@
             name="click"
             type="com.fn.healfie.interfaces.BaseOnClick" />
 
-        <import type="com.fn.healfie.adapter.FoodListAdapter" />
+        <import type="com.fn.healfie.adapter.DrugsListAdapter" />
 
         <variable
             name="adapter"
-            type="FoodListAdapter" />
+            type="DrugsListAdapter" />
     </data>
 
     <RelativeLayout

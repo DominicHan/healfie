@@ -17,11 +17,20 @@ import com.fn.healfie.BR;
 import com.fn.healfie.R;
 import com.fn.healfie.adapter.LoginComponent;
 import com.fn.healfie.adapter.ViewPagerFragmentAdapter;
+import com.fn.healfie.component.pickdatetime.DatePickDialog;
+import com.fn.healfie.component.pickdatetime.OnSureListener;
+import com.fn.healfie.component.pickdatetime.bean.DateParams;
 import com.fn.healfie.databinding.HomeFragmentBinding;
 import com.fn.healfie.interfaces.BaseOnClick;
+import com.fn.healfie.interfaces.TabChangeLisen;
+import com.fn.healfie.model.CreateFoodBean;
 import com.fn.healfie.module.HomeModule;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -32,6 +41,9 @@ public class HomeFragment extends BaseFragment implements BaseOnClick {
     ViewPagerFragmentAdapter mViewPagerFragmentAdapter;
     // xml-->view
     List<Fragment> mFragmentList = new ArrayList<Fragment>();
+    FoodFragment chat;
+    DrugsFragment friend;
+    int selectposition = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,7 +52,9 @@ public class HomeFragment extends BaseFragment implements BaseOnClick {
         module.setSelect(1);
         module.setFirst("first");
         module.setImageIdFirst(R.mipmap.ic_food_selected);
-        module.setTime("7月25日");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM月dd日");
+        Date date = new Date(System.currentTimeMillis());
+        module.setTime(simpleDateFormat.format(date));
         module.setLast("last");
         module.setImageIdLast(R.mipmap.ic_medicine_normal);
         mBinding.setHome(module);
@@ -60,15 +74,56 @@ public class HomeFragment extends BaseFragment implements BaseOnClick {
     }
 
     public void initFragmetList() {
-        Fragment chat = new FoodFragment();
-        Fragment friend = new DrugsFragment();
-        mFragmentList.add(chat);
-        mFragmentList.add(friend);
+         chat = new FoodFragment();
+         friend = new DrugsFragment();
+         mFragmentList.add(chat);
+         mFragmentList.add(friend);
+         chat.changeLisen(new TabChangeLisen() {
+             @Override
+             public void tabChangeLisen(String name, String id) {
+
+             }
+         });
+        friend.changeLisen(new TabChangeLisen() {
+            @Override
+            public void tabChangeLisen(String name, String id) {
+
+            }
+        });
     }
 
     @Override
     protected void initData() {
         mBinding.ViewPagerLayout.setScrollble(false);
+    }
+
+    public void openYear(int first,int center, int last){
+        try {
+        Calendar todayCal = Calendar.getInstance();
+        Calendar startCal = Calendar.getInstance();
+        Calendar endCal = Calendar.getInstance();
+        endCal.add(Calendar.YEAR,1);
+        loge(endCal.getTime().toString());
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2015-09-17 20:27:00");
+        new DatePickDialog.Builder()
+                .setTypes(first,center,last)
+                .setCurrentDate(todayCal.getTime())
+                .setStartDate(date)
+                .setEndDate(endCal.getTime())
+                .setOnSureListener(new OnSureListener() {
+                    @Override
+                    public void onSure(Date date) {
+                        String message = new SimpleDateFormat("MM-dd").format(date);
+                        module.setTime(message);
+                        chat.changeTime(new SimpleDateFormat("yyyy-MM-dd").format(date));
+                        friend.changeTime(new SimpleDateFormat("yyyy-MM-dd").format(date));
+                    }
+                })
+                .show(context);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -90,6 +145,12 @@ public class HomeFragment extends BaseFragment implements BaseOnClick {
                     mBinding.ViewPagerLayout.setCurrentItem(1);
                 }
                 break;
+            case R.id.tv_time:
+                openYear(DateParams.TYPE_YEAR, DateParams.TYPE_MONTH, DateParams.TYPE_DAY);
+                break;
+            case R.id.iv_down:
+                openYear(DateParams.TYPE_YEAR, DateParams.TYPE_MONTH, DateParams.TYPE_DAY);
+                break;
         }
     }
 
@@ -100,6 +161,7 @@ public class HomeFragment extends BaseFragment implements BaseOnClick {
         }
         @Override
         public void onPageSelected(int position) {
+            selectposition = position;
         }
         @Override
         public void onPageScrollStateChanged(int state) {

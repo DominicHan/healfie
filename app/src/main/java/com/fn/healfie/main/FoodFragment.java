@@ -26,6 +26,7 @@ import com.fn.healfie.food.FoodScendInfoActivity;
 import com.fn.healfie.interfaces.BaseOnClick;
 import com.fn.healfie.interfaces.ConnectBack;
 import com.fn.healfie.interfaces.ConnectLoginBack;
+import com.fn.healfie.interfaces.TabChangeLisen;
 import com.fn.healfie.login.LoginActivity;
 import com.fn.healfie.model.FoodBean;
 import com.fn.healfie.model.FoodListBean;
@@ -50,6 +51,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import in.srain.cube.views.ptr.PtrClassicDefaultHeader;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
+import in.srain.cube.views.ptr.util.PtrLocalDisplay;
+
 
 public class FoodFragment extends BaseFragment implements BaseOnClick {
 
@@ -58,7 +65,9 @@ public class FoodFragment extends BaseFragment implements BaseOnClick {
     int page = 1;
     int total = 0;
     int limit = 20;
+    String date = "";
     private FoodListAdapter adapter;
+    TabChangeLisen callBack;
     Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -137,7 +146,7 @@ public class FoodFragment extends BaseFragment implements BaseOnClick {
             Iterator iterator = jsonObject.keys();
             String key = null;
             String value = null;
-
+            list.clear();
             while (iterator.hasNext()) {
                 key = (String) iterator.next();
                 value = jsonObject.getString(key);
@@ -157,6 +166,7 @@ public class FoodFragment extends BaseFragment implements BaseOnClick {
                     list.add(userBean);
                 }
             }
+            adapter.notifyDataSetChanged();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -169,7 +179,7 @@ public class FoodFragment extends BaseFragment implements BaseOnClick {
 //        module = new HomeModule();
 //        mBinding.setHome(module);
         mBinding.setVariable(BR.click, this);
-        FoodListAdapter adapter = new FoodListAdapter(context, list, new BaseOnClick() {
+         adapter = new FoodListAdapter(context, list, new BaseOnClick() {
             @Override
             public void onSaveClick(int id) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), FoodScendInfoActivity.class);
@@ -179,7 +189,44 @@ public class FoodFragment extends BaseFragment implements BaseOnClick {
         });
         mBinding.setAdapter(adapter);
         View view = mBinding.getRoot();
+        final PtrClassicDefaultHeader header = new PtrClassicDefaultHeader(context);
+        header.setPadding(0, PtrLocalDisplay.dp2px(15), 0, 0);
+        mBinding.ptr.setHeaderView(header);
+        // mPtrFrame.setPinContent(true);//刷新时，保持内容不动，仅头部下移,默认,false
+        mBinding.ptr.addPtrUIHandler(header);
+        //mPtrFrame.setKeepHeaderWhenRefresh(true);//刷新时保持头部的显示，默认为true
+        //mPtrFrame.disableWhenHorizontalMove(true);//如果是ViewPager，设置为true，会解决ViewPager滑动冲突问题。
+        mBinding.ptr.setPtrHandler(new PtrHandler() {
+
+            //需要加载数据时触发
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                mBinding.ptr.refreshComplete();
+                getData();
+
+            }
+
+            /**
+             * 检查是否可以执行下来刷新，比如列表为空或者列表第一项在最上面时。
+             */
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                System.out.println("MainActivity.checkCanDoRefresh");
+                // 默认实现，根据实际情况做改动
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+                // return true;
+            }
+        });
         return view;
+    }
+
+    public void changeTime(String time){
+        date = time;
+        getData();
+    }
+
+    public void changeLisen(TabChangeLisen callBack){
+         this.callBack = callBack;
     }
 
     @Override
@@ -198,22 +245,6 @@ public class FoodFragment extends BaseFragment implements BaseOnClick {
 
     @Override
     protected void initData() {
-//        list.add("A");
-//        listTag.add("A");
-//        for (int i = 0; i < 3; i++) {
-//            list.add("阿凡达" + i);
-//        }
-//        list.add("B");
-//        listTag.add("B");
-//        for (int i = 0; i < 3; i++) {
-//            list.add("比特风暴" + i);
-//        }
-//        list.add("C");
-//        listTag.add("C");
-//        for (int i = 0; i < 30; i++) {
-//            list.add("查理风云" + i);
-//        }
-//        mBinding.lvFood.setAdapter(adapter);
         getData();
 
     }
@@ -226,6 +257,9 @@ public class FoodFragment extends BaseFragment implements BaseOnClick {
         map.put("page", page + "");
         map.put("limit", limit + "");
         map.put("type", "1");
+        if(!date.equals("")){
+            map.put("date", date);
+        }
         connect.getData(MyUrl.RECORD, map, new ConnectBack() {
             @Override
             public void success(String json) {

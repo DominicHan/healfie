@@ -9,7 +9,7 @@ public class MyUrl {
      * from @zhaojian
      * content 开发环境
      */
-    private static String BASE = "http://13.229.151.83:8081/healfie";
+    private static String BASE = "http://13.229.151.83/healfie";
 
     /**
      * from @zhaojian
@@ -76,5 +76,17 @@ public class MyUrl {
      * content 添加聯繫人
      */
     public static String FRIENDAUDIT = BASE + "/api/friend/audit/info";
+
+    /**
+     * from @zhaojian
+     * content 创建药品
+     */
+    public static String DRUGS = BASE + "/api/drugs";
+
+    /**
+     * from @zhaojian
+     * content 搜索藥物
+     */
+    public static String DRUGSPAGE = BASE + "/api/drugs/page";
 
 }
