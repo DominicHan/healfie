@@ -17,6 +17,7 @@ import com.fn.healfie.component.RoundImageView;
 import com.fn.healfie.consts.MyUrl;
 import com.fn.healfie.consts.PrefeKey;
 import com.fn.healfie.contact.AuditContactActivity;
+import com.fn.healfie.contact.ContactHomePageActivity;
 import com.fn.healfie.model.MessageBean;
 import com.fn.healfie.utils.PrefeUtil;
 import com.google.gson.Gson;
@@ -91,12 +92,10 @@ public class ContactListAdapter extends BaseAdapter {
         itemLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(bean.getShowLimit() == 1){
-//                    Intent intents = new Intent(context, AuditContactActivity.class);
-//                    Gson gson = new Gson();
-//                    intents.putExtra("data", gson.toJson(bean));
-//                    context.startActivity(intents);
-                }
+                Intent intents = new Intent(context, ContactHomePageActivity.class);
+                Gson gson = new Gson();
+                intents.putExtra("data", gson.toJson(bean));
+                context.startActivity(intents);
             }
         });
         return convertView;

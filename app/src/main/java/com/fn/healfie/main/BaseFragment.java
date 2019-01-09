@@ -40,7 +40,7 @@ import java.util.List;
  */
 public abstract class BaseFragment extends Fragment {
     public Context context;
-    public MainActivity activity;
+    public Activity activity;
     public boolean isLoadingMore = true;
     public boolean canLoad = true;
     private CustomProgressDialog mCustomProgressDialog;
@@ -55,7 +55,7 @@ public abstract class BaseFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getActivity();
-        activity = (MainActivity) getActivity();
+        activity = getActivity();
     }
 
 
