@@ -79,9 +79,11 @@ public class DrugsFragment extends BaseFragment implements BaseOnClick {
                         mBinding.lvFood.setVisibility(View.VISIBLE);
                         mBinding.rlNodata.setVisibility(View.GONE);
                         changeData(msg.obj.toString());
+                        callBack.tabChangeLisen("",bean.getStayAuditCount()+"");
                     }else if(bean.getResultCode().equals("200")){
                         mBinding.lvFood.setVisibility(View.GONE);
                         mBinding.rlNodata.setVisibility(View.VISIBLE);
+                        callBack.tabChangeLisen("",bean.getStayAuditCount()+"");
                     } else if (bean.getResultCode().equals("-10010")) {
                         showDialog();
                         sendLogin(new ConnectLoginBack() {

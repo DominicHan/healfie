@@ -18,7 +18,7 @@ public class HomeModule extends BaseObservable {
     private int select;
     private int imageIdFirst;
     private int imageIdLast;
-
+    private String stayNumber;
     private String first;
 
     private String last;
@@ -30,6 +30,15 @@ public class HomeModule extends BaseObservable {
     public void setFirst(String first) {
         this.first = first;
         notifyPropertyChanged(BR.first);
+    }
+    @Bindable
+    public String getStayNumber() {
+        return stayNumber;
+    }
+
+    public void setStayNumber(String stayNumber) {
+        this.stayNumber = stayNumber;
+        notifyPropertyChanged(BR.stayNumber);
     }
     @Bindable
     public String getLast() {

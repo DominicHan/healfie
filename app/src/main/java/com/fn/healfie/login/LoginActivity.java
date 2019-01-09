@@ -27,6 +27,7 @@ import com.fn.healfie.model.BaseBean;
 import com.fn.healfie.model.RegisterBean;
 import com.fn.healfie.module.LoginModule;
 import com.fn.healfie.utils.JsonUtil;
+import com.fn.healfie.utils.MD5Util;
 import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.StatusBarUtil;
 import com.fn.healfie.utils.ToastUtil;
@@ -140,7 +141,7 @@ public class LoginActivity extends BaseActivity implements BaseOnClick {
         MyConnect connect = new MyConnect();
         HashMap<String, String> map = new HashMap<>();
         map.put("userName", module.getName());
-        map.put("password", module.getPassword());
+        map.put("password",MD5Util.MD5(MD5Util.MD5(module.getName()+ module.getPassword())));
         map.put("isFaceBookLogin", "0");
         map.put("mobileId", getIMEI());
         map.put("isAutoLogin", "2");

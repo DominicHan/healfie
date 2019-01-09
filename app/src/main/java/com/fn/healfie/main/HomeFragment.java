@@ -44,6 +44,8 @@ public class HomeFragment extends BaseFragment implements BaseOnClick {
     FoodFragment chat;
     DrugsFragment friend;
     int selectposition = 0;
+    String foodNumber = "";
+    String drugsNumber = "";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,13 +83,14 @@ public class HomeFragment extends BaseFragment implements BaseOnClick {
          chat.changeLisen(new TabChangeLisen() {
              @Override
              public void tabChangeLisen(String name, String id) {
-
+                foodNumber = id;
+                 module.setStayNumber(foodNumber);
              }
          });
         friend.changeLisen(new TabChangeLisen() {
             @Override
             public void tabChangeLisen(String name, String id) {
-
+                drugsNumber = id;
             }
         });
     }
@@ -162,6 +165,11 @@ public class HomeFragment extends BaseFragment implements BaseOnClick {
         @Override
         public void onPageSelected(int position) {
             selectposition = position;
+            if(selectposition==0){
+                module.setStayNumber(foodNumber);
+            }else{
+                module.setStayNumber(drugsNumber);
+            }
         }
         @Override
         public void onPageScrollStateChanged(int state) {
