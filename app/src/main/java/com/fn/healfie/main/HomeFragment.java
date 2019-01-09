@@ -44,6 +44,10 @@ public class HomeFragment extends BaseFragment implements BaseOnClick {
     FoodFragment chat;
     DrugsFragment friend;
     int selectposition = 0;
+    String foodName = "";
+    String foodId = "";
+    String drugsName = "";
+    String drugsId = "";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
