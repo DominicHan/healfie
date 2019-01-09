@@ -153,13 +153,13 @@ public class LoginActivity extends BaseActivity implements BaseOnClick {
                 if (beans.getResultCode().equals("200")) {
                     PrefeUtil.saveString(activity, PrefeKey.TOKEN, beans.getItem().getAuthorization());
                     PrefeUtil.saveString(activity, PrefeKey.USERNAME, module.getName());
-                    PrefeUtil.saveString(activity, PrefeKey.USERPWD,  module.getPassword());
+                    PrefeUtil.saveString(activity, PrefeKey.USERPWD,  MD5Util.MD5(MD5Util.MD5(module.getName()+ module.getPassword())));
                     Intent intents = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intents);
                     finish();
                 } else if (beans.getResultCode().equals("40013") && header != null && !header.equals("")) {
                     PrefeUtil.saveString(activity, PrefeKey.USERNAME, module.getName());
-                    PrefeUtil.saveString(activity, PrefeKey.USERPWD,  module.getPassword());
+                    PrefeUtil.saveString(activity, PrefeKey.USERPWD, MD5Util.MD5(MD5Util.MD5(module.getName()+ module.getPassword())));
                     Intent intent = new Intent(activity, SaveNameActivity.class);
                     intent.putExtra(PrefeKey.TOKEN, header);
                     startActivity(intent);

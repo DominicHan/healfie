@@ -83,7 +83,7 @@ public class RegisterActivity extends BaseActivity implements BaseOnClick {
                     RegisterBean beans = JsonUtil.getBean(msg.obj.toString(), RegisterBean.class);
                     if (beans.getResultCode().equals("200")) {
                         PrefeUtil.saveString(activity, PrefeKey.USERNAME, module.getName());
-                        PrefeUtil.saveString(activity, PrefeKey.USERPWD, module.getPassword());
+                        PrefeUtil.saveString(activity, PrefeKey.USERPWD, MD5Util.MD5(MD5Util.MD5(module.getName()+ module.getPassword())));
                         Intent intent = new Intent(activity, SaveNameActivity.class);
                         intent.putExtra(PrefeKey.TOKEN, beans.getItem().getAuthorization());
                         startActivity(intent);

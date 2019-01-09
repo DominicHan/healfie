@@ -4,17 +4,23 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
+import android.util.Base64;
 import android.util.Log;
 
+import com.bumptech.glide.Glide;
 import com.fn.healfie.BR;
 import com.fn.healfie.BaseActivity;
 import com.fn.healfie.R;
 import com.fn.healfie.adapter.LoginComponent;
+import com.fn.healfie.component.camera.CameraActivity;
+import com.fn.healfie.component.camera.CameraTitleActivity;
 import com.fn.healfie.connect.MyConnect;
 import com.fn.healfie.consts.MyUrl;
 import com.fn.healfie.consts.PrefeKey;
@@ -32,6 +38,9 @@ import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.StatusBarUtil;
 import com.fn.healfie.utils.ToastUtil;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -49,6 +58,7 @@ public class SaveNameActivity extends BaseActivity implements BaseOnClick {
     SaveNameActivityBinding binding;
     SaveNameModule module;
     String token = "";
+    String path="";
     Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -80,6 +90,7 @@ public class SaveNameActivity extends BaseActivity implements BaseOnClick {
         binding.setSave(module);
         binding.setVariable(BR.click, this);
         token = getIntent().getStringExtra(PrefeKey.TOKEN);
+        binding.ivTx.changeRadius(100);
     }
 
     /**
@@ -97,9 +108,37 @@ public class SaveNameActivity extends BaseActivity implements BaseOnClick {
                 this.sendData();
                 break;
             case R.id.iv_tx:
-
+                Intent intent = new Intent(this, CameraTitleActivity.class);
+                startActivityForResult(intent,1);
                 break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+                if (data != null) {
+                    path =  data.getStringExtra("path");
+                    File file = new File(path);
+                    Glide.with(this).load(file).into(binding.ivTx);
+                }
+//        if (requestCode == PROCESS) {
+//            if (resultCode == RESULT_OK) {
+//                Intent intent = new Intent();
+//                if (data != null) {
+//                    intent.putExtra(CAMERA_RETURN_PATH,
+//                            data.getStringExtra(CAMERA_PATH_VALUE2));
+//                }
+//                setResult(RESULT_OK, intent);
+//                finish();
+//            } else {
+//                if (data != null) {
+//                    File dir = new File(data.getStringExtra(CAMERA_PATH_VALUE2));
+//                    if (dir != null) {
+//                        dir.delete();
+//                    }
+//                }
+//            }
+//        }
     }
 
     /**
@@ -112,6 +151,13 @@ public class SaveNameActivity extends BaseActivity implements BaseOnClick {
         HashMap<String, String> map = new HashMap<>();
         map.put("authorization", token);
         map.put("name", module.getName());
+        if(!path.equals("")){
+            Bitmap bm = BitmapFactory.decodeFile(path);
+            Bitmap mSrcBitmap = Bitmap.createScaledBitmap(bm, 400, 400, true);
+            bm.recycle();
+            bm = null;
+            map.put("image", bitmapToBase64(mSrcBitmap));
+        }
         connect.putData(MyUrl.MEMBERINFO, map, new ConnectBack() {
             @Override
             public void success(String json) {
@@ -128,5 +174,41 @@ public class SaveNameActivity extends BaseActivity implements BaseOnClick {
                 ToastUtil.errorToast(activity, "-1022");
             }
         });
+    }
+
+    /**
+     * bitmap转为base64
+     * @param bitmap
+     * @return
+     */
+    public static String bitmapToBase64(Bitmap bitmap) {
+
+        String result = null;
+        ByteArrayOutputStream baos = null;
+        try {
+            if (bitmap != null) {
+                baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+
+                baos.flush();
+                baos.close();
+
+                byte[] bitmapBytes = baos.toByteArray();
+                result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (baos != null) {
+                    baos.flush();
+                    baos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+
     }
 }

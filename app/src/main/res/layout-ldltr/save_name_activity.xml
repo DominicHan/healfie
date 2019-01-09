@@ -40,13 +40,16 @@
             android:textColor="@color/textBlack"
             android:textSize="27sp" />
 
-        <ImageView
+        <com.fn.healfie.component.RoundImageView
             android:id="@+id/iv_tx"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:maxHeight="100dp"
+            android:maxWidth="100dp"
             android:layout_below="@id/tv_grxx"
             android:layout_marginTop="35dp"
             android:layout_marginLeft="30dp"
+            android:scaleType="fitXY"
             android:onClick="@{() -> click.onSaveClick(@id/iv_tx)}"
             app:image_url="@{save.imageUrl}" />
 
