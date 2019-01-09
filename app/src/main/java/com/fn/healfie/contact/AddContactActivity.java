@@ -19,6 +19,8 @@ import com.fn.healfie.databinding.AddContactActivityBinding;
 import com.fn.healfie.databinding.UnidentifiedFoodActivityBinding;
 import com.fn.healfie.food.CreateFoodActivity;
 import com.fn.healfie.food.SearchFoodActivity;
+import com.fn.healfie.google.zxing.activity.CaptureActivity;
+import com.fn.healfie.google.zxing.util.Constant;
 import com.fn.healfie.interfaces.BaseOnClick;
 import com.fn.healfie.utils.StatusBarUtil;
 
@@ -58,6 +60,10 @@ public class AddContactActivity extends BaseActivity implements BaseOnClick {
             case R.id.rl_add_name:
                 Intent intents = new Intent(AddContactActivity.this, SearchNameActivity.class);
                 startActivity(intents);
+                break;
+            case R.id.rl_add_img:
+                Intent intent = new Intent(AddContactActivity.this, CaptureActivity.class);
+                startActivityForResult(intent, Constant.REQ_QR_CODE);
                 break;
         }
     }

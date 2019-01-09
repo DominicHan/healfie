@@ -67,6 +67,18 @@ public class MyUrl {
 
     /**
      * from @zhaojian
+     * content 添加聯繫人
+     */
+    public static String FRIENDINFO = BASE + "/api/friend/info";
+
+    /**
+     * from @zhaojian
+     * content 添加聯繫人
+     */
+    public static String FRIENDAUDIT = BASE + "/api/friend/audit/info";
+
+    /**
+     * from @zhaojian
      * content 创建药品
      */
     public static String DRUGS = BASE + "/api/drugs";

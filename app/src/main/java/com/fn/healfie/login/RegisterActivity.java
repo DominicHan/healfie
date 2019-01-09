@@ -25,6 +25,7 @@ import com.fn.healfie.model.BaseBean;
 import com.fn.healfie.model.RegisterBean;
 import com.fn.healfie.module.RegisterModule;
 import com.fn.healfie.utils.JsonUtil;
+import com.fn.healfie.utils.MD5Util;
 import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.StatusBarUtil;
 import com.fn.healfie.utils.ToastUtil;
@@ -173,7 +174,7 @@ public class RegisterActivity extends BaseActivity implements BaseOnClick {
         map.put("verificationCode", module.getCode());
         map.put("mobileId", getIMEI());
         map.put("mobileType", "2");
-        map.put("password", module.getPassword());
+        map.put("password", MD5Util.MD5(MD5Util.MD5(module.getName()+ module.getPassword())));
         connect.postData(MyUrl.REGISTER, map, new ConnectBack() {
             @Override
             public void success(String json) {

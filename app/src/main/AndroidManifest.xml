@@ -2,6 +2,8 @@
     package="com.fn.healfie">
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 
+    <uses-permission android:name="android.permission.VIBRATE" /> <!-- 震动权限 -->
+
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-feature android:name="android.permission.camera"/>
     <uses-feature android:name="android.hardware.camera" />
@@ -147,5 +149,31 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <activity
+            android:name=".google.zxing.activity.CaptureActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".contact.MessageActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".contact.AuditContactActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".contact.EditContactActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".contact.EditRemarkActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            />
+
     </application>
 </manifest>

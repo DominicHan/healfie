@@ -68,6 +68,7 @@
                         android:layout_height="wrap_content" />
 
                     <Button
+                        android:visibility="gone"
                         android:gravity="center"
                         android:text="3"
                         android:textSize="9sp"
@@ -106,7 +107,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="3"
+                        android:text="@{home.stayNumber}"
                         android:textColor="@color/red"
                         android:textSize="13sp" />
 
