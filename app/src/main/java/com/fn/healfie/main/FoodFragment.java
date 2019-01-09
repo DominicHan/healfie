@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.google.zxing.common.StringUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,6 +68,7 @@ public class FoodFragment extends BaseFragment implements BaseOnClick {
     int total = 0;
     int limit = 20;
     String date = "";
+    private String memberId;
     private FoodListAdapter adapter;
     TabChangeLisen callBack;
     Handler myHandler = new Handler() {
@@ -189,6 +192,11 @@ public class FoodFragment extends BaseFragment implements BaseOnClick {
         });
         mBinding.setAdapter(adapter);
         View view = mBinding.getRoot();
+        Bundle bundle =  getArguments();
+        if(bundle != null){
+            memberId = bundle.getString("data","");
+        }
+
         final PtrClassicDefaultHeader header = new PtrClassicDefaultHeader(context);
         header.setPadding(0, PtrLocalDisplay.dp2px(15), 0, 0);
         mBinding.ptr.setHeaderView(header);
@@ -256,6 +264,9 @@ public class FoodFragment extends BaseFragment implements BaseOnClick {
         map.put("authorization", PrefeUtil.getString(activity, PrefeKey.TOKEN, ""));
         map.put("page", page + "");
         map.put("limit", limit + "");
+        if(!TextUtils.isEmpty(memberId)){
+            map.put("memberId", memberId);
+        }
         map.put("type", "1");
         if(!date.equals("")){
             map.put("date", date);

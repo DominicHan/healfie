@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,7 @@ public class DrugsFragment extends BaseFragment implements BaseOnClick {
     int total = 0;
     int limit = 20;
     String date = "";
+    private String memberId;
     DrugsFragmentBinding mBinding;
     DrugsListAdapter adapter;
     TabChangeLisen callBack;
@@ -135,6 +137,10 @@ public class DrugsFragment extends BaseFragment implements BaseOnClick {
         });
         mBinding.setAdapter(adapter);
         View view = mBinding.getRoot();
+        Bundle bundle =  getArguments();
+        if(bundle != null){
+            memberId = bundle.getString("data","");
+        }
         final PtrClassicDefaultHeader header = new PtrClassicDefaultHeader(context);
         header.setPadding(0, PtrLocalDisplay.dp2px(15), 0, 0);
         mBinding.ptr.setHeaderView(header);
@@ -271,6 +277,9 @@ public class DrugsFragment extends BaseFragment implements BaseOnClick {
         map.put("page", page + "");
         map.put("limit", limit + "");
         map.put("type", "2");
+        if(!TextUtils.isEmpty(memberId)){
+            map.put("memberId", memberId);
+        }
         if(!date.equals("")){
             map.put("date", date);
         }
