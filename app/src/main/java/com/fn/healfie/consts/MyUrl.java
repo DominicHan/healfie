@@ -65,4 +65,16 @@ public class MyUrl {
      */
     public static String FRIENDSEARCH = BASE + "/api/friend/search";
 
+    /**
+     * from @zhaojian
+     * content 添加聯繫人
+     */
+    public static String FRIENDINFO = BASE + "/api/friend/info";
+
+    /**
+     * from @zhaojian
+     * content 添加聯繫人
+     */
+    public static String FRIENDAUDIT = BASE + "/api/friend/audit/info";
+
 }

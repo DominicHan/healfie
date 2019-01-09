@@ -1,105 +1,77 @@
-package com.fn.healfie.main;
+package com.fn.healfie.contact;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.fn.healfie.BR;
+import com.fn.healfie.BaseActivity;
 import com.fn.healfie.R;
-import com.fn.healfie.adapter.ContactListAdapter;
-import com.fn.healfie.adapter.LoginComponent;
 import com.fn.healfie.adapter.MessageListAdapter;
-import com.fn.healfie.adapter.ViewPagerFragmentAdapter;
-import com.fn.healfie.component.camera.CameraActivity;
 import com.fn.healfie.connect.MyConnect;
 import com.fn.healfie.consts.MyUrl;
 import com.fn.healfie.consts.PrefeKey;
-import com.fn.healfie.contact.AddContactActivity;
-import com.fn.healfie.contact.MessageActivity;
-import com.fn.healfie.databinding.ContactFragmentBinding;
-import com.fn.healfie.interfaces.BaseOnClick;
 import com.fn.healfie.interfaces.ConnectBack;
 import com.fn.healfie.interfaces.ConnectLoginBack;
 import com.fn.healfie.login.LoginActivity;
-import com.fn.healfie.model.ContactListBean;
 import com.fn.healfie.model.MessageBean;
 import com.fn.healfie.model.MessageListBean;
 import com.fn.healfie.model.RegisterBean;
-import com.fn.healfie.module.HomeModule;
 import com.fn.healfie.utils.JsonUtil;
 import com.fn.healfie.utils.PrefeUtil;
+import com.fn.healfie.utils.StatusBarUtil;
 import com.fn.healfie.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+public class MessageActivity extends BaseActivity implements View.OnClickListener {
 
-public class ContactFragment extends BaseFragment implements BaseOnClick {
+    Activity activity = this;
 
-    ContactFragmentBinding mBinding;
-
+    private ImageView backIv;
     private ListView messageLv;
     private List<MessageBean> mData;
-    private ContactListAdapter mAdapter;
+    private MessageListAdapter mAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.contact_fragment, container, false, new LoginComponent(context));
-//        module = new HomeModule();
-//        module.setSelect(1);
-//        module.setFirst("first");
-//        module.setImageIdFirst(R.mipmap.ic_food_selected);
-//        module.setTime("7月25日");
-//        module.setLast("last");
-//        module.setImageIdLast(R.mipmap.ic_medicine_normal);
-//        mBinding.setHome(module);
-        mBinding.setVariable(BR.click, ContactFragment.this);
-        View view = mBinding.getRoot();
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        StatusBarUtil.StatusBarLightMode(this);
+        setContentView(R.layout.message_activity);
 
-        messageLv = view.findViewById(R.id.lv_message);
+        backIv = findViewById(R.id.iv_back);
+        backIv.setOnClickListener(this);
 
-        return view;
-    }
+        messageLv = findViewById(R.id.lv_message);
 
-    @Override
-    protected void initData() {
         mData = new ArrayList<>();
-        mAdapter = new ContactListAdapter(getActivity(),mData);
+        mAdapter = new MessageListAdapter(this,mData);
         messageLv.setAdapter(mAdapter);
 
         getData();
     }
 
     @Override
-    public void onSaveClick(int id) {
-        switch (id) {
-            case R.id.rl_add:
-                Intent intent = new Intent(getActivity().getApplicationContext(), AddContactActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.iv_message:
-                Intent intent2 = new Intent(getActivity().getApplicationContext(), MessageActivity.class);
-                startActivity(intent2);
-                break;
+    public void onClick(View view) {
+        if(view.getId() == R.id.iv_back){
+            finish();
         }
     }
+
 
     private void getData() {
         showDialog();
         MyConnect connect = new MyConnect();
         HashMap<String, String> map = new HashMap<>();
         map.put("authorization", PrefeUtil.getString(activity, PrefeKey.TOKEN, ""));
-        connect.getData(MyUrl.FRIENDINFO, map, new ConnectBack() {
+        connect.getData(MyUrl.FRIENDAUDIT, map, new ConnectBack() {
             @Override
             public void success(String json) {
                 Message msg = new Message();
@@ -117,21 +89,39 @@ public class ContactFragment extends BaseFragment implements BaseOnClick {
         });
     }
 
-    private void changeData(ContactListBean bean){
+    private void changeData(MessageListBean bean){
         mData.clear();
+        MessageBean titleBeanUnaudit = new MessageBean();
+        titleBeanUnaudit.setType(0);
+        mData.add(titleBeanUnaudit);
 
-        if(bean.getItem().getList() != null && bean.getItem().getList().size() > 0){
-            mData.addAll(bean.getItem().getList());
+        if(bean.getItem().getUnaudited() != null && bean.getItem().getUnaudited().size() > 0){
+            for(MessageBean msg : bean.getItem().getUnaudited()){
+                msg.setType(1);
+                mData.add(msg);
+            }
+        }
+
+        MessageBean titleBeanAudit = new MessageBean();
+        titleBeanUnaudit.setType(2);
+        mData.add(titleBeanAudit);
+
+        if(bean.getItem().getAudited() != null && bean.getItem().getAudited().size() > 0){
+            for(MessageBean msg : bean.getItem().getAudited()){
+                msg.setType(3);
+                mData.add(msg);
+            }
         }
 
         mAdapter.notifyDataSetChanged();
+
     }
 
     Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    ContactListBean bean = JsonUtil.getBean(msg.obj.toString(), ContactListBean.class);
+                    MessageListBean bean = JsonUtil.getBean(msg.obj.toString(), MessageListBean.class);
                     loge(msg.obj.toString()+"");
                     if (bean.getResultCode().equals("200")) {
                         changeData(bean);
@@ -147,16 +137,18 @@ public class ContactFragment extends BaseFragment implements BaseOnClick {
                                     myHandler.sendEmptyMessage(2);
 
                                 }else{
-                                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                    Intent intent = new Intent(MessageActivity.this, LoginActivity.class);
                                     startActivity(intent);
+                                    finish();
                                 }
                             }
 
                             @Override
                             public void error(String json) {
                                 hideDialog();
-                                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                Intent intent = new Intent(MessageActivity.this, LoginActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
                         });
                     } else {
@@ -170,4 +162,5 @@ public class ContactFragment extends BaseFragment implements BaseOnClick {
             super.handleMessage(msg);
         }
     };
+
 }

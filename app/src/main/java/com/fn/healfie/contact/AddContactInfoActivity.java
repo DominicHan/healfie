@@ -25,6 +25,7 @@ import com.fn.healfie.interfaces.BaseOnClick;
 import com.fn.healfie.interfaces.ConnectBack;
 import com.fn.healfie.interfaces.ConnectLoginBack;
 import com.fn.healfie.login.LoginActivity;
+import com.fn.healfie.model.BaseBean;
 import com.fn.healfie.model.RegisterBean;
 import com.fn.healfie.model.SearchContactBean;
 import com.fn.healfie.utils.JsonUtil;
@@ -49,12 +50,11 @@ public class AddContactInfoActivity extends BaseActivity implements BaseOnClick 
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    SearchContactBean bean = JsonUtil.getBean(msg.obj.toString(), SearchContactBean.class);
-//                    loge(bean.getItem().toString()+"");
-                    if (bean.getResultCode().equals("200") && bean.getItem().getName()!=null) {
-                    }else if(bean.getResultCode().equals("200")){
-//                        binding.tv
-                    } else if (bean.getResultCode().equals("-10010")) {
+                    BaseBean result = JsonUtil.getBean(msg.obj.toString(), BaseBean.class);
+
+                    if (result.getResultCode().equals("200")) {
+                        finish();
+                    } else if (result.getResultCode().equals("-10010")) {
                         showDialog();
                         sendLogin(new ConnectLoginBack() {
                             @Override
@@ -81,7 +81,7 @@ public class AddContactInfoActivity extends BaseActivity implements BaseOnClick 
                             }
                         });
                     } else {
-                        ToastUtil.errorToast(activity, bean.getResultCode());
+                        ToastUtil.errorToast(activity, result.getResultCode());
                     }
                     break;
                 case 2:
@@ -107,7 +107,34 @@ public class AddContactInfoActivity extends BaseActivity implements BaseOnClick 
     }
 
     private void getData() {
+//        if(binding.etInput.getText().toString().equals("")){
+//            ToastUtil.showToast(this,"請輸入會員名");
+//            return;
+//        }
+        showDialog();
+        MyConnect connect = new MyConnect();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("authorization", PrefeUtil.getString(activity, PrefeKey.TOKEN, ""));
+        map.put("desc", binding.etInput.getText().toString());
+        map.put("memberId", bean.getItem().getId());
+        map.put("showLimit", "2");
+        connect.postData(MyUrl.FRIENDINFO, map, new ConnectBack() {
+            @Override
+            public void success(String json) {
+                Message msg = new Message();
+                msg.what = 1;
+                msg.obj = json;
+                myHandler.sendMessage(msg);
+                hideDialog();
+            }
 
+            @Override
+            public void error(String json) {
+                hideDialog();
+                loge("2222"+json);
+                ToastUtil.errorToast(activity, "-1022");
+            }
+        });
     }
     /**
      * from @zhaojian

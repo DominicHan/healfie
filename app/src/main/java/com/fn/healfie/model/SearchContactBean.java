@@ -27,6 +27,7 @@ public class SearchContactBean extends BaseBean {
         private Object headImageObject;
         private String name;
         private Object headBucket;
+        private String id;
 
         public Object getHeadImageObject() {
             return headImageObject;
@@ -50,6 +51,14 @@ public class SearchContactBean extends BaseBean {
 
         public void setHeadBucket(Object headBucket) {
             this.headBucket = headBucket;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
         }
     }
 }

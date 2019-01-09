@@ -57,6 +57,7 @@ public class SearchNameActivity extends BaseActivity implements BaseOnClick {
                         Intent intents = new Intent(SearchNameActivity.this, AddContactInfoActivity.class);
                         intents.putExtra("data", msg.obj.toString());
                         startActivity(intents);
+                        finish();
                     }else if(bean.getResultCode().equals("200")){
 //                        binding.tv
                         binding.tvNo.setVisibility(View.VISIBLE);
@@ -157,6 +158,9 @@ public class SearchNameActivity extends BaseActivity implements BaseOnClick {
         switch (id) {
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.iv_search:
+                getData();
                 break;
         }
     }

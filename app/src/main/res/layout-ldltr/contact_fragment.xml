@@ -19,6 +19,8 @@
             android:background="#fff"
             android:layout_height="116dp">
             <ImageView
+                android:id="@+id/iv_message"
+                android:onClick='@{() -> click.onSaveClick(@id/iv_message)}'
                 android:src="@mipmap/ic_message_normal"
                 android:layout_marginTop="33dp"
                 android:layout_alignParentRight="true"
@@ -41,6 +43,7 @@
             android:layout_width="match_parent"
             android:background="@drawable/white_shape5"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginHorizontal="10dp"
             android:layout_height="wrap_content">
 
@@ -62,6 +65,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
+        <ListView
+            android:id="@+id/lv_message"
+            android:scrollbars="none"
+            android:layout_width="match_parent"
+            android:divider="@color/allBack"
+            android:dividerHeight="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/allBack">
+        </ListView>
     </LinearLayout>
 </layout>
 

@@ -17,4 +17,12 @@
     <color name="bottomline">#cacbcc</color>
     <color name="red">#e8605a</color>
     <color name="textOrange">#fac14d</color>
+    <!-- QRCode scanner color begin -->
+    <color name="viewfinder_mask">#80000000</color>
+    <color name="result_view">#80000000</color>
+    <color name="viewfinder_frame">#90FFFFFF</color>
+    <color name="result_point_color">#C0FFFF00</color>
+    <color name="laser_color">#0ba7c5</color>
+    <color name="corner_color">#0ba7c5</color>
+    <!-- QRCode scanner color end -->
 </resources>
