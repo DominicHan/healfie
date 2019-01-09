@@ -8,21 +8,24 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupWindow;
 
 import com.fn.healfie.BR;
 import com.fn.healfie.BaseActivity;
 import com.fn.healfie.R;
 import com.fn.healfie.adapter.DrugsScendInfoAdapter;
-import com.fn.healfie.adapter.SearchDrugsListAdapter;
+import com.fn.healfie.adapter.FoodScendInfoAdapter;
 import com.fn.healfie.component.camera.CameraActivity;
 import com.fn.healfie.connect.MyConnect;
 import com.fn.healfie.consts.MyUrl;
 import com.fn.healfie.consts.PrefeKey;
-import com.fn.healfie.databinding.SearchDrugsActivityBinding;
+import com.fn.healfie.databinding.DrugsScendInfoActivityBinding;
+import com.fn.healfie.databinding.FoodScendInfoActivityBinding;
+import com.fn.healfie.food.CreateFoodActivity;
 import com.fn.healfie.interfaces.BaseOnClick;
 import com.fn.healfie.interfaces.ConnectBack;
 import com.fn.healfie.interfaces.ConnectLoginBack;
@@ -30,10 +33,8 @@ import com.fn.healfie.login.LoginActivity;
 import com.fn.healfie.model.BaseBean;
 import com.fn.healfie.model.CreateFoodBean;
 import com.fn.healfie.model.DrugsInfoBean;
-import com.fn.healfie.model.DrugsSearchBean;
-import com.fn.healfie.model.DrugsSearchOneBean;
+import com.fn.healfie.model.FoodInfoBean;
 import com.fn.healfie.model.RegisterBean;
-import com.fn.healfie.module.SearchModule;
 import com.fn.healfie.utils.JsonUtil;
 import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.StatusBarUtil;
@@ -47,29 +48,22 @@ import java.util.HashMap;
  * content 創建食物
  */
 
-public class SearchDrugsActivity extends BaseActivity implements BaseOnClick {
+public class DrugsScendInfoActivity extends BaseActivity implements BaseOnClick {
 
     Activity activity = this;
-    SearchDrugsActivityBinding binding;
-    SearchModule module;
-    String path;
-    SearchDrugsListAdapter adapter;
-    ArrayList<DrugsSearchBean.ItemBean> list = new ArrayList<>();
+    DrugsScendInfoActivityBinding binding;
+    ArrayList<CreateFoodBean> list;
+    String id;
+    String infoJson;
+    PopupWindow popupWindow;
     Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    DrugsSearchBean bean = JsonUtil.getBean(msg.obj.toString(), DrugsSearchBean.class);
-                    if (bean.getResultCode().equals("200")&&bean.getItem().size()>0) {
-                        binding.tvZjtj.setVisibility(View.VISIBLE);
-                        binding.lvFood.setVisibility(View.VISIBLE);
-                        binding.buttonSearch.setVisibility(View.GONE);
-                        list.addAll(bean.getItem());
-                    }else if(bean.getResultCode().equals("200")){
-//                        binding.tvZjtj.setVis
-                        binding.tvZjtj.setVisibility(View.GONE);
-                        binding.lvFood.setVisibility(View.GONE);
-                        binding.buttonSearch.setVisibility(View.VISIBLE);
+                    DrugsInfoBean bean = JsonUtil.getBean(msg.obj.toString(), DrugsInfoBean.class);
+                    if (bean.getResultCode().equals("200")) {
+                        infoJson = msg.obj.toString();
+                        changeList(bean);
                     } else if (bean.getResultCode().equals("-10010")) {
                         showDialog();
                         sendLogin(new ConnectLoginBack() {
@@ -104,21 +98,11 @@ public class SearchDrugsActivity extends BaseActivity implements BaseOnClick {
                     getFood();
                     break;
                 case 3:
-                    DrugsSearchOneBean beans = JsonUtil.getBean(msg.obj.toString(), DrugsSearchOneBean.class);
-                    if (beans.getResultCode().equals("200")&&beans.getItem().size()>0) {
-                        binding.tvZjtj.setVisibility(View.VISIBLE);
-                        binding.lvFood.setVisibility(View.VISIBLE);
-                        binding.buttonSearch.setVisibility(View.GONE);
-                        list.clear();
-                        for (int i = 0;i<beans.getItem().size();i++){
-                            list.add(new DrugsSearchBean.ItemBean(beans.getItem().get(i).getTakeMode(),beans.getItem().get(i).getCnName()));
-                        }
-                        adapter.notifyDataSetChanged();
-                    }else if(beans.getResultCode().equals("200")){
-//                        binding.tvZjtj.setVis
-                        binding.tvZjtj.setVisibility(View.GONE);
-                        binding.lvFood.setVisibility(View.GONE);
-                        binding.buttonSearch.setVisibility(View.VISIBLE);
+                    BaseBean beans = JsonUtil.getBean(msg.obj.toString(), BaseBean.class);
+                    if (beans.getResultCode().equals("200")) {
+                        ToastUtil.showToast(activity,"刪除成功");
+                        popupWindow.dismiss();
+                        finish();
                     } else if (beans.getResultCode().equals("-10010")) {
                         showDialog();
                         sendLogin(new ConnectLoginBack() {
@@ -150,59 +134,66 @@ public class SearchDrugsActivity extends BaseActivity implements BaseOnClick {
                     }
                     break;
                 case 4:
-                    getData();
+                    deleteData();
                     break;
             }
             super.handleMessage(msg);
         }
     };
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtil.StatusBarLightMode(this);
-        binding = DataBindingUtil.setContentView(this, R.layout.search_drugs_activity);
+        binding = DataBindingUtil.setContentView(this, R.layout.drugs_scend_info_activity);
         binding.setVariable(BR.click, this);
-        module = new SearchModule();
-        module.setName("");
-        path = getIntent().getStringExtra(CameraActivity.CAMERA_PATH_VALUE1);
-        binding.setSearch(module);
-         adapter = new SearchDrugsListAdapter(this, list, new BaseOnClick() {
+        id = getIntent().getStringExtra("foodId");
+        initData();
+        DrugsScendInfoAdapter adapter = new DrugsScendInfoAdapter(this, list, this, new BaseOnClick() {
             @Override
             public void onSaveClick(int id) {
-
             }
         });
 
         binding.setAdapter(adapter);
-        initData();
-    }
-
-    private void initData() {
-        binding.etInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        View inflate = LayoutInflater.from(this).inflate(R.layout.editor_pop_window, null);
+        popupWindow = new PopupWindow(inflate, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
+        Button btn_quxiao = inflate.findViewById(R.id.btn_quxiao);
+        Button btn_shanchu = inflate.findViewById(R.id.btn_shanchu);
+        Button btn_bianji = inflate.findViewById(R.id.btn_bianji);
+        btn_quxiao.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEND
-                        || actionId == EditorInfo.IME_ACTION_DONE
-                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
-                    //处理事件
-                    getData();
-                }
-                return false;
+            public void onClick(View view) {
+                popupWindow.dismiss();
             }
         });
-        getFood();
+        btn_shanchu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               deleteData();
+            }
+        });
+        btn_bianji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, CreateFoodActivity.class);
+                intent.putExtra(CameraActivity.CAMERA_PATH_VALUE1, "");
+                intent.putExtra("data", infoJson);
+                intent.putExtra("from", "info");
+                startActivity(intent);
+                popupWindow.dismiss();
+            }
+        });
     }
 
-    private void getData() {
+    private void deleteData() {
         showDialog();
         MyConnect connect = new MyConnect();
         HashMap<String, String> map = new HashMap<>();
         map.put("authorization", PrefeUtil.getString(activity, PrefeKey.TOKEN, ""));
-        map.put("name", binding.etInput.getText().toString());
-        map.put("page", "1");
-        map.put("limit", "20");
-        connect.getData(MyUrl.DRUGSPAGE , map, new ConnectBack() {
+        map.put("id", id);
+        connect.deleteData(MyUrl.DRUGS + "/" + id, map, new ConnectBack() {
             @Override
             public void success(String json) {
                 Message msg = new Message();
@@ -226,8 +217,9 @@ public class SearchDrugsActivity extends BaseActivity implements BaseOnClick {
         MyConnect connect = new MyConnect();
         HashMap<String, String> map = new HashMap<>();
         map.put("authorization", PrefeUtil.getString(activity, PrefeKey.TOKEN, ""));
+        map.put("id", id);
 
-        connect.getData(MyUrl.DRUGS , map, new ConnectBack() {
+        connect.getData(MyUrl.DRUGS + "/" + id, map, new ConnectBack() {
             @Override
             public void success(String json) {
                 Message msg = new Message();
@@ -246,6 +238,35 @@ public class SearchDrugsActivity extends BaseActivity implements BaseOnClick {
         });
     }
 
+    private void initData() {
+        list = new ArrayList<>();
+        list.add(new CreateFoodBean("image", "", "image"));
+        list.add(new CreateFoodBean("", "", "one_input"));
+        list.add(new CreateFoodBean("服藥方式 :", "", "one_select"));
+        list.add(new CreateFoodBean("服藥劑量 :", "", "one_select"));
+        list.add(new CreateFoodBean("服藥日期 :", "", "one_select"));
+        list.add(new CreateFoodBean("服藥時間 :", "", "one_select"));
+        list.add(new CreateFoodBean("查看權限", "一般聯繫人", "one_input"));
+        list.add(new CreateFoodBean("", "", "white"));
+        getFood();
+    }
+
+    private void changeList(DrugsInfoBean bean) {
+        DrugsInfoBean.ItemBean item = bean.getItem();
+        list.get(0).setValue(getUrl(item.getImageObject(), item.getBucket()));
+        list.get(1).setValue("");
+        list.get(1).setKey(item.getCnName()+"（"+item.getEnName()+"）");
+        list.get(2).setValue(item.getTakeMode());
+        list.get(3).setValue(item.getTakeDose()+item.getTakeUnit());
+        list.get(4).setValue(item.getEatDate());
+        list.get(5).setValue(item.getEatTime());
+    }
+
+    public String getUrl(String img, String bucket) {
+        Log.e("getUrl: ", MyUrl.SHOWIMAGE + "?bucket=" + bucket + "&imageObject=" + img + "&authorization=" + PrefeUtil.getString(getApplicationContext(), PrefeKey.TOKEN, ""));
+        return MyUrl.SHOWIMAGE + "?bucket=" + bucket + "&imageObject=" + img + "&authorization=" + PrefeUtil.getString(getApplicationContext(), PrefeKey.TOKEN, "");
+    }
+
     /**
      * from @zhaojian
      * content 点击事件绑定
@@ -256,10 +277,8 @@ public class SearchDrugsActivity extends BaseActivity implements BaseOnClick {
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.btn_zjsw:
-                Intent intent = new Intent(activity, CreateDrugsActivity.class);
-                intent.putExtra(CameraActivity.CAMERA_PATH_VALUE1, path);
-                startActivity(intent);
+            case R.id.iv_setting:
+                popupWindow.showAtLocation(binding.ivBack, 0, 0, 0);
                 break;
         }
     }

@@ -43,10 +43,12 @@
                     android:textSize="18sp" />
 
                 <ImageView
+                    android:id="@+id/iv_down"
                     android:layout_marginTop="17dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:onClick="@{() -> click.onSaveClick(@id/iv_down)}"
                     android:layout_toRightOf="@id/tv_time"
                     android:src="@mipmap/ic_down_normal" />
 

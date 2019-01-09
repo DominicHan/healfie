@@ -10,6 +10,7 @@ import com.fn.healfie.utils.JsonUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -28,7 +29,11 @@ import static android.content.ContentValues.TAG;
 
 public class MyConnect {
 
-    public final OkHttpClient client = new OkHttpClient(); //构建FormBody，传入要提交的参数
+    public final OkHttpClient client = new OkHttpClient.Builder()
+            .connectTimeout(20, TimeUnit.SECONDS)
+            .writeTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build();; //构建FormBody，传入要提交的参数
 
     public void postData(String url, HashMap<String, String> map, final ConnectBack callBack) {
         Log.e(TAG, "postData: post");

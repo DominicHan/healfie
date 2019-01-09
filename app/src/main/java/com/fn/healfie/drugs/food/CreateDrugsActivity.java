@@ -27,7 +27,9 @@ import com.fn.healfie.interfaces.BaseOnClick;
 import com.fn.healfie.interfaces.ConnectBack;
 import com.fn.healfie.interfaces.ConnectLoginBack;
 import com.fn.healfie.login.LoginActivity;
+import com.fn.healfie.model.BaseBean;
 import com.fn.healfie.model.CreateFoodBean;
+import com.fn.healfie.model.DrugsInfoBean;
 import com.fn.healfie.model.FoodBackBean;
 import com.fn.healfie.model.RegisterBean;
 import com.fn.healfie.utils.JsonUtil;
@@ -50,13 +52,13 @@ public class CreateDrugsActivity extends BaseActivity implements BaseOnClick {
     Activity activity = this;
     ArrayList<CreateFoodBean> list;
     String path;
-    String from;
+    String from="";
     CreateDrugsActivityBinding binding;
     Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    FoodBackBean bean = JsonUtil.getBean(msg.obj.toString(), FoodBackBean.class);
+                    DrugsInfoBean bean = JsonUtil.getBean(msg.obj.toString(), DrugsInfoBean.class);
                     if (bean.getResultCode().equals("200")) {
                         if (from.equals("info")) {
                             ToastUtil.showToast(activity, "編輯成功");
@@ -124,8 +126,9 @@ public class CreateDrugsActivity extends BaseActivity implements BaseOnClick {
                     }
 
                 }
-                ToastUtil.showToast(activity,"添加成功");
-                finish();
+                sendData();
+//                ToastUtil.showToast(activity,"添加成功");
+//                finish();
             }
         });
         binding.setAdapter(adapter);
@@ -137,6 +140,8 @@ public class CreateDrugsActivity extends BaseActivity implements BaseOnClick {
         map.put("authorization", PrefeUtil.getString(activity, PrefeKey.TOKEN, ""));
         map.put("showLimit", "1");
         map.put("isOtherAdd", "0");
+        map.put("takeUnit", "粒");
+        map.put("takeMode", "1");
         map.put("src", "2");
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getValue().equals("")) {
@@ -151,37 +156,31 @@ public class CreateDrugsActivity extends BaseActivity implements BaseOnClick {
                         bm = null;
                         map.put("image", bitmapToBase64(mSrcBitmap));
                         break;
-                    case "食物名":
-                        map.put("name", list.get(i).getValue());
+                    case "中文名 :":
+                        map.put("cnName", list.get(i).getValue());
                         break;
-                    case "預估熱量 :":
+                    case "英文名 :":
+                        map.put("enName", list.get(i).getValue());
                         break;
-                    case "進食日期 :":
+                    case "服藥方式 :":
                         map.put("eatDate", list.get(i).getValue());
                         break;
-                    case "卡路里":
-                        map.put("calorie", list.get(i).getValue());
+                    case "服藥劑量 :":
+                        map.put("takeDose", list.get(i).getValue());
                         break;
-                    case "進食時間 :":
+                    case "服藥日期 :":
+                        map.put("eatDate", list.get(i).getValue());
+                        break;
+                    case "服藥時間 :":
                         map.put("eatTime", list.get(i).getValue()+":00");
-                        break;
-                    case "脂肪總量":
-                        map.put("fat", list.get(i).getValue());
-                        break;
-                    case "鈉":
-                        map.put("sodium", list.get(i).getValue());
-                        break;
-                    case "碳水化合物":
-                        map.put("carbohydrate", list.get(i).getValue());
                         break;
                 }
             }
         }
         showDialog();
-        connect.postData(MyUrl.FOOD, map, new ConnectBack() {
+        connect.postData(MyUrl.DRUGS, map, new ConnectBack() {
             @Override
             public void success(String json) {
-                loge(json);
                 Message msg = new Message();
                 msg.what = 1;
                 msg.obj = json;

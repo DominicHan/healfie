@@ -16,6 +16,8 @@ public class SearchModule extends BaseObservable {
 
     private String name;
 
+    private String have;
+
     @Bindable
     public String getName() {
         return name;
@@ -25,6 +27,17 @@ public class SearchModule extends BaseObservable {
         this.name = name;
         Log.e(TAG, "setName: --------------");
         notifyPropertyChanged(BR.name);
+    }
+
+    @Bindable
+    public String getHave() {
+        return have;
+    }
+
+    public void setHave(String have) {
+        this.name = name;
+        Log.e(TAG, "setName: --------------");
+        notifyPropertyChanged(BR.have);
     }
 
 }
