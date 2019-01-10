@@ -124,6 +124,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
+                    android:id="@+id/tv_remark"
+                    android:onClick="@{() -> click.onSaveClick(@id/tv_remark)}"
                     android:layout_centerVertical="true"
                     android:textSize="15sp"
                     android:text="一般聯繫人"

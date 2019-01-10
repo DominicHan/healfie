@@ -23,6 +23,8 @@ import com.fn.healfie.component.MyViewPager;
 import com.fn.healfie.component.RoundImageView;
 import com.fn.healfie.consts.MyUrl;
 import com.fn.healfie.consts.PrefeKey;
+import com.fn.healfie.event.DeleteContactEvent;
+import com.fn.healfie.event.EditContactEvent;
 import com.fn.healfie.interfaces.TabChangeLisen;
 import com.fn.healfie.main.DrugsFragment;
 import com.fn.healfie.main.FoodFragment;
@@ -33,6 +35,9 @@ import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.StatusBarUtil;
 import com.google.gson.Gson;
 
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +83,8 @@ public class ContactHomePageActivity extends FragmentActivity implements View.On
         StatusBarUtil.StatusBarLightMode(this);
         setContentView(R.layout.contact_homepage_activity);
 
+        EventBus.getDefault().register(this);
+
         backIv = findViewById(R.id.iv_back);
         backIv.setOnClickListener(this);
 
@@ -113,6 +120,24 @@ public class ContactHomePageActivity extends FragmentActivity implements View.On
         medicineIndicatorIv.setVisibility(View.INVISIBLE);
 
         initData();
+    }
+
+
+    @Subscribe
+    public void refreshData(EditContactEvent event) {
+        nameTv.setText(event.getMsg().getName());
+        remarkTv.setText("備註："+event.getMsg().getRemark());
+    }
+
+    @Subscribe
+    public void deleteData(DeleteContactEvent event) {
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initData(){

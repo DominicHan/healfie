@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.fn.healfie.BaseActivity;
 import com.fn.healfie.R;
+import com.fn.healfie.component.dialog.GradeChoiceDialog;
 import com.fn.healfie.connect.MyConnect;
 import com.fn.healfie.consts.MyUrl;
 import com.fn.healfie.consts.PrefeKey;
@@ -30,7 +31,7 @@ import com.fn.healfie.utils.ToastUtil;
 import java.util.HashMap;
 
 
-public class EditContactActivity extends BaseActivity implements View.OnClickListener{
+public class EditContactActivity extends BaseActivity implements View.OnClickListener,GradeChoiceDialog.DialogClick{
 
     Activity activity = this;
 
@@ -46,6 +47,10 @@ public class EditContactActivity extends BaseActivity implements View.OnClickLis
     private TextView finishTv;
     private RelativeLayout remarkRl;
     private RelativeLayout permissionRl;
+
+    private int showLimit = 1;
+    private String[] permissions = new String[]{"星標聯繫人","一般聯繫人","屏蔽聯繫人"};
+    private GradeChoiceDialog gradeChoiceDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,7 +92,7 @@ public class EditContactActivity extends BaseActivity implements View.OnClickLis
         }
 
         if(view.getId() == R.id.permission_rl){
-
+            showGradeDialog();
         }
     }
 
@@ -110,6 +115,20 @@ public class EditContactActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    public void onFinishClick(int index, String hint) {
+        remarkTv.setText(hint);
+        showLimit = index + 1;
+    }
+
+    private void showGradeDialog() {
+        if (gradeChoiceDialog != null)
+            getFragmentManager().beginTransaction().remove(gradeChoiceDialog);
+        gradeChoiceDialog = new GradeChoiceDialog();
+        gradeChoiceDialog.setDialogClick(this);
+        gradeChoiceDialog.show(getFragmentManager(), "");
+    }
+
     private void getData() {
         showDialog();
         MyConnect connect = new MyConnect();
@@ -117,7 +136,7 @@ public class EditContactActivity extends BaseActivity implements View.OnClickLis
         map.put("authorization", PrefeUtil.getString(activity, PrefeKey.TOKEN, ""));
         map.put("memberId", bean.getMemberId()+"");
         map.put("desc", remarkTv.getText().toString());
-        map.put("showLimit",1+""); //1-星标；2-一般；3-屏蔽
+        map.put("showLimit",showLimit+""); //1-星标；2-一般；3-屏蔽
         connect.putData(MyUrl.FRIENDINFO, map, new ConnectBack() {
             @Override
             public void success(String json) {

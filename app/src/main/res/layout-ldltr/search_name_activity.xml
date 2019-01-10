@@ -45,6 +45,7 @@
         </RelativeLayout>
         <EditText
             android:id="@+id/et_input"
+            android:textCursorDrawable="@drawable/dr_edit_cursor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"

@@ -25,6 +25,8 @@ import com.fn.healfie.consts.PrefeKey;
 import com.fn.healfie.contact.AddContactActivity;
 import com.fn.healfie.contact.MessageActivity;
 import com.fn.healfie.databinding.ContactFragmentBinding;
+import com.fn.healfie.event.DeleteContactEvent;
+import com.fn.healfie.event.EditContactEvent;
 import com.fn.healfie.interfaces.BaseOnClick;
 import com.fn.healfie.interfaces.ConnectBack;
 import com.fn.healfie.interfaces.ConnectLoginBack;
@@ -38,15 +40,26 @@ import com.fn.healfie.utils.JsonUtil;
 import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.ToastUtil;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import in.srain.cube.views.ptr.PtrClassicDefaultHeader;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
+import in.srain.cube.views.ptr.util.PtrLocalDisplay;
 
 
 public class ContactFragment extends BaseFragment implements BaseOnClick {
 
     ContactFragmentBinding mBinding;
 
+    private PtrFrameLayout ptrClassicFrameLayout;
     private ListView messageLv;
     private List<MessageBean> mData;
     private ContactListAdapter mAdapter;
@@ -54,6 +67,8 @@ public class ContactFragment extends BaseFragment implements BaseOnClick {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        EventBus.getDefault().register(this);
         mBinding = DataBindingUtil.inflate(inflater, R.layout.contact_fragment, container, false, new LoginComponent(context));
 //        module = new HomeModule();
 //        module.setSelect(1);
@@ -67,8 +82,54 @@ public class ContactFragment extends BaseFragment implements BaseOnClick {
         View view = mBinding.getRoot();
 
         messageLv = view.findViewById(R.id.lv_message);
+        ptrClassicFrameLayout = view.findViewById(R.id.ptr);
+
+        final PtrClassicDefaultHeader header = new PtrClassicDefaultHeader(context);
+        header.setPadding(0, PtrLocalDisplay.dp2px(15), 0, 0);
+        ptrClassicFrameLayout.setHeaderView(header);
+        // mPtrFrame.setPinContent(true);//刷新时，保持内容不动，仅头部下移,默认,false
+        ptrClassicFrameLayout.addPtrUIHandler(header);
+        //mPtrFrame.setKeepHeaderWhenRefresh(true);//刷新时保持头部的显示，默认为true
+        //mPtrFrame.disableWhenHorizontalMove(true);//如果是ViewPager，设置为true，会解决ViewPager滑动冲突问题。
+        ptrClassicFrameLayout.setPtrHandler(new PtrHandler() {
+
+            //需要加载数据时触发
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                mBinding.ptr.refreshComplete();
+                getData();
+
+            }
+
+            /**
+             * 检查是否可以执行下来刷新，比如列表为空或者列表第一项在最上面时。
+             */
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                System.out.println("MainActivity.checkCanDoRefresh");
+                // 默认实现，根据实际情况做改动
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+                // return true;
+            }
+        });
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void refreshData(EditContactEvent event) {
+        getData();
+    }
+
+    @Subscribe
+    public void deleteData(DeleteContactEvent event) {
+        getData();
     }
 
     @Override

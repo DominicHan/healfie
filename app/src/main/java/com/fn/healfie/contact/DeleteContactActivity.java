@@ -11,11 +11,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.resource.bitmap.BitmapEncoder;
 import com.fn.healfie.BaseActivity;
 import com.fn.healfie.R;
+import com.fn.healfie.component.dialog.GradeChoiceDialog;
 import com.fn.healfie.connect.MyConnect;
 import com.fn.healfie.consts.MyUrl;
 import com.fn.healfie.consts.PrefeKey;
+import com.fn.healfie.event.DeleteContactEvent;
+import com.fn.healfie.event.EditContactEvent;
 import com.fn.healfie.interfaces.ConnectBack;
 import com.fn.healfie.interfaces.ConnectLoginBack;
 import com.fn.healfie.login.LoginActivity;
@@ -27,9 +31,11 @@ import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.StatusBarUtil;
 import com.fn.healfie.utils.ToastUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.HashMap;
 
-public class DeleteContactActivity extends BaseActivity implements View.OnClickListener{
+public class DeleteContactActivity extends BaseActivity implements View.OnClickListener,GradeChoiceDialog.DialogClick{
 
     Activity activity = this;
 
@@ -45,6 +51,10 @@ public class DeleteContactActivity extends BaseActivity implements View.OnClickL
     private TextView finishTv;
     private RelativeLayout remarkRl;
     private RelativeLayout permissionRl;
+    private int showLimit = 1;
+    private String[] permissions = new String[]{"星標聯繫人","一般聯繫人","屏蔽聯繫人"};
+
+    private GradeChoiceDialog gradeChoiceDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,10 +96,17 @@ public class DeleteContactActivity extends BaseActivity implements View.OnClickL
         }
 
         if(view.getId() == R.id.permission_rl){
-
+            showGradeDialog();
         }
     }
 
+    private void showGradeDialog() {
+        if (gradeChoiceDialog != null)
+            getFragmentManager().beginTransaction().remove(gradeChoiceDialog);
+        gradeChoiceDialog = new GradeChoiceDialog();
+        gradeChoiceDialog.setDialogClick(this);
+        gradeChoiceDialog.show(getFragmentManager(), "");
+    }
 
     private void initData(){
         data = getIntent().getStringExtra("data");
@@ -97,6 +114,8 @@ public class DeleteContactActivity extends BaseActivity implements View.OnClickL
 
         nameTv.setText(bean.getName());
         remarkTv.setText(bean.getRemark());
+        showLimit = bean.getShowLimit();
+        permissionTv.setText(permissions[showLimit-1]);
     }
 
     @Override
@@ -111,6 +130,13 @@ public class DeleteContactActivity extends BaseActivity implements View.OnClickL
         }
     }
 
+    @Override
+    public void onFinishClick(int index, String hint) {
+        permissionTv.setText(hint);
+        showLimit = index + 1;
+        getData();
+    }
+
     private void getData() {
         showDialog();
         MyConnect connect = new MyConnect();
@@ -118,7 +144,7 @@ public class DeleteContactActivity extends BaseActivity implements View.OnClickL
         map.put("authorization", PrefeUtil.getString(activity, PrefeKey.TOKEN, ""));
         map.put("memberId", bean.getMemberId()+"");
         map.put("desc", remarkTv.getText().toString());
-        map.put("showLimit",1+""); //1-星标；2-一般；3-屏蔽
+        map.put("showLimit",showLimit+""); //1-星标；2-一般；3-屏蔽
         connect.putData(MyUrl.FRIENDINFO, map, new ConnectBack() {
             @Override
             public void success(String json) {
@@ -165,11 +191,16 @@ public class DeleteContactActivity extends BaseActivity implements View.OnClickL
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    MessageListBean bean = JsonUtil.getBean(msg.obj.toString(), MessageListBean.class);
+                    MessageListBean resultBean = JsonUtil.getBean(msg.obj.toString(), MessageListBean.class);
                     loge(msg.obj.toString()+"");
-                    if (bean.getResultCode().equals("200")) {
-
-                    } else if (bean.getResultCode().equals("-10010")) {
+                    if (resultBean.getResultCode().equals("200")) {
+                        //修改成功后通知其他页面刷新
+                        EditContactEvent editEvent = new EditContactEvent();
+                        bean.setRemark(remarkTv.getText().toString());
+                        bean.setShowLimit(showLimit);
+                        editEvent.setMsg(bean);
+                        EventBus.getDefault().post(editEvent);
+                    } else if (resultBean.getResultCode().equals("-10010")) {
                         showDialog();
                         sendLogin(new ConnectLoginBack() {
                             @Override
@@ -196,7 +227,7 @@ public class DeleteContactActivity extends BaseActivity implements View.OnClickL
                             }
                         });
                     } else {
-                        ToastUtil.errorToast(activity, bean.getResultCode());
+                        ToastUtil.errorToast(activity, resultBean.getResultCode());
                     }
                     break;
                 case 2:
@@ -206,6 +237,7 @@ public class DeleteContactActivity extends BaseActivity implements View.OnClickL
                     MessageListBean bean3 = JsonUtil.getBean(msg.obj.toString(), MessageListBean.class);
                     loge(msg.obj.toString()+"");
                     if (bean3.getResultCode().equals("200")) {
+                        EventBus.getDefault().post(new DeleteContactEvent());
                         finish();
                     } else if (bean3.getResultCode().equals("-10010")) {
                         showDialog();

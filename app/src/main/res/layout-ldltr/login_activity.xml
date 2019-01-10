@@ -60,6 +60,7 @@
 
             <EditText
                 android:layout_width="315dp"
+                android:textCursorDrawable="@drawable/dr_edit_cursor"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="10dp"
@@ -102,6 +103,7 @@
             <EditText
                 android:id="@+id/et_pwd"
                 android:layout_width="315dp"
+                android:textCursorDrawable="@drawable/dr_edit_cursor"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="10dp"
