@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/allBack"
+    android:fitsSystemWindows="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="106dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="21dp"
+            android:src="@mipmap/ic_back_normal"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="60dp"
+            android:text="意見反饋"
+            android:textColor="@color/textBlack"
+            android:textSize="27sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp"
+                android:orientation="vertical"
+                android:clipChildren="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text="您要反饋的問題類型："
+                    android:textColor="@color/textBlack"
+                    android:textSize="15sp"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/qt_performance_tv"
+                        android:text="性能問題"
+                        android:textSize="15sp"
+                        android:background="@drawable/care_card_board_shape"
+                        android:textColor="@color/buttonBlue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/qt_function_tv"
+                        android:text="新功能建議"
+                        android:textSize="15sp"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/care_card_shape"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:text="反饋的內容描述："
+                    android:textColor="@color/textBlack"
+                    android:textSize="15sp"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/content_et"
+                    android:textColor="@color/textBlack"
+                    android:textSize="13sp"
+                    android:gravity="top"
+                    android:textCursorDrawable="@drawable/dr_edit_cursor"
+                    android:hint="請描述您在使用過程中遇到的問題或功能建議"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:background="#F0F0F1"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="165dp" />
+
+                <RelativeLayout
+                    android:id="@+id/photo_rl"
+                    android:background="@mipmap/img_shangchuantp"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <ImageView
+                        android:layout_marginRight="-12dp"
+                        android:layout_marginTop="-12dp"
+                        android:layout_alignParentRight="true"
+                        android:src="@mipmap/ic_close_red_normal"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:text="您的聯繫方式（非必填）："
+                    android:textColor="@color/textBlack"
+                    android:textSize="15sp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/contact_et"
+                    android:textColor="@color/textBlack"
+                    android:textSize="13sp"
+                    android:gravity="top"
+                    android:textCursorDrawable="@drawable/dr_edit_cursor"
+                    android:hint="手機號/郵箱/Facebook號"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:background="#F0F0F1"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="57dp" />
+
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/finish_tv"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/accept_btn_shape"
+                android:text="提交反饋"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_height="45dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

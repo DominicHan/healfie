@@ -29,7 +29,12 @@ import com.fn.healfie.interfaces.BaseOnClick;
 import com.fn.healfie.interfaces.ConnectBack;
 import com.fn.healfie.interfaces.ConnectLoginBack;
 import com.fn.healfie.login.LoginActivity;
+import com.fn.healfie.mine.CareCardActivity;
+import com.fn.healfie.mine.CompanyProfileActivity;
+import com.fn.healfie.mine.FeedBackActivity;
+import com.fn.healfie.mine.MedicalHistoryActivity;
 import com.fn.healfie.mine.MineInfoActivity;
+import com.fn.healfie.mine.SafetyCheckActivity;
 import com.fn.healfie.model.FoodListBean;
 import com.fn.healfie.model.MineBean;
 import com.fn.healfie.model.RegisterBean;
@@ -149,6 +154,26 @@ public class MineFragment extends BaseFragment implements BaseOnClick {
             case R.id.rl_jkf:
                 Intent intents = new Intent(getActivity().getApplicationContext(), MineInfoActivity.class);
                 startActivity(intents);
+                break;
+            case R.id.rl_fwsm:
+                Intent fujsIn = new Intent(getActivity().getApplicationContext(), CompanyProfileActivity.class);
+                startActivity(fujsIn);
+                break;
+            case R.id.rl_ylk:
+                Intent ylkIn = new Intent(getActivity().getApplicationContext(), CareCardActivity.class);
+                startActivity(ylkIn);
+                break;
+            case R.id.rl_feedback:
+                Intent feedback = new Intent(getActivity().getApplicationContext(), FeedBackActivity.class);
+                startActivity(feedback);
+                break;
+            case R.id.rl_safety:
+                Intent safety = new Intent(getActivity().getApplicationContext(), SafetyCheckActivity.class);
+                startActivity(safety);
+                break;
+            case R.id.rl_fyls:
+                Intent fylsIn = new Intent(getActivity().getApplicationContext(), MedicalHistoryActivity.class);
+                startActivity(fylsIn);
                 break;
         }
     }

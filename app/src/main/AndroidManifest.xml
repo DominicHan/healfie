@@ -195,5 +195,54 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             />
+        <activity
+            android:name=".mine.EditNameActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".mine.MineQrActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.CompanyProfileActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.CareCardActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.EditCareActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.FeedBackActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.SafetyCheckActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.BindMobileActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.MedicalHistoryActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.AddAllergyActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.SearchAllergyActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

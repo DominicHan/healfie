@@ -83,6 +83,7 @@ public class MineInfoAdapter extends BaseAdapter {
         MineInfoHeadItemBinding mineinfoheaditembinding;
         MineInfoContentItemBinding mineinfocontentitembinding;
         MineInfoZxingItemBinding mineinfozxingitembinding;
+
         if (type == 0) {
             if (convertView == null) {
                mineinfoheaditembinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.mine_info_head_item, parent, false);
@@ -92,6 +93,7 @@ public class MineInfoAdapter extends BaseAdapter {
             }
             mineinfoheaditembinding.setVariable(BR.food, getItem(position));
             mineinfoheaditembinding.ivTx.changeRadius(100);
+            mineinfoheaditembinding.setVariable(BR.click, new OnClick(position));
             Glide.with(context).load(listTag.get(position).getValue()).into(mineinfoheaditembinding.ivTx);
         } else if (type == 1) {
             if (convertView == null) {
@@ -100,6 +102,7 @@ public class MineInfoAdapter extends BaseAdapter {
             } else {
                 mineinfocontentitembinding = DataBindingUtil.getBinding(convertView);
             }
+            mineinfocontentitembinding.setVariable(BR.click, new OnClick(position));
             mineinfocontentitembinding.setVariable(BR.food, getItem(position));
         } else {
             if (convertView == null) {
@@ -108,7 +111,7 @@ public class MineInfoAdapter extends BaseAdapter {
             } else {
                 mineinfozxingitembinding = DataBindingUtil.getBinding(convertView);
             }
-
+            mineinfozxingitembinding.setVariable(BR.click, new OnClick(position));
             mineinfozxingitembinding.setVariable(BR.food, getItem(position));
         }
         return convertView;
@@ -118,15 +121,15 @@ public class MineInfoAdapter extends BaseAdapter {
 
 
     class OnClick implements BaseOnClick {
-        CreateFoodBean bean;
+        int bean;
 
-        OnClick(CreateFoodBean bean) {
+        OnClick(int bean) {
             this.bean = bean;
         }
 
         @Override
         public void onSaveClick(int id) {
-
+            back.onSaveClick(bean);
         }
     }
 

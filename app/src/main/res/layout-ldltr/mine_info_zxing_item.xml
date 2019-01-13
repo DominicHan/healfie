@@ -21,6 +21,7 @@
         android:paddingRight="10dp">
 
         <RelativeLayout
+            android:onClick="@{() -> click.onSaveClick(@id/rl_input)}"
             android:background="@drawable/white_shapebottom"
             android:id="@+id/rl_input"
             android:layout_width="match_parent"

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/allBack"
+    android:fitsSystemWindows="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="106dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="21dp"
+            android:src="@mipmap/ic_back_normal"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="60dp"
+            android:text="帳號安全"
+            android:textColor="@color/textBlack"
+            android:textSize="27sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <RelativeLayout
+            android:id="@+id/fb_rl"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Facebook帳號"
+                android:textSize="15sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/textBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/fb_tv"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/arrow1_iv"
+                android:textSize="15sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/textBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/arrow1_iv"
+                android:src="@mipmap/ic_back1_normal"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="#CACBCC"
+            android:layout_height="1px"
+            android:layout_width="match_parent" />
+
+        <RelativeLayout
+            android:id="@+id/mobile_rl"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="手機號"
+                android:textSize="15sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/textBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/mobile_tv"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/arrow2_iv"
+                android:textSize="15sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/textBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/arrow2_iv"
+                android:src="@mipmap/ic_back1_normal"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="#CACBCC"
+            android:layout_height="1px"
+            android:layout_width="match_parent" />
+
+        <RelativeLayout
+            android:id="@+id/password_rl"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="修改密碼"
+                android:textSize="15sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/textBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="去修改"
+                android:id="@+id/password_tv"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/arrow3_iv"
+                android:textSize="15sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/textBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/arrow3_iv"
+                android:src="@mipmap/ic_back1_normal"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

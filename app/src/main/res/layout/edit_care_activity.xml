@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/allBack"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="106dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="21dp"
+            android:src="@mipmap/ic_back_normal"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/finish_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/iv_back"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:text="确定"
+            android:textColor="@color/textBlack"
+            android:textSize="16sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="60dp"
+            android:text="醫療卡"
+            android:textColor="@color/textBlack"
+            android:textSize="27sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:background="@drawable/white_shape5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="姓名"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/name_et"
+                        android:textSize="15sp"
+                        android:textCursorDrawable="@drawable/dr_edit_cursor"
+                        android:textColor="@color/textGray9"
+                        android:background="@null"
+                        android:gravity="right"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="#CACBCC"
+                    android:layout_height="1px"
+                    android:layout_width="match_parent" />
+
+                <LinearLayout
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="性別"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/sex_et"
+                        android:textSize="15sp"
+                        android:textCursorDrawable="@drawable/dr_edit_cursor"
+                        android:textColor="@color/textGray9"
+                        android:background="@null"
+                        android:gravity="right"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="#CACBCC"
+                    android:layout_height="1px"
+                    android:layout_width="match_parent" />
+
+                <LinearLayout
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="年齡"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/age_et"
+                        android:textSize="15sp"
+                        android:hint="歲"
+                        android:textCursorDrawable="@drawable/dr_edit_cursor"
+                        android:textColor="@color/textGray9"
+                        android:background="@null"
+                        android:gravity="right"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="#CACBCC"
+                    android:layout_height="1px"
+                    android:layout_width="match_parent" />
+
+                <LinearLayout
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="身高"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/height_et"
+                        android:textSize="15sp"
+                        android:hint="cm"
+                        android:textCursorDrawable="@drawable/dr_edit_cursor"
+                        android:textColor="@color/textGray9"
+                        android:background="@null"
+                        android:gravity="right"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="#CACBCC"
+                    android:layout_height="1px"
+                    android:layout_width="match_parent" />
+
+                <LinearLayout
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="體重"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/weight_et"
+                        android:textSize="15sp"
+                        android:hint="kg"
+                        android:textCursorDrawable="@drawable/dr_edit_cursor"
+                        android:textColor="@color/textGray9"
+                        android:background="@null"
+                        android:gravity="right"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="#CACBCC"
+                    android:layout_height="1px"
+                    android:layout_width="match_parent" />
+
+                <LinearLayout
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="血型"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/blood_et"
+                        android:textSize="15sp"
+                        android:textCursorDrawable="@drawable/dr_edit_cursor"
+                        android:textColor="@color/textGray9"
+                        android:background="@null"
+                        android:gravity="right"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:background="@drawable/white_shape5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/allergy_rl"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="過敏反應"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/allergy_tv"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@id/arrow1_iv"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:id="@+id/arrow1_iv"
+                        android:src="@mipmap/ic_back1_normal"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="#CACBCC"
+                    android:layout_height="1px"
+                    android:layout_width="match_parent" />
+
+                <RelativeLayout
+                    android:id="@+id/sickness_rl"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="既往疾病"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/sickness_tv"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@id/arrow2_iv"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:id="@+id/arrow2_iv"
+                        android:src="@mipmap/ic_back1_normal"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

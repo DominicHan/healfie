@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:background="@drawable/white_shape5"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/male_ll"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="57dp">
+
+                <TextView
+                    android:text="男"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/buttonBlue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <View
+                android:background="#CACBCC"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
+
+            <LinearLayout
+                android:id="@+id/female_ll"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="57dp">
+
+                <TextView
+                    android:text="女"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/buttonBlue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/cancel_ll"
+            android:background="@drawable/white_shape5"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="57dp">
+
+            <TextView
+                android:text="取消"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:textColor="@color/buttonBlue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </LinearLayout>
+    
+</RelativeLayout>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/allBack"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="106dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="21dp"
+            android:src="@mipmap/ic_back_normal"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/finish_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/iv_back"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:text="确定"
+            android:textColor="@color/textBlack"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="60dp"
+            android:text="設置備註"
+            android:textColor="@color/textBlack"
+            android:textSize="27sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/allBack"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <RelativeLayout
+            android:id="@+id/rl_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:background="@drawable/white_shape5">
+
+            <EditText
+                android:id="@+id/remark_et"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:textCursorDrawable="@drawable/dr_edit_cursor"
+                android:textSize="16sp"
+                android:textColor="@color/textGray9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

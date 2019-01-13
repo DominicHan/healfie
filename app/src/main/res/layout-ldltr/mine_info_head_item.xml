@@ -21,6 +21,7 @@
         android:paddingRight="10dp">
 
         <RelativeLayout
+            android:onClick="@{() -> click.onSaveClick(@id/rl_input)}"
             android:background="@drawable/white_shapetop"
             android:id="@+id/rl_input"
             android:layout_width="match_parent"
@@ -43,7 +44,6 @@
                 android:layout_centerVertical="true"
                 android:scaleType="fitXY"
                 android:layout_marginRight="30dp"
-                android:onClick="@{() -> click.onSaveClick(@id/iv_tx)}"
                 />
 
         </RelativeLayout>

@@ -25,6 +25,12 @@ public class MyUrl {
 
     /**
      * from @zhaojian
+     * content 绑定
+     */
+    public static String BINDPHONE = BASE + "/api/bind/phone";
+
+    /**
+     * from @zhaojian
      * content 會員信息編輯
      */
     public static String MEMBERINFO = BASE + "/api/member/info";
@@ -88,5 +94,35 @@ public class MyUrl {
      * content 搜索藥物
      */
     public static String DRUGSPAGE = BASE + "/api/drugs/page";
+
+    /**
+     * from @zhaojian
+     * content 服务介绍
+     */
+    public static String ABOUT = BASE + "/api/about";
+
+    /**
+     * from @zhaojian
+     * content 医疗卡
+     */
+    public static String MEDICALCARD = BASE + "/api/medical/card";
+
+    /**
+     * from @zhaojian
+     * content 意见反馈
+     */
+    public static String PROPOSAL = BASE + "/api/proposal";
+
+    /**
+     * from @zhaojian
+     * content 过敏原或疾病库搜索接口
+     */
+    public static String ALLERGYSEARCH = BASE + "/api/allergAdisease/info";
+
+    /**
+     * from @zhaojian
+     * content 过敏原或疾病库添加
+     */
+    public static String ALLERGYADD = BASE + "/api/allergAdisease/add";
 
 }

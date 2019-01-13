@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/allBack"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="106dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="21dp"
+            android:src="@mipmap/ic_back_normal"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/iv_edit"
+            android:layout_alignParentRight="true"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="21dp"
+            android:src="@mipmap/ic_bianji_normal"
+            android:textSize="18sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="60dp"
+            android:text="醫療卡"
+            android:textColor="@color/textBlack"
+            android:textSize="27sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/name_tv"
+                android:text=""
+                android:textSize="18sp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/textBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/sex_tv"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:textColor="@color/buttonBlue"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/care_card_shape"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/birth_tv"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:textColor="@color/buttonBlue"
+                    android:background="@drawable/care_card_shape"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <TextView
+                android:text="身高"
+                android:textSize="15sp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/textBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/height_tv"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:textColor="@color/buttonBlue"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/care_card_shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="體重"
+                android:textSize="15sp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/textBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/weight_tv"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:textColor="@color/buttonBlue"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/care_card_shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="血型"
+                android:textSize="15sp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/textBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/blood_type_tv"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:textColor="@color/buttonBlue"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/care_card_shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="過敏反應"
+                android:textSize="15sp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/textBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/allergy_ll"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </LinearLayout>
+
+            <TextView
+                android:text="既往疾病"
+                android:textSize="15sp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/textBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/sickness_ll"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
