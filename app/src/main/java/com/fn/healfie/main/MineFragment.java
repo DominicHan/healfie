@@ -32,6 +32,7 @@ import com.fn.healfie.login.LoginActivity;
 import com.fn.healfie.mine.CareCardActivity;
 import com.fn.healfie.mine.CompanyProfileActivity;
 import com.fn.healfie.mine.FeedBackActivity;
+import com.fn.healfie.mine.HealthReportActivity;
 import com.fn.healfie.mine.MedicalHistoryActivity;
 import com.fn.healfie.mine.MineInfoActivity;
 import com.fn.healfie.mine.SafetyCheckActivity;
@@ -39,6 +40,7 @@ import com.fn.healfie.model.FoodListBean;
 import com.fn.healfie.model.MineBean;
 import com.fn.healfie.model.RegisterBean;
 import com.fn.healfie.module.SaveNameModule;
+import com.fn.healfie.news.NewsListActivity;
 import com.fn.healfie.utils.JsonUtil;
 import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.ToastUtil;
@@ -174,6 +176,14 @@ public class MineFragment extends BaseFragment implements BaseOnClick {
             case R.id.rl_fyls:
                 Intent fylsIn = new Intent(getActivity().getApplicationContext(), MedicalHistoryActivity.class);
                 startActivity(fylsIn);
+                break;
+            case R.id.news_iv:
+                Intent news = new Intent(getActivity().getApplicationContext(), NewsListActivity.class);
+                startActivity(news);
+                break;
+            case R.id.health_num_btn:
+                Intent report = new Intent(getActivity().getApplicationContext(), HealthReportActivity.class);
+                startActivity(report);
                 break;
         }
     }

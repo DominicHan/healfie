@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.TextureView;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -39,8 +38,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 
-public class SearchAllergyActivity extends BaseActivity implements View.OnClickListener {
-
+public class SearchSicknessActivity extends BaseActivity implements View.OnClickListener{
 
     private Activity activity = this;
 
@@ -54,13 +52,13 @@ public class SearchAllergyActivity extends BaseActivity implements View.OnClickL
     private ListView searchLv;
 
     private String searchName;
-    private String noResultFmt = "沒有搜索到\"%s\"這種過敏原，您是否確定添加\"<font color='#0ba7c5'>%s</font>\"為您的過敏原";
+    private String noResultFmt = "沒有搜索到\"%s\"這種疾病，您是否確定添加\"<font color='#0ba7c5'>%s</font>\"為您的既往疾病";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtil.StatusBarLightMode(this);
-        setContentView(R.layout.search_allergy_activity);
+        setContentView(R.layout.search_sickness_activity);
 
         backIv = findViewById(R.id.iv_back);
         backIv.setOnClickListener(this);
@@ -115,7 +113,7 @@ public class SearchAllergyActivity extends BaseActivity implements View.OnClickL
         MyConnect connect = new MyConnect();
         HashMap<String, String> map = new HashMap<>();
         map.put("authorization", PrefeUtil.getString(activity, PrefeKey.TOKEN, ""));
-        map.put("type", "2");
+        map.put("type", "1");
         map.put("keywords", searchName);
         connect.getData(MyUrl.ALLERGYSEARCH, map, new ConnectBack() {
             @Override
@@ -147,7 +145,7 @@ public class SearchAllergyActivity extends BaseActivity implements View.OnClickL
         MyConnect connect = new MyConnect();
         HashMap<String, String> map = new HashMap<>();
         map.put("authorization", PrefeUtil.getString(activity, PrefeKey.TOKEN, ""));
-        map.put("type", "2");
+        map.put("type", "1");
         map.put("isCustom", "1");
         map.put("name", searchName);
         connect.postData(MyUrl.ALLERGYADD, map, new ConnectBack() {

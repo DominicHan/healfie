@@ -21,6 +21,8 @@ public class EditCareActivity extends BaseActivity implements View.OnClickListen
     private TextView finishTv;
     private RelativeLayout allergyRl;
     private TextView allergyTv;
+    private RelativeLayout sicknessRl;
+    private TextView sicknessTv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +38,10 @@ public class EditCareActivity extends BaseActivity implements View.OnClickListen
         allergyRl = findViewById(R.id.allergy_rl);
         allergyRl.setOnClickListener(this);
         allergyTv = findViewById(R.id.allergy_tv);
+
+        sicknessRl = findViewById(R.id.sickness_rl);
+        sicknessRl.setOnClickListener(this);
+        sicknessTv = findViewById(R.id.sickness_tv);
     }
 
     @Override
@@ -48,6 +54,10 @@ public class EditCareActivity extends BaseActivity implements View.OnClickListen
         }
         if(view.getId() == R.id.allergy_rl){
             Intent intent = new Intent(activity,AddAllergyActivity.class);
+            startActivity(intent);
+        }
+        if(view.getId() == R.id.sickness_rl){
+            Intent intent = new Intent(activity,AddSicknessActivity.class);
             startActivity(intent);
         }
 

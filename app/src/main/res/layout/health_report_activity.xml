@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/allBack"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="106dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="21dp"
+            android:src="@mipmap/ic_back_normal"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/share_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/iv_back"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:text="分享"
+            android:textColor="@color/textBlack"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="60dp"
+            android:text="健康分"
+            android:textColor="@color/textBlack"
+            android:textSize="27sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginRight="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="160dp">
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:src="@mipmap/img_fenshu01"
+            android:layout_width="match_parent"
+            android:layout_height="160dp" />
+
+        <LinearLayout
+            android:layout_marginLeft="48dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/health_num_tv"
+                android:text="89"
+                android:textColor="@color/buttonBlue"
+                android:textSize="54sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_below="@id/health_num_tv"
+                android:text="健康分"
+                android:textColor="@color/textGray9"
+                android:textSize="15sp"
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:visibility="gone"
+            android:background="@drawable/transparent_shape5"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp"
+            android:layout_height="match_parent">
+            
+            <LinearLayout
+                android:background="#E7F2F4"
+                android:paddingLeft="30dp"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="67dp">
+
+                <TextView
+                    android:text="90-100"
+                    android:textSize="18sp"
+                    android:textColor="@color/textBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="分代表著健康來自健康的生活習慣。"
+                    android:textSize="18sp"
+                    android:textColor="@color/textBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="#D5E9F5"
+                android:paddingLeft="30dp"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="67dp">
+
+                <TextView
+                    android:text="80-90"
+                    android:textSize="18sp"
+                    android:textColor="@color/textBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="分代表著健康來自健康的生活習慣。"
+                    android:textSize="18sp"
+                    android:textColor="@color/textBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="#D4E3F5"
+                android:paddingLeft="30dp"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="67dp">
+
+                <TextView
+                    android:text="70-80"
+                    android:textSize="18sp"
+                    android:textColor="@color/textBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="分代表著健康來自健康的生活習慣。"
+                    android:textSize="18sp"
+                    android:textColor="@color/textBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="35dp"
+            android:paddingRight="28dp"
+            android:paddingLeft="28dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textSize="15sp"
+                android:textColor="@color/buttonBlue"
+                android:text="提示：健康分數的計算需要您完善一下信息"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            
+            <LinearLayout
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                
+                <TextView
+                    android:text="身高"
+                    android:layout_marginRight="15dp"
+                    android:textSize="15sp"
+                    android:textColor="#666666"
+                    android:background="@drawable/white_shape17"
+                    android:gravity="center"
+                    android:layout_width="70dp"
+                    android:layout_height="35dp" />
+
+                <TextView
+                    android:text="體重"
+                    android:layout_marginRight="15dp"
+                    android:textSize="15sp"
+                    android:textColor="#666666"
+                    android:background="@drawable/white_shape17"
+                    android:gravity="center"
+                    android:layout_width="70dp"
+                    android:layout_height="35dp" />
+
+                <TextView
+                    android:text="年齡"
+                    android:layout_marginRight="15dp"
+                    android:textSize="15sp"
+                    android:textColor="#666666"
+                    android:background="@drawable/white_shape17"
+                    android:gravity="center"
+                    android:layout_width="70dp"
+                    android:layout_height="35dp" />
+
+                <TextView
+                    android:text="性別"
+                    android:layout_marginRight="15dp"
+                    android:textSize="15sp"
+                    android:textColor="#666666"
+                    android:background="@drawable/white_shape17"
+                    android:gravity="center"
+                    android:layout_width="70dp"
+                    android:layout_height="35dp" />
+                
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/finish_tv"
+                android:layout_marginTop="35dp"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/accept_btn_shape"
+                android:text="前往完善信息"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="45dp" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
