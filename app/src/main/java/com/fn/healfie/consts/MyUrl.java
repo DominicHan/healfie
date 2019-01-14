@@ -125,4 +125,10 @@ public class MyUrl {
      */
     public static String ALLERGYADD = BASE + "/api/allergAdisease/add";
 
+    /**
+     * from @zhaojian
+     * content 消息列表
+     */
+    public static String MESSAGELIST = BASE + "/api/message/list";
+
 }

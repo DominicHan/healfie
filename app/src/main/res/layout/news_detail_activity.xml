@@ -31,4 +31,51 @@
             android:textSize="27sp" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:background="@drawable/white_shape5"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingTop="23dp"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:textSize="18sp"
+            android:textColor="@color/textBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/content_tv"
+            android:layout_marginTop="13dp"
+            android:textSize="15sp"
+            android:textColor="@color/textGray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/date_tv"
+                android:layout_alignParentRight="true"
+                android:textSize="13sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/textGray9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
 </LinearLayout>
