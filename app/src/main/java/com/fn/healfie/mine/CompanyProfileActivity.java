@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.fn.healfie.BaseActivity;
 import com.fn.healfie.R;
@@ -17,6 +18,7 @@ import com.fn.healfie.consts.PrefeKey;
 import com.fn.healfie.interfaces.ConnectBack;
 import com.fn.healfie.interfaces.ConnectLoginBack;
 import com.fn.healfie.login.LoginActivity;
+import com.fn.healfie.model.AboutBean;
 import com.fn.healfie.model.MessageListBean;
 import com.fn.healfie.model.RegisterBean;
 import com.fn.healfie.utils.JsonUtil;
@@ -24,13 +26,20 @@ import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.StatusBarUtil;
 import com.fn.healfie.utils.ToastUtil;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 
 public class CompanyProfileActivity extends BaseActivity implements View.OnClickListener{
 
     private Activity activity = this;
+    private AboutBean bean;
 
     private ImageView backIv;
+    private TextView introduceTv;
+    private TextView telTv;
+    private TextView emailTv;
+    private TextView facebookTv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +49,12 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
 
         backIv = findViewById(R.id.iv_back);
         backIv.setOnClickListener(this);
+        introduceTv = findViewById(R.id.introduce_tv);
+        telTv = findViewById(R.id.tel_tv);
+        emailTv = findViewById(R.id.email_tv);
+        facebookTv = findViewById(R.id.facebook_tv);
 
+        getData();
     }
 
     @Override
@@ -51,7 +65,12 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
     }
 
     private void setData(){
-
+        if(bean != null){
+            introduceTv.setText(bean.getItem().getIntroduce());
+            telTv.setText("電話：" + bean.getItem().getTel());
+            emailTv.setText("郵箱：" + bean.getItem().getEmail());
+            facebookTv.setText("Facebook：" + bean.getItem().getFacebook());
+        }
     }
 
     private void getData() {
@@ -81,10 +100,10 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    MessageListBean bean = JsonUtil.getBean(msg.obj.toString(), MessageListBean.class);
+                    bean = JsonUtil.getBean(msg.obj.toString(), AboutBean.class);
                     loge(msg.obj.toString()+"");
                     if (bean.getResultCode().equals("200")) {
-                        finish();
+                        setData();
                     } else if (bean.getResultCode().equals("-10010")) {
                         showDialog();
                         sendLogin(new ConnectLoginBack() {
