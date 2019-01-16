@@ -72,4 +72,9 @@
     <string name="app_fsgzsq">發送關注申請</string>
     <string name="app_yblxrkj">一般聯繫人可見權限為 "一般聯繫人" 的記錄</string>
     <string name="app_wnsbewm">未能識別出二維碼</string>
+
+    <string name="image">图片</string>
+    <string name="confirm">确定</string>
+    <string name="preview">预览</string>
+    <string name="select">选择</string>
 </resources>
