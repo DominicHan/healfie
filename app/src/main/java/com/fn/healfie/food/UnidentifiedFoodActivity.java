@@ -94,6 +94,7 @@ public class UnidentifiedFoodActivity extends BaseActivity implements BaseOnClic
             case R.id.btn_zjsw:
                 Intent intents = new Intent(UnidentifiedFoodActivity.this, CreateFoodActivity.class);
                 intents.putExtra(CameraActivity.CAMERA_PATH_VALUE1, path);
+                intents.putExtra(CameraActivity.From, "FoodFragment");
                 startActivity(intents);
                 break;
             case R.id.btn_ssgd:

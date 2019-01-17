@@ -71,6 +71,7 @@ public class UnidentifiedDrugsActivity extends BaseActivity implements BaseOnCli
             case R.id.btn_zjsw:
                 Intent intents = new Intent(UnidentifiedDrugsActivity.this, CreateDrugsActivity.class);
                 intents.putExtra(CameraActivity.CAMERA_PATH_VALUE1, path);
+                intents.putExtra(CameraActivity.From, "DrugsFragment");
                 startActivity(intents);
                 break;
             case R.id.btn_ssgd:

@@ -253,6 +253,9 @@ public class CreateFoodAdapter extends BaseAdapter {
             if(bean.getKey().equals("確定")){
                 back.onSaveClick(1);
             }
+            if(bean.getKey().equals("查看權限")){
+                back.onSaveClick(2);
+            }
         }
     }
 
