@@ -23,6 +23,7 @@ public class EditNameActivity extends BaseActivity implements View.OnClickListen
     private TextView finishTv;
     private EditText remarkEt;
     private TextView titleTv;
+    private TextView hintTv;
     private String type;
 
     @Override
@@ -40,6 +41,8 @@ public class EditNameActivity extends BaseActivity implements View.OnClickListen
 
         titleTv = findViewById(R.id.title_tv);
         remarkEt = findViewById(R.id.remark_et);
+
+        hintTv = findViewById(R.id.hint_tv);
 
         initData();
     }
@@ -65,9 +68,11 @@ public class EditNameActivity extends BaseActivity implements View.OnClickListen
         if(type.equals("0")){
             titleTv.setText("設置姓名");
             remarkEt.setHint("請輸入姓名");
+            hintTv.setVisibility(View.GONE);
         }else if(type.equals("1")){
             titleTv.setText("設置會員名");
             remarkEt.setHint("請輸入會員名");
+            hintTv.setVisibility(View.VISIBLE);
         }
         if(!TextUtils.isEmpty(data)){
             remarkEt.setText(data);

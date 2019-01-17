@@ -3,17 +3,21 @@ package com.fn.healfie.mine;
 import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
 
+import com.bumptech.glide.Glide;
 import com.fn.healfie.BR;
 import com.fn.healfie.BaseActivity;
 import com.fn.healfie.R;
@@ -21,13 +25,13 @@ import com.fn.healfie.adapter.FoodScendInfoAdapter;
 import com.fn.healfie.adapter.MineInfoAdapter;
 import com.fn.healfie.component.camera.CameraActivity;
 import com.fn.healfie.component.dialog.GenderChoiceDialog;
-import com.fn.healfie.component.imagepicker.IResultCollector;
-import com.fn.healfie.component.imagepicker.ImagePicker;
+import com.fn.healfie.component.imageselector.utils.ImageSelector;
 import com.fn.healfie.connect.MyConnect;
 import com.fn.healfie.consts.MyUrl;
 import com.fn.healfie.consts.PrefeKey;
 import com.fn.healfie.databinding.FoodScendInfoActivityBinding;
 import com.fn.healfie.databinding.MineInfoActivityBinding;
+import com.fn.healfie.event.EditMemberEvent;
 import com.fn.healfie.food.CreateFoodActivity;
 import com.fn.healfie.interfaces.BaseOnClick;
 import com.fn.healfie.interfaces.ConnectBack;
@@ -38,23 +42,26 @@ import com.fn.healfie.model.CreateFoodBean;
 import com.fn.healfie.model.FoodInfoBean;
 import com.fn.healfie.model.MineBean;
 import com.fn.healfie.model.RegisterBean;
+import com.fn.healfie.utils.FileUtil;
 import com.fn.healfie.utils.JsonUtil;
 import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.StatusBarUtil;
 import com.fn.healfie.utils.ToastUtil;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import id.zelory.compressor.Compressor;
 
 /**
  * from @zhaojian
  * content 創建食物
  */
 
-public class MineInfoActivity extends BaseActivity implements BaseOnClick,GenderChoiceDialog.DialogClick,IResultCollector {
+public class MineInfoActivity extends BaseActivity implements BaseOnClick,GenderChoiceDialog.DialogClick {
 
     Activity activity = this;
     MineInfoActivityBinding binding;
@@ -63,7 +70,8 @@ public class MineInfoActivity extends BaseActivity implements BaseOnClick,Gender
     PopupWindow popupWindow;
     private GenderChoiceDialog genderChoiceDialog;
     final int REQUEST_NAME = 0x01;
-    private ImagePicker mImagePicker;
+    private final int REQUEST_IMAGE = 0x0003;
+    MineInfoAdapter adapter;
 
     Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -119,7 +127,7 @@ public class MineInfoActivity extends BaseActivity implements BaseOnClick,Gender
         binding.setVariable(BR.click, this);
         id = getIntent().getStringExtra("foodId");
         initData();
-        MineInfoAdapter adapter = new MineInfoAdapter(this, list, new BaseOnClick() {
+        adapter = new MineInfoAdapter(this, list, new BaseOnClick() {
             @Override
             public void onSaveClick(int id) {
                 if(id == 2){
@@ -132,10 +140,12 @@ public class MineInfoActivity extends BaseActivity implements BaseOnClick,Gender
                     activity.startActivityForResult(intent,REQUEST_NAME);
                 }
                 if(id == 3){
-                    Intent intent = new Intent(activity,EditNameActivity.class);
-                    intent.putExtra("type","1");
-                    intent.putExtra("data",list.get(3).getValue());
-                    activity.startActivityForResult(intent,REQUEST_NAME);
+                    if(list.get(3).getValue().equals("設置會員名")){
+                        Intent intent = new Intent(activity,EditNameActivity.class);
+                        intent.putExtra("type","1");
+                        intent.putExtra("data",list.get(3).getValue());
+                        activity.startActivityForResult(intent,REQUEST_NAME);
+                    }
                 }
                 if(id == 4){
                     Intent intent = new Intent(activity,MineQrActivity.class);
@@ -143,19 +153,15 @@ public class MineInfoActivity extends BaseActivity implements BaseOnClick,Gender
                     activity.startActivityForResult(intent,REQUEST_NAME);
                 }
                 if(id == 0){
-                    try{
-                        JSONObject options = new JSONObject();
-                        options.put("width",240);
-                        options.put("height",240);
-                        options.put("cropping",true);
-                        options.put("hideBottomControls",true);
-                        mImagePicker.openPicker(options);
-                    }catch (Exception e){}
+                    ImageSelector.builder()
+                            .useCamera(true) // 设置是否使用拍照
+                            .setSingle(true)  //设置是否单选
+                            .setViewImage(true) //是否点击放大图片查看,，默认为true
+                            .start(activity, REQUEST_IMAGE); // 打开相册
                 }
             }
         });
 
-        mImagePicker = new ImagePicker(this,this);
         binding.setAdapter(adapter);
         View inflate = LayoutInflater.from(this).inflate(R.layout.editor_pop_window, null);
         popupWindow = new PopupWindow(inflate, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
@@ -205,6 +211,8 @@ public class MineInfoActivity extends BaseActivity implements BaseOnClick,Gender
         if(item.getUserName()!=null){
             list.get(3).setValue(item.getUserName().toString());
         }
+        adapter.notifyDataSetChanged();
+
     }
 
     public String getUrl(String img, String bucket) {
@@ -250,13 +258,42 @@ public class MineInfoActivity extends BaseActivity implements BaseOnClick,Gender
                 String result = data.getExtras().getString("result");
                 HashMap<String, String> map = new HashMap<>();
                 if(type.equals("0")){
+                    if(TextUtils.isEmpty(result)){
+                        ToastUtil.showToast(this,"姓名不能為空");
+                        return;
+                    }
                     list.get(1).setValue(result);
                     map.put("name",result);
                 }else if(type.equals("1")){
+                    if(TextUtils.isEmpty(result)){
+                        ToastUtil.showToast(this,"會員名不能為空不能為空");
+                        return;
+                    }
                     list.get(3).setValue(result);
                     map.put("userName",result);
                 }
                 editPersonInfo(map);
+            }else if(requestCode == REQUEST_IMAGE){
+                //获取选择器返回的数据
+                ArrayList<String> images = data.getStringArrayListExtra(
+                        ImageSelector.SELECT_RESULT);
+                if(!TextUtils.isEmpty(images.get(0))){
+                    File file = new File(images.get(0));
+                    Uri uri = Uri.fromFile(file);
+                    if(file.exists()){
+                        list.get(0).setValue(uri.toString());
+                        adapter.notifyDataSetChanged();
+                        try{
+                            String imgBase64 = FileUtil.encodeBase64File(new Compressor(this).compressToFile(file));
+                            HashMap<String, String> map = new HashMap<>();
+                            map.put("image",imgBase64);
+                            editPersonInfo(map);
+                        }catch (Exception ex){
+
+                        }
+
+                    }
+                }
             }
         }
     }
@@ -275,6 +312,7 @@ public class MineInfoActivity extends BaseActivity implements BaseOnClick,Gender
                 msg.obj = json;
                 myHandler.sendMessage(msg);
                 hideDialog();
+                EventBus.getDefault().post(new EditMemberEvent());
             }
 
             @Override
@@ -283,25 +321,6 @@ public class MineInfoActivity extends BaseActivity implements BaseOnClick,Gender
                 ToastUtil.errorToast(activity, "-1022");
             }
         });
-    }
-
-    @Override
-    public void resolve(JSONArray array) {
-
-    }
-
-    @Override
-    public void resolve(JSONObject object) {
-        try{
-            //uploadHead(object.getString("path"));
-        }catch (Exception e){
-
-        }
-    }
-
-    @Override
-    public void reject(String code, String message) {
-
     }
 
 }

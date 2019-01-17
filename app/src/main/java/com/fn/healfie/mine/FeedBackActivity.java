@@ -2,18 +2,28 @@ package com.fn.healfie.mine;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.fn.healfie.BaseActivity;
 import com.fn.healfie.R;
+import com.fn.healfie.component.imageselector.utils.ImageSelector;
+import com.fn.healfie.component.imageselector.utils.ImageSelectorUtils;
 import com.fn.healfie.connect.MyConnect;
 import com.fn.healfie.consts.MyUrl;
 import com.fn.healfie.consts.PrefeKey;
@@ -24,15 +34,23 @@ import com.fn.healfie.login.LoginActivity;
 import com.fn.healfie.model.BaseBean;
 import com.fn.healfie.model.MessageListBean;
 import com.fn.healfie.model.RegisterBean;
+import com.fn.healfie.utils.FileUtil;
 import com.fn.healfie.utils.JsonUtil;
 import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.StatusBarUtil;
 import com.fn.healfie.utils.ToastUtil;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import id.zelory.compressor.Compressor;
 
 public class FeedBackActivity extends BaseActivity implements View.OnClickListener{
 
+    private final int REQUEST_CODE = 0x0001;
     private Activity activity = this;
     private boolean isPerformance = true;
 
@@ -42,6 +60,11 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
     private EditText contentEt;
     private EditText contactEt;
     private TextView finishTv;
+
+    private RelativeLayout photoRl;
+    private ImageView contentIv;
+    private ImageView deleteIv;
+    private String imgBase64;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +86,11 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
         finishTv = findViewById(R.id.finish_tv);
         finishTv.setOnClickListener(this);
 
+        photoRl = findViewById(R.id.photo_rl);
+        photoRl.setOnClickListener(this);
+        contentIv = findViewById(R.id.content_iv);
+        deleteIv = findViewById(R.id.delete_iv);
+        deleteIv.setOnClickListener(this);
     }
 
     @Override
@@ -81,7 +109,44 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
         if(view.getId() == R.id.finish_tv){
             getData();
         }
+        if(view.getId() == R.id.photo_rl){
+            ImageSelector.builder()
+                    .useCamera(true) // 设置是否使用拍照
+                    .setSingle(true)  //设置是否单选
+                    .setViewImage(true) //是否点击放大图片查看,，默认为true
+                    .start(this, REQUEST_CODE); // 打开相册
+        }
+        if(view.getId() == R.id.delete_iv){
+            deleteIv.setVisibility(View.GONE);
+            contentIv.setImageBitmap(null);
+            imgBase64 = "";
+        }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE && data != null) {
+            //获取选择器返回的数据
+            ArrayList<String> images = data.getStringArrayListExtra(
+                    ImageSelector.SELECT_RESULT);
+            if(!TextUtils.isEmpty(images.get(0))){
+                File file = new File(images.get(0));
+                if(file.exists()){
+                    try{
+                        Glide.with(this).load(file).into(contentIv);
+                        imgBase64 = FileUtil.encodeBase64File(new Compressor(this).compressToFile(file));
+                        deleteIv.setVisibility(View.VISIBLE);
+                    }catch (Exception ex){
+
+                    }
+
+                }
+            }
+        }
+    }
+
 
     private void getData() {
         String content = contentEt.getText().toString();
@@ -95,10 +160,10 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
         map.put("authorization", PrefeUtil.getString(activity, PrefeKey.TOKEN, ""));
         map.put("type", isPerformance?"1":"2");
         map.put("content", content);
-        //map.put("image", content);
+        map.put("image", TextUtils.isEmpty(imgBase64)?"":imgBase64);
         map.put("contactInformation", contactEt.getText().toString());
 
-        connect.getData(MyUrl.PROPOSAL, map, new ConnectBack() {
+        connect.postData(MyUrl.PROPOSAL, map, new ConnectBack() {
             @Override
             public void success(String json) {
                 Message msg = new Message();

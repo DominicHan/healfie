@@ -120,12 +120,16 @@
                     android:layout_height="90dp">
 
                     <ImageView
+                        android:id="@+id/content_iv"
+                        android:scaleType="fitXY"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
                     <ImageView
-                        android:layout_marginRight="-12dp"
-                        android:layout_marginTop="-12dp"
+                        android:visibility="gone"
+                        android:id="@+id/delete_iv"
+                        android:layout_marginRight="-10dp"
+                        android:layout_marginTop="-10dp"
                         android:layout_alignParentRight="true"
                         android:src="@mipmap/ic_close_red_normal"
                         android:layout_width="24dp"
