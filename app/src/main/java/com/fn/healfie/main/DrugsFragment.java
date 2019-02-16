@@ -18,6 +18,7 @@ import com.fn.healfie.adapter.DrugsListAdapter;
 import com.fn.healfie.adapter.FoodListAdapter;
 import com.fn.healfie.adapter.LoginComponent;
 import com.fn.healfie.adapter.ViewPagerFragmentAdapter;
+import com.fn.healfie.app.MyApp;
 import com.fn.healfie.component.camera.CameraActivity;
 import com.fn.healfie.connect.MyConnect;
 import com.fn.healfie.consts.MyUrl;
@@ -60,7 +61,7 @@ import in.srain.cube.views.ptr.util.PtrLocalDisplay;
 
 public class DrugsFragment extends BaseFragment implements BaseOnClick {
 
-
+    MyApp myApp;
     private List<DrugsBean> list = new ArrayList<DrugsBean>();
     int page = 1;
     int total = 0;
@@ -171,6 +172,7 @@ public class DrugsFragment extends BaseFragment implements BaseOnClick {
                 // return true;
             }
         });
+        myApp = (MyApp) getActivity().getApplication();
         return view;
     }
 
@@ -206,14 +208,18 @@ public class DrugsFragment extends BaseFragment implements BaseOnClick {
 //            list.add("查理风云" + i);
 //        }
 //        mBinding.lvFood.setAdapter(adapter);
-        getData();
+        if(!myApp.isVisitor()){
+            getData();
+        }
 
     }
 
     public void changeTime(String time){
-        date = time;
-        list.clear();
-        getData();
+        if(!myApp.isVisitor()){
+            date = time;
+            list.clear();
+            getData();
+        }
     }
 
     private void changeData(String json) {

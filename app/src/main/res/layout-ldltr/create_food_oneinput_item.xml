@@ -38,6 +38,7 @@
                 android:layout_height="wrap_content" />
             <EditText
                 android:gravity="right"
+                android:textCursorDrawable="@drawable/dr_edit_cursor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"

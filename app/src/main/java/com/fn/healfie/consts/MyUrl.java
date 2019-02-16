@@ -9,7 +9,7 @@ public class MyUrl {
      * from @zhaojian
      * content 开发环境
      */
-    private static String BASE = "http://13.229.151.83/healfie";
+    private static String BASE = "http://47.52.252.37/healfie";
 
     /**
      * from @zhaojian

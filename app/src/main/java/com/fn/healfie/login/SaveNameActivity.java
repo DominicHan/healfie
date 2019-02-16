@@ -99,7 +99,6 @@ public class SaveNameActivity extends BaseActivity implements BaseOnClick {
      */
     @Override
     public void onSaveClick(int id) {
-        Log.e(TAG, "1111111" + module.getName());
         switch (id) {
             case R.id.iv_back:
                 this.finish();

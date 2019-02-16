@@ -13,6 +13,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
+import com.elvishew.xlog.XLog;
 import com.fn.healfie.BR;
 import com.fn.healfie.BaseActivity;
 import com.fn.healfie.R;
@@ -34,16 +35,20 @@ import com.fn.healfie.model.FoodBackBean;
 import com.fn.healfie.model.FoodInfoBean;
 import com.fn.healfie.model.FoodListBean;
 import com.fn.healfie.model.RegisterBean;
+import com.fn.healfie.utils.FileUtil;
 import com.fn.healfie.utils.JsonUtil;
 import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.StatusBarUtil;
 import com.fn.healfie.utils.ToastUtil;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import id.zelory.compressor.Compressor;
 
 /**
  * from @zhaojian
@@ -63,7 +68,7 @@ public class CreateFoodActivity extends BaseActivity implements BaseOnClick {
                 case 1:
                     FoodBackBean bean = JsonUtil.getBean(msg.obj.toString(), FoodBackBean.class);
                     if (bean.getResultCode().equals("200")) {
-                        if(from.equals("info")){
+                        if((from != null) && from.equals("info")){
                             ToastUtil.showToast(activity,"編輯成功");
                         }else{
                             ToastUtil.showToast(activity,"添加成功");
@@ -100,7 +105,7 @@ public class CreateFoodActivity extends BaseActivity implements BaseOnClick {
                     }
                     break;
                 case 2:
-                    if(from.equals("info")){
+                    if((from != null) && from.equals("info")){
                         changeData();
                     }else{
                         sendData();
@@ -119,7 +124,7 @@ public class CreateFoodActivity extends BaseActivity implements BaseOnClick {
         binding = DataBindingUtil.setContentView(this, R.layout.create_food_activity);
         binding.setVariable(BR.click, this);
         from = getIntent().getStringExtra("from");
-        if(from.equals("info")){
+        if((from != null) && from.equals("info")){
            String jsons = getIntent().getStringExtra("data");
            foodinfobean = JsonUtil.getBean(jsons, FoodInfoBean.class);
         }else{
@@ -129,7 +134,7 @@ public class CreateFoodActivity extends BaseActivity implements BaseOnClick {
         CreateFoodAdapter adapter = new CreateFoodAdapter(this, list, this, new BaseOnClick() {
             @Override
             public void onSaveClick(int id) {
-                if(from.equals("info")){
+                if((from != null) && from.equals("info")){
                     changeData();
                 }else{
                     sendData();
@@ -153,11 +158,21 @@ public class CreateFoodActivity extends BaseActivity implements BaseOnClick {
             } else {
                 switch (list.get(i).getKey()) {
                     case "image":
-                        Bitmap bm = BitmapFactory.decodeFile(path);
-                        Bitmap mSrcBitmap = Bitmap.createScaledBitmap(bm, 720, 1280, true);
-                        bm.recycle();
-                        bm = null;
-                        map.put("image", bitmapToBase64(mSrcBitmap));
+//                        Bitmap bm = BitmapFactory.decodeFile(path);
+//                        Bitmap mSrcBitmap = Bitmap.createScaledBitmap(bm, 720, 1080, true);
+//                        bm.recycle();
+//                        bm = null;
+                        try{
+                            // base64 too long
+                            File file = new File(path);
+                            Compressor compressor = new Compressor(this);
+                            compressor.setQuality(50);
+                            String imgBase64 = FileUtil.encodeBase64File(
+                                    compressor.compressToFile(file));
+                            map.put("image", imgBase64);
+                        }catch (Exception e){
+
+                        }
                         break;
                     case "食物名":
                         map.put("name", list.get(i).getValue());
@@ -304,7 +319,7 @@ public class CreateFoodActivity extends BaseActivity implements BaseOnClick {
 
     private void initData() {
         list = new ArrayList<>();
-        if(from.equals("info")){
+        if((from != null) && from.equals("info")){
             list.add(new CreateFoodBean("image", getUrl(foodinfobean.getItem().getImageObject(),
                     foodinfobean.getItem().getBucket()), "image"));
             list.add(new CreateFoodBean("食物名", foodinfobean.getItem().getName(), "one_input"));

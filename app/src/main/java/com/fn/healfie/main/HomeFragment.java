@@ -17,6 +17,7 @@ import com.fn.healfie.BR;
 import com.fn.healfie.R;
 import com.fn.healfie.adapter.LoginComponent;
 import com.fn.healfie.adapter.ViewPagerFragmentAdapter;
+import com.fn.healfie.app.MyApp;
 import com.fn.healfie.component.pickdatetime.DatePickDialog;
 import com.fn.healfie.component.pickdatetime.OnSureListener;
 import com.fn.healfie.component.pickdatetime.bean.DateParams;

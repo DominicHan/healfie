@@ -17,7 +17,9 @@ import com.fn.healfie.BaseActivity;
 import com.fn.healfie.R;
 import com.fn.healfie.adapter.CreateDrugsAdapter;
 import com.fn.healfie.adapter.CreateFoodAdapter;
+import com.fn.healfie.app.MyApp;
 import com.fn.healfie.component.camera.CameraActivity;
+import com.fn.healfie.component.dialog.ToLoginDialog;
 import com.fn.healfie.connect.MyConnect;
 import com.fn.healfie.consts.MyUrl;
 import com.fn.healfie.consts.PrefeKey;
@@ -47,8 +49,10 @@ import java.util.HashMap;
  * content 創建食物
  */
 
-public class CreateDrugsActivity extends BaseActivity implements BaseOnClick {
+public class CreateDrugsActivity extends BaseActivity implements BaseOnClick, ToLoginDialog.DialogClick {
 
+    MyApp myApp;
+    private ToLoginDialog toLoginDialog;
     Activity activity = this;
     ArrayList<CreateFoodBean> list;
     String path;
@@ -115,6 +119,7 @@ public class CreateDrugsActivity extends BaseActivity implements BaseOnClick {
         binding= DataBindingUtil.setContentView(this, R.layout.create_drugs_activity);
         binding.setVariable(BR.click, this);
         path = getIntent().getStringExtra(CameraActivity.CAMERA_PATH_VALUE1);
+        myApp = (MyApp) this.getApplication();
         initData();
         CreateDrugsAdapter adapter = new CreateDrugsAdapter(this, list, this, new BaseOnClick() {
             @Override
@@ -126,7 +131,11 @@ public class CreateDrugsActivity extends BaseActivity implements BaseOnClick {
                     }
 
                 }
-                sendData();
+                if(myApp.isVisitor()){
+                    showGenderDialog();
+                }else{
+                    sendData();
+                }
 //                ToastUtil.showToast(activity,"添加成功");
 //                finish();
             }
@@ -265,6 +274,21 @@ public class CreateDrugsActivity extends BaseActivity implements BaseOnClick {
                 finish();
                 break;
         }
+    }
+
+    private void showGenderDialog() {
+        if (toLoginDialog != null)
+            getFragmentManager().beginTransaction().remove(toLoginDialog);
+        toLoginDialog = new ToLoginDialog();
+        toLoginDialog.setDialogClick(this);
+        toLoginDialog.show(getFragmentManager(), "");
+    }
+
+    @Override
+    public void onSureClick() {
+        Intent intent = new Intent(this,LoginActivity.class);
+        intent.putExtra("from","main");
+        startActivity(intent);
     }
 
 
