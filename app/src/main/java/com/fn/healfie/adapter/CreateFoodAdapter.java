@@ -243,7 +243,6 @@ public class CreateFoodAdapter extends BaseAdapter {
 
         @Override
         public void onSaveClick(int id) {
-            Log.e("111111111111", "onSaveClick: "+bean.getKey());
             if(bean.getKey().equals("進食日期 :")){
                 openYear(DateParams.TYPE_YEAR, DateParams.TYPE_MONTH, DateParams.TYPE_DAY,bean);
             }

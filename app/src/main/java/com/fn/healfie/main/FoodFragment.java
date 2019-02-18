@@ -18,6 +18,7 @@ import com.fn.healfie.adapter.CreateFoodAdapter;
 import com.fn.healfie.adapter.FoodListAdapter;
 import com.fn.healfie.adapter.LoginComponent;
 import com.fn.healfie.adapter.ViewPagerFragmentAdapter;
+import com.fn.healfie.app.MyApp;
 import com.fn.healfie.component.camera.CameraActivity;
 import com.fn.healfie.connect.MyConnect;
 import com.fn.healfie.consts.MyUrl;
@@ -62,6 +63,7 @@ import in.srain.cube.views.ptr.util.PtrLocalDisplay;
 
 public class FoodFragment extends BaseFragment implements BaseOnClick {
 
+    MyApp myApp;
     FoodFragmentBinding mBinding;
     private List<FoodBean> list = new ArrayList<FoodBean>();
     int page = 1;
@@ -229,12 +231,15 @@ public class FoodFragment extends BaseFragment implements BaseOnClick {
                 // return true;
             }
         });
+        myApp = (MyApp) getActivity().getApplication();
         return view;
     }
 
     public void changeTime(String time){
-        date = time;
-        getData();
+        if(!myApp.isVisitor()){
+            date = time;
+            getData();
+        }
     }
 
     public void changeLisen(TabChangeLisen callBack){
@@ -257,8 +262,9 @@ public class FoodFragment extends BaseFragment implements BaseOnClick {
 
     @Override
     protected void initData() {
-        getData();
-
+        if(!myApp.isVisitor()){
+            getData();
+        }
     }
 
     @Override

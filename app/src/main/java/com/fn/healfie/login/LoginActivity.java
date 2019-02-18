@@ -15,6 +15,7 @@ import com.fn.healfie.BR;
 import com.fn.healfie.BaseActivity;
 import com.fn.healfie.R;
 import com.fn.healfie.adapter.LoginComponent;
+import com.fn.healfie.app.MyApp;
 import com.fn.healfie.connect.MyConnect;
 import com.fn.healfie.consts.MyUrl;
 import com.fn.healfie.consts.PrefeKey;
@@ -48,6 +49,8 @@ public class LoginActivity extends BaseActivity implements BaseOnClick {
     LoginActivityBinding binding;
     LoginModule module;
     Activity activity = this;
+    MyApp myApp;
+    String from = "";
 
     Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -72,6 +75,8 @@ public class LoginActivity extends BaseActivity implements BaseOnClick {
         module.setPassword("");
         binding.setLogin(module);
         binding.setVariable(BR.click, this);
+        myApp = (MyApp) this.getApplication();
+        from = getIntent().getStringExtra("from");
         PrefeUtil.saveString(this,PrefeKey.TOKEN,"");
         PrefeUtil.saveString(this,PrefeKey.USERNAME,"");
         PrefeUtil.saveString(this,PrefeKey.USERPWD,"");
@@ -118,6 +123,11 @@ public class LoginActivity extends BaseActivity implements BaseOnClick {
                 Intent intents = new Intent(LoginActivity.this, ResetPwdActivity.class);
                 startActivity(intents);
                 break;
+            case R.id.tv_tyyx:
+                myApp.setVisitor(true);
+                Intent tyIntent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(tyIntent);
+                break;
         }
     }
 
@@ -151,18 +161,29 @@ public class LoginActivity extends BaseActivity implements BaseOnClick {
             public void success(String json, String header) {
                 RegisterBean beans = JsonUtil.getBean(json, RegisterBean.class);
                 if (beans.getResultCode().equals("200")) {
+                    myApp.setVisitor(false);
                     PrefeUtil.saveString(activity, PrefeKey.TOKEN, beans.getItem().getAuthorization());
                     PrefeUtil.saveString(activity, PrefeKey.USERNAME, module.getName());
                     PrefeUtil.saveString(activity, PrefeKey.USERPWD,  MD5Util.MD5(MD5Util.MD5(module.getName()+ module.getPassword())));
-                    Intent intents = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intents);
-                    finish();
+                    if((from != null) && from.equals("main")){
+                        finish();
+                    }else{
+                        Intent intents = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intents);
+                        finish();
+                    }
+
                 } else if (beans.getResultCode().equals("40013") && header != null && !header.equals("")) {
+                    myApp.setVisitor(false);
                     PrefeUtil.saveString(activity, PrefeKey.USERNAME, module.getName());
                     PrefeUtil.saveString(activity, PrefeKey.USERPWD, MD5Util.MD5(MD5Util.MD5(module.getName()+ module.getPassword())));
-                    Intent intent = new Intent(activity, SaveNameActivity.class);
-                    intent.putExtra(PrefeKey.TOKEN, header);
-                    startActivity(intent);
+                    if((from != null) && from.equals("main")){
+                        finish();
+                    }else{
+                        Intent intent = new Intent(activity, SaveNameActivity.class);
+                        intent.putExtra(PrefeKey.TOKEN, header);
+                        startActivity(intent);
+                    }
                 } else {
                     ToastUtil.errorToast(activity, beans.getResultCode());
                 }

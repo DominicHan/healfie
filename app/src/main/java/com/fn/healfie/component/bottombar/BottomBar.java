@@ -272,9 +272,13 @@ public class BottomBar extends View {
                 }
                 if (target == withinWhichArea((int) event.getX())) {
                     //这里触发点击事件
-                    switchFragment(target);
-                    currentCheckedIndex = target;
-                    invalidate();
+                    if(!onBottomClick.onItemClick(target)){
+                        switchFragment(target);
+                        currentCheckedIndex = target;
+                        invalidate();
+                    }
+
+
                 }
                 target = -1;
                 break;
@@ -301,6 +305,7 @@ public class BottomBar extends View {
 
     //注意 这里是只支持AppCompatActivity 需要支持其他老版的 自行修改
     protected void switchFragment(int whichFragment) {
+
         Fragment fragment = fragmentList.get(whichFragment);
         int frameLayoutId = containerId;
 
@@ -322,5 +327,15 @@ public class BottomBar extends View {
             currentFragment = fragment;
             transaction.commit();
         }
+    }
+
+    public void setBottomClick(onBottomClick onBottomClick){
+        this.onBottomClick = onBottomClick;
+    }
+
+    private onBottomClick onBottomClick;
+
+    public interface onBottomClick {
+        boolean onItemClick(int index);
     }
 }

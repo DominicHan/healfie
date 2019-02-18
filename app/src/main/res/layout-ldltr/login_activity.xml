@@ -66,7 +66,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/iv_phone"
                 android:background="@null"
-                android:hint="請輸入手機號或者用戶名"
+                android:hint="請輸入手機號或者會員名"
                 android:maxLength="30"
                 android:text="@={login.name}"
                 android:textSize="14sp" />
