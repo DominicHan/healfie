@@ -56,6 +56,7 @@ import java.util.HashMap;
 public class MineFragment extends BaseFragment implements BaseOnClick {
 
     MineFragmentBinding mBinding;
+    private String name;
 
     Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -63,6 +64,7 @@ public class MineFragment extends BaseFragment implements BaseOnClick {
                 case 1:
                     MineBean bean = JsonUtil.getBean(msg.obj.toString(), MineBean.class);
                     if (bean.getResultCode().equals("200")) {
+                        name = bean.getItem().getName();
                         mBinding.tvName.setText(bean.getItem().getName());
                         Glide.with(getActivity()).load(getUrl(bean.getItem().getImageObject(),bean.getItem().getBucket())).into(mBinding.ivTx);
                     } else if (bean.getResultCode().equals("-10010")) {
@@ -181,6 +183,7 @@ public class MineFragment extends BaseFragment implements BaseOnClick {
                 break;
             case R.id.rl_ylk:
                 Intent ylkIn = new Intent(getActivity().getApplicationContext(), CareCardActivity.class);
+                ylkIn.putExtra("name",name);
                 startActivity(ylkIn);
                 break;
             case R.id.rl_feedback:

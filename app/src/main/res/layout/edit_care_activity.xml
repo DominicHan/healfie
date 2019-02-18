@@ -97,12 +97,12 @@
                     android:layout_height="1px"
                     android:layout_width="match_parent" />
 
-                <LinearLayout
+                <RelativeLayout
+                    android:id="@+id/sex_rl"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
                     android:paddingTop="20dp"
                     android:paddingBottom="20dp"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -114,19 +114,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <EditText
-                        android:id="@+id/sex_et"
+                    <TextView
+                        android:id="@+id/sex_tv"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@id/arrow_sex_iv"
                         android:textSize="15sp"
-                        android:textCursorDrawable="@drawable/dr_edit_cursor"
-                        android:textColor="@color/textGray9"
-                        android:background="@null"
-                        android:gravity="right"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_marginLeft="40dp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                </LinearLayout>
+                    <ImageView
+                        android:id="@+id/arrow_sex_iv"
+                        android:src="@mipmap/ic_back1_normal"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
 
                 <View
                     android:layout_marginLeft="30dp"
@@ -135,12 +141,12 @@
                     android:layout_height="1px"
                     android:layout_width="match_parent" />
 
-                <LinearLayout
+                <RelativeLayout
+                    android:id="@+id/age_rl"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
                     android:paddingTop="20dp"
                     android:paddingBottom="20dp"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -152,20 +158,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <EditText
-                        android:id="@+id/age_et"
+                    <TextView
+                        android:id="@+id/age_tv"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@id/arrow_age_iv"
                         android:textSize="15sp"
-                        android:hint="歲"
-                        android:textCursorDrawable="@drawable/dr_edit_cursor"
-                        android:textColor="@color/textGray9"
-                        android:background="@null"
-                        android:gravity="right"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_marginLeft="40dp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                </LinearLayout>
+                    <ImageView
+                        android:id="@+id/arrow_age_iv"
+                        android:src="@mipmap/ic_back1_normal"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
 
                 <View
                     android:layout_marginLeft="30dp"
@@ -174,12 +185,12 @@
                     android:layout_height="1px"
                     android:layout_width="match_parent" />
 
-                <LinearLayout
+                <RelativeLayout
+                    android:id="@+id/height_rl"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
                     android:paddingTop="20dp"
                     android:paddingBottom="20dp"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -191,20 +202,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <EditText
-                        android:id="@+id/height_et"
+                    <TextView
+                        android:id="@+id/height_tv"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@id/arrow_height_iv"
                         android:textSize="15sp"
-                        android:hint="cm"
-                        android:textCursorDrawable="@drawable/dr_edit_cursor"
-                        android:textColor="@color/textGray9"
-                        android:background="@null"
-                        android:gravity="right"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_marginLeft="40dp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                </LinearLayout>
+                    <ImageView
+                        android:id="@+id/arrow_height_iv"
+                        android:src="@mipmap/ic_back1_normal"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
 
                 <View
                     android:layout_marginLeft="30dp"
@@ -213,12 +229,12 @@
                     android:layout_height="1px"
                     android:layout_width="match_parent" />
 
-                <LinearLayout
+                <RelativeLayout
+                    android:id="@+id/weight_rl"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
                     android:paddingTop="20dp"
                     android:paddingBottom="20dp"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -230,20 +246,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <EditText
-                        android:id="@+id/weight_et"
+                    <TextView
+                        android:id="@+id/weight_tv"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@id/arrow_weight_iv"
                         android:textSize="15sp"
-                        android:hint="kg"
-                        android:textCursorDrawable="@drawable/dr_edit_cursor"
-                        android:textColor="@color/textGray9"
-                        android:background="@null"
-                        android:gravity="right"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_marginLeft="40dp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                </LinearLayout>
+                    <ImageView
+                        android:id="@+id/arrow_weight_iv"
+                        android:src="@mipmap/ic_back1_normal"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
 
                 <View
                     android:layout_marginLeft="30dp"
@@ -252,12 +273,12 @@
                     android:layout_height="1px"
                     android:layout_width="match_parent" />
 
-                <LinearLayout
+                <RelativeLayout
+                    android:id="@+id/blood_rl"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
                     android:paddingTop="20dp"
                     android:paddingBottom="20dp"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -269,20 +290,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <EditText
-                        android:id="@+id/blood_et"
+                    <TextView
+                        android:id="@+id/blood_tv"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@id/arrow_blood_iv"
                         android:textSize="15sp"
-                        android:textCursorDrawable="@drawable/dr_edit_cursor"
-                        android:textColor="@color/textGray9"
-                        android:background="@null"
-                        android:gravity="right"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_marginLeft="40dp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                </LinearLayout>
+                    <ImageView
+                        android:id="@+id/arrow_blood_iv"
+                        android:src="@mipmap/ic_back1_normal"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content" />
 
+                </RelativeLayout>
 
             </LinearLayout>
 

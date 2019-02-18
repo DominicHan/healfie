@@ -38,6 +38,7 @@ public class CareCardActivity extends BaseActivity implements View.OnClickListen
     private TextView bloodTv;
     private LinearLayout allergyLl;
     private LinearLayout sicknessLl;
+    private String name;
 
 
     @Override
@@ -61,7 +62,10 @@ public class CareCardActivity extends BaseActivity implements View.OnClickListen
         allergyLl = findViewById(R.id.allergy_ll);
         sicknessLl = findViewById(R.id.sickness_ll);
 
-        //getData();
+        Intent intent = getIntent();
+        name = intent.getStringExtra("name");
+        nameTv.setText(name);
+        getData();
     }
 
     @Override
@@ -71,6 +75,7 @@ public class CareCardActivity extends BaseActivity implements View.OnClickListen
         }
         if(view.getId() == R.id.iv_edit){
             Intent intent = new Intent(this,EditCareActivity.class);
+            intent.putExtra("name", name);
             startActivity(intent);
         }
     }

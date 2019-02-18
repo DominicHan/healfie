@@ -23,7 +23,7 @@
                 android:gravity="center"
                 android:textSize="16sp"
                 android:textColor="@color/textBlack"
-                android:text="您尚未登錄，無法使用該功能，註冊後即可完整體驗。前往登录页？"
+                android:text="您確定要退出資料編輯？"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

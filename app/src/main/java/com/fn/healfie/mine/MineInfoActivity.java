@@ -72,6 +72,7 @@ public class MineInfoActivity extends BaseActivity implements BaseOnClick,Gender
     final int REQUEST_NAME = 0x01;
     private final int REQUEST_IMAGE = 0x0003;
     MineInfoAdapter adapter;
+    String name = "";
 
     Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -209,6 +210,7 @@ public class MineInfoActivity extends BaseActivity implements BaseOnClick,Gender
             list.get(2).setValue((int)Float.parseFloat(item.getSex().toString())==1?"男":"女");
         }
         if(item.getUserName()!=null){
+            name = item.getUserName().toString();
             list.get(3).setValue(item.getUserName().toString());
         }
         adapter.notifyDataSetChanged();
