@@ -83,11 +83,15 @@ public class FoodFragment extends BaseFragment implements BaseOnClick {
                         mBinding.lvFood.setVisibility(View.VISIBLE);
                         mBinding.rlNodata.setVisibility(View.GONE);
                         changeData(msg.obj.toString());
-                        callBack.tabChangeLisen("",bean.getStayAuditCount()+"");
+                        if(callBack!=null){
+                            callBack.tabChangeLisen("",bean.getStayAuditCount()+"");
+                        }
                     }else if(bean.getResultCode().equals("200")){
                         mBinding.lvFood.setVisibility(View.GONE);
                         mBinding.rlNodata.setVisibility(View.VISIBLE);
-                        callBack.tabChangeLisen("",bean.getStayAuditCount()+"");
+                        if(callBack!=null) {
+                            callBack.tabChangeLisen("", bean.getStayAuditCount() + "");
+                        }
                     } else if (bean.getResultCode().equals("-10010")) {
                         showDialog();
                         sendLogin(new ConnectLoginBack() {
@@ -98,7 +102,6 @@ public class FoodFragment extends BaseFragment implements BaseOnClick {
                                 if(registerBean.getResultCode().equals("200")){
                                     PrefeUtil.saveString(activity, PrefeKey.TOKEN, registerBean.getItem().getAuthorization());
                                     myHandler.sendEmptyMessage(2);
-
                                 }else{
                                     Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
                                     startActivity(intent);
@@ -262,6 +265,12 @@ public class FoodFragment extends BaseFragment implements BaseOnClick {
         if(!myApp.isVisitor()){
             getData();
         }
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
     }
 
     private void getData() {

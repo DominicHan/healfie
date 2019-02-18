@@ -68,10 +68,12 @@ public class PhotoProcessActivity extends Activity implements View.OnClickListen
                 if(froms.equals("DrugsFragment")){
                     Intent intent = new Intent(PhotoProcessActivity.this, UnidentifiedDrugsActivity.class);
                     intent.putExtra(CameraActivity.CAMERA_PATH_VALUE1, path);
+                    intent.putExtra(CameraActivity.From, "DrugsFragment");
                     startActivity(intent);
                     finish();
                 }else{
                     Intent intent = new Intent(PhotoProcessActivity.this, UnidentifiedFoodActivity.class);
+                    intent.putExtra(CameraActivity.From, "FoodFragment");
                     intent.putExtra(CameraActivity.CAMERA_PATH_VALUE1, path);
                     startActivity(intent);
                     finish();
