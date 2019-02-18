@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.fn.healfie.BR;
 import com.fn.healfie.BaseActivity;
 import com.fn.healfie.R;
@@ -109,6 +111,8 @@ public class AddContactInfoActivity extends BaseActivity implements BaseOnClick,
         data = getIntent().getStringExtra("data");
         bean =  JsonUtil.getBean(data,SearchContactBean.class);
         binding.tvName.setText(bean.getItem().getName());
+        binding.etInput.setText("您好，我是" + PrefeUtil.getString(activity, PrefeKey.USERNAME, ""));
+        Glide.with(this).load(getUrl((String) bean.getItem().getHeadImageObject(),(String) bean.getItem().getHeadBucket())).into(binding.rvImage);
     }
 
     @Override
@@ -118,10 +122,6 @@ public class AddContactInfoActivity extends BaseActivity implements BaseOnClick,
     }
 
     private void getData() {
-//        if(binding.etInput.getText().toString().equals("")){
-//            ToastUtil.showToast(this,"請輸入會員名");
-//            return;
-//        }
         showDialog();
         MyConnect connect = new MyConnect();
         HashMap<String, String> map = new HashMap<>();
@@ -175,5 +175,8 @@ public class AddContactInfoActivity extends BaseActivity implements BaseOnClick,
         }
     }
 
+    public String getUrl(String img, String bucket) {
+        return MyUrl.SHOWIMAGE + "?bucket=" + bucket + "&imageObject=" + img + "&authorization=" + PrefeUtil.getString(this, PrefeKey.TOKEN, "");
+    }
 
 }

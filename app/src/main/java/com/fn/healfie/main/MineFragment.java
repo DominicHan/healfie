@@ -25,6 +25,8 @@ import com.fn.healfie.consts.PrefeKey;
 import com.fn.healfie.contact.AddContactActivity;
 import com.fn.healfie.databinding.ContactFragmentBinding;
 import com.fn.healfie.databinding.MineFragmentBinding;
+import com.fn.healfie.event.EditContactEvent;
+import com.fn.healfie.event.EditMemberEvent;
 import com.fn.healfie.interfaces.BaseOnClick;
 import com.fn.healfie.interfaces.ConnectBack;
 import com.fn.healfie.interfaces.ConnectLoginBack;
@@ -44,6 +46,9 @@ import com.fn.healfie.news.NewsListActivity;
 import com.fn.healfie.utils.JsonUtil;
 import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
 
@@ -113,8 +118,21 @@ public class MineFragment extends BaseFragment implements BaseOnClick {
         mBinding.setSave(module);
         View view = mBinding.getRoot();
         mBinding.ivTx.changeRadius(100);
+        EventBus.getDefault().register(this);
         return view;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void refreshData(EditMemberEvent event) {
+        sendData();
+    }
+
 
     @Override
     protected void initData() {

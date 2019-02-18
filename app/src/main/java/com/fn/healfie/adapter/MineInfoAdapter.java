@@ -102,6 +102,7 @@ public class MineInfoAdapter extends BaseAdapter {
             } else {
                 mineinfocontentitembinding = DataBindingUtil.getBinding(convertView);
             }
+            Log.e("0000000","444"+getItem(position));
             mineinfocontentitembinding.setVariable(BR.click, new OnClick(position));
             mineinfocontentitembinding.setVariable(BR.food, getItem(position));
         } else {

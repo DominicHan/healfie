@@ -71,4 +71,14 @@
         </RelativeLayout>
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/hint_tv"
+        android:layout_marginTop="12dp"
+        android:textSize="13sp"
+        android:textColor="@color/textGray9"
+        android:layout_marginLeft="46dp"
+        android:text="會員名設置後無法進行修改，請謹慎設置"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
