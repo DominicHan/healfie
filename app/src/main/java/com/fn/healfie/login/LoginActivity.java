@@ -12,9 +12,12 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.fn.healfie.BR;
@@ -38,6 +41,8 @@ import com.fn.healfie.utils.MD5Util;
 import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.StatusBarUtil;
 import com.fn.healfie.utils.ToastUtil;
+
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -100,9 +105,38 @@ public class LoginActivity extends BaseActivity implements BaseOnClick {
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
-                    public void onSuccess(LoginResult loginResult) {
+                    public void onSuccess(final LoginResult loginResult) {
                         // App code
-                        facebookLogin(loginResult.getAccessToken().getToken());
+                        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                if (object != null) {
+//                                    email = object.optString("email");
+//                                    firstname = object.optString("first_name");
+//                                    lastname = object.optString("last_name");
+//                                    Log.e("log", "LoginActivity - email----" + email);
+                                    String userName = object.optString("name");
+//                                    Log.e("log", "LoginActivity - getLoginInfo::---" + object.toString());
+
+                                    AccessToken accessToken = loginResult.getAccessToken();
+                                    String fbuserId = accessToken.getUserId();
+//                                    String token = accessToken.getToken();
+//                                    Log.e("log", "LoginActivity - accessToken：：：" + accessToken);
+//                                    Log.e("log", "LoginActivity - userid:::" + fbuserId);
+
+                                    if (accessToken != null) {
+                                        //如果登录成功，跳转到登录成功界面，拿到facebook返回的email/userid等值，在我们后台进行操作
+                                        facebookLogin(fbuserId, userName);
+                                    }
+                                }
+                            }
+                        });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,link,gender,birthday,email,picture,locale," +
+                                "updated_time,timezone,age_range,first_name,last_name");
+                        request.setParameters(parameters);
+                        request.executeAsync();
                     }
 
                     @Override
@@ -244,7 +278,7 @@ public class LoginActivity extends BaseActivity implements BaseOnClick {
         });
     }
 
-    private void facebookLogin(String facebookUserId) {
+    private void facebookLogin(String facebookUserId, String facebookUserName) {
         showDialog();
         MyConnect connect = new MyConnect();
         HashMap<String, String> map = new HashMap<>();
@@ -257,6 +291,7 @@ public class LoginActivity extends BaseActivity implements BaseOnClick {
         map.put("mobileType", "2");
         map.put("registrationId", "1");
         map.put("otherOpenId", facebookUserId);
+        map.put("name", facebookUserName);
         connect.login(MyUrl.LOGIN, map, new ConnectLoginBack() {
             @Override
             public void success(String json, String header) {
