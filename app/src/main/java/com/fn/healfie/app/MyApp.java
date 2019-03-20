@@ -2,6 +2,8 @@ package com.fn.healfie.app;
 
 import android.app.Application;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * author: sail
  * date :  2019/2/16
@@ -22,5 +24,7 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 }
