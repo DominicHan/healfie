@@ -188,12 +188,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <ImageView
+            android:id="@+id/iv_zhdl"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="17dp"
             android:layout_below="@id/tv_zhdl"
             android:src="@mipmap/btn_common_normal"
+            android:onClick="@{() -> click.onSaveClick(@id/iv_zhdl)}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <!--<com.facebook.login.widget.LoginButton-->
+            <!--android:id="@+id/login_button"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/iv_zhdl"-->
+             <!--/>-->
     </RelativeLayout>
 </layout>
 

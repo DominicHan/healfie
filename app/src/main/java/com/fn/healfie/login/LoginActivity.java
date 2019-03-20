@@ -10,7 +10,13 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.fn.healfie.BR;
 import com.fn.healfie.BaseActivity;
 import com.fn.healfie.R;
@@ -33,6 +39,7 @@ import com.fn.healfie.utils.PrefeUtil;
 import com.fn.healfie.utils.StatusBarUtil;
 import com.fn.healfie.utils.ToastUtil;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -51,6 +58,7 @@ public class LoginActivity extends BaseActivity implements BaseOnClick {
     Activity activity = this;
     MyApp myApp;
     String from = "";
+    CallbackManager callbackManager;
 
     Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -62,6 +70,12 @@ public class LoginActivity extends BaseActivity implements BaseOnClick {
             super.handleMessage(msg);
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,6 +94,30 @@ public class LoginActivity extends BaseActivity implements BaseOnClick {
         PrefeUtil.saveString(this,PrefeKey.TOKEN,"");
         PrefeUtil.saveString(this,PrefeKey.USERNAME,"");
         PrefeUtil.saveString(this,PrefeKey.USERPWD,"");
+
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        // App code
+                        facebookLogin(loginResult.getAccessToken().getToken());
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                        Log.d("FacebookCallback", "onCancel");
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                        Log.d("FacebookCallback", "onError");
+                    }
+                });
+
     }
 
     /**
@@ -88,7 +126,7 @@ public class LoginActivity extends BaseActivity implements BaseOnClick {
      */
     @Override
     public void onSaveClick(int id) {
-        Log.e(TAG, "1111111" + module.getName());
+        //Log.e(TAG, "1111111" + module.getName());
         switch (id) {
             case R.id.iv_see:
                 if (module.getPwdShow()) {
@@ -128,6 +166,12 @@ public class LoginActivity extends BaseActivity implements BaseOnClick {
                 Intent tyIntent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(tyIntent);
                 break;
+            case R.id.iv_zhdl:
+                //Toast.makeText(getApplicationContext(), "測試", Toast.LENGTH_LONG).show();
+                LoginManager.getInstance()
+                        .logInWithReadPermissions(LoginActivity.this,
+                                Arrays.asList("public_profile"));
+                break;
         }
     }
 
@@ -151,11 +195,68 @@ public class LoginActivity extends BaseActivity implements BaseOnClick {
         MyConnect connect = new MyConnect();
         HashMap<String, String> map = new HashMap<>();
         map.put("userName", module.getName());
-        map.put("password",MD5Util.MD5(MD5Util.MD5(module.getName()+ module.getPassword())));
+        //map.put("password",MD5Util.MD5(MD5Util.MD5(module.getName()+ module.getPassword())));
+        map.put("password", module.getPassword());
         map.put("isFaceBookLogin", "0");
         map.put("mobileId", getIMEI());
         map.put("isAutoLogin", "2");
         map.put("mobileType", "2");
+        map.put("registrationId", "1");
+        connect.login(MyUrl.LOGIN, map, new ConnectLoginBack() {
+            @Override
+            public void success(String json, String header) {
+                RegisterBean beans = JsonUtil.getBean(json, RegisterBean.class);
+                if (beans.getResultCode().equals("200")) {
+                    myApp.setVisitor(false);
+                    PrefeUtil.saveString(activity, PrefeKey.TOKEN, beans.getItem().getAuthorization());
+                    PrefeUtil.saveString(activity, PrefeKey.USERNAME, module.getName());
+                    PrefeUtil.saveString(activity, PrefeKey.USERPWD,  MD5Util.MD5(MD5Util.MD5(module.getName()+ module.getPassword())));
+                    if((from != null) && from.equals("main")){
+                        finish();
+                    }else{
+                        Intent intents = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intents);
+                        finish();
+                    }
+
+                } else if (beans.getResultCode().equals("40013") && header != null && !header.equals("")) {
+                    myApp.setVisitor(false);
+                    PrefeUtil.saveString(activity, PrefeKey.USERNAME, module.getName());
+                    PrefeUtil.saveString(activity, PrefeKey.USERPWD, MD5Util.MD5(MD5Util.MD5(module.getName()+ module.getPassword())));
+                    if((from != null) && from.equals("main")){
+                        finish();
+                    }else{
+                        Intent intent = new Intent(activity, SaveNameActivity.class);
+                        intent.putExtra(PrefeKey.TOKEN, header);
+                        startActivity(intent);
+                    }
+                } else {
+                    ToastUtil.errorToast(activity, beans.getResultCode());
+                }
+                hideDialog();
+            }
+
+            @Override
+            public void error(String json) {
+                hideDialog();
+                ToastUtil.errorToast(activity, "-1022");
+            }
+        });
+    }
+
+    private void facebookLogin(String facebookUserId) {
+        showDialog();
+        MyConnect connect = new MyConnect();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("userName", module.getName());
+        //map.put("password",MD5Util.MD5(MD5Util.MD5(module.getName()+ module.getPassword())));
+        map.put("password", module.getPassword());
+        map.put("isFaceBookLogin", "1");
+        map.put("mobileId", getIMEI());
+        map.put("isAutoLogin", "2");
+        map.put("mobileType", "2");
+        map.put("registrationId", "1");
+        map.put("otherOpenId", facebookUserId);
         connect.login(MyUrl.LOGIN, map, new ConnectLoginBack() {
             @Override
             public void success(String json, String header) {

@@ -77,4 +77,7 @@
     <string name="confirm">确定</string>
     <string name="preview">预览</string>
     <string name="select">选择</string>
+    <string name="facebook_app_id">241547993422904</string>
+    <string name="fb_login_protocol_scheme">fb241547993422904</string>
+
 </resources>
