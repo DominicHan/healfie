@@ -7,11 +7,20 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.fn.healfie.BaseActivity;
 import com.fn.healfie.R;
 import com.fn.healfie.connect.MyConnect;
@@ -31,7 +40,9 @@ import com.fn.healfie.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class SafetyCheckActivity extends BaseActivity implements View.OnClickListener{
@@ -47,6 +58,7 @@ public class SafetyCheckActivity extends BaseActivity implements View.OnClickLis
     private TextView mobileTv;
     private RelativeLayout passwordRl;
     private TextView passwordTv;
+    CallbackManager callbackManager;
 
 
     @Override
@@ -71,7 +83,45 @@ public class SafetyCheckActivity extends BaseActivity implements View.OnClickLis
         passwordTv = findViewById(R.id.password_tv);
 
         EventBus.getDefault().register(this);
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(final LoginResult loginResult) {
+                        // App code
+                        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
+                                        if (object != null) {
+                                            AccessToken accessToken = loginResult.getAccessToken();
+                                            String fbuserId = accessToken.getUserId();
+                                            if (accessToken != null) {
+                                                //如果登录成功，跳转到登录成功界面，拿到facebook返回的email/userid等值，在我们后台进行操作
+                                                bindFacebook(fbuserId);
+                                            }
+                                        }
+                                    }
+                                });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,link,gender,birthday,email,picture,locale," +
+                                "updated_time,timezone,age_range,first_name,last_name");
+                        request.setParameters(parameters);
+                        request.executeAsync();
+                    }
 
+                    @Override
+                    public void onCancel() {
+                        // App code
+                        Log.d("FacebookCallback", "onCancel");
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                        Log.d("FacebookCallback", "onError");
+                    }
+                });
         getData();
     }
 
@@ -82,7 +132,11 @@ public class SafetyCheckActivity extends BaseActivity implements View.OnClickLis
         }
 
         if(view.getId() == R.id.fb_rl){
-
+            if (bean.getItem().getIsBindFaceBook() == 0) {
+                LoginManager.getInstance()
+                        .logInWithReadPermissions(SafetyCheckActivity.this,
+                                Arrays.asList("public_profile"));
+            }
         }
         if(view.getId() == R.id.mobile_rl){
             Intent intent = new Intent(activity, BindMobileActivity.class);
@@ -93,6 +147,30 @@ public class SafetyCheckActivity extends BaseActivity implements View.OnClickLis
             startActivity(intents);
         }
 
+    }
+
+    private void bindFacebook(String otherOpenId) {
+        showDialog();
+        MyConnect connect = new MyConnect();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("authorization", PrefeUtil.getString(activity, PrefeKey.TOKEN, ""));
+        map.put("otherOpenId", otherOpenId);
+        connect.putData(MyUrl.BINDFACEBOOK, map, new ConnectBack() {
+            @Override
+            public void success(String json) {
+                Message msg = new Message();
+                msg.what = 3;
+                msg.obj = json;
+                myHandler.sendMessage(msg);
+                hideDialog();
+            }
+
+            @Override
+            public void error(String json) {
+                hideDialog();
+                ToastUtil.errorToast(activity, "-1022");
+            }
+        });
     }
 
     private void getData() {
@@ -181,6 +259,40 @@ public class SafetyCheckActivity extends BaseActivity implements View.OnClickLis
                     break;
                 case 2:
                     getData();
+                    break;
+                case 3:
+                    bean = JsonUtil.getBean(msg.obj.toString(), MineBean.class);
+                    if (bean.getResultCode().equals("200")) {
+                        setData();
+                    } else if (bean.getResultCode().equals("-10010")) {
+                        showDialog();
+                        sendLogin(new ConnectLoginBack() {
+                            @Override
+                            public void success(String json, String header) {
+                                hideDialog();
+                                RegisterBean registerBean = JsonUtil.getBean(json, RegisterBean.class);
+                                if(registerBean.getResultCode().equals("200")){
+                                    PrefeUtil.saveString(activity, PrefeKey.TOKEN, registerBean.getItem().getAuthorization());
+                                    myHandler.sendEmptyMessage(2);
+
+                                }else{
+                                    Intent intent = new Intent(activity, LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }
+
+                            @Override
+                            public void error(String json) {
+                                hideDialog();
+                                Intent intent = new Intent(activity, LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+                    } else {
+                        ToastUtil.errorToast(activity, bean.getResultCode());
+                    }
                     break;
             }
             super.handleMessage(msg);

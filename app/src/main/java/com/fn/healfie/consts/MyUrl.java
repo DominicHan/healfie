@@ -31,6 +31,12 @@ public class MyUrl {
 
     /**
      * from @zhaojian
+     * content 绑定facebook
+     */
+    public static String BINDFACEBOOK = BASE + "/api/bind/facebook";
+
+    /**
+     * from @zhaojian
      * content 會員信息編輯
      */
     public static String MEMBERINFO = BASE + "/api/member/info";
