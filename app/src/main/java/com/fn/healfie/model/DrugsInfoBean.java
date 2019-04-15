@@ -75,7 +75,7 @@ public class DrugsInfoBean extends BaseBean {
         private long createDate;
         private Object updateTime;
         private Object remarks;
-        private Object needRemind;
+        private int needRemind;
 
         public int getId() {
             return id;
@@ -277,11 +277,11 @@ public class DrugsInfoBean extends BaseBean {
             this.remarks = remarks;
         }
 
-        public Object getNeedRemind() {
+        public int getNeedRemind() {
             return needRemind;
         }
 
-        public void setNeedRemind(Object needRemind) {
+        public void setNeedRemind(int needRemind) {
             this.needRemind = needRemind;
         }
     }

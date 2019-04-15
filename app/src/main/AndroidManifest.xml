@@ -171,6 +171,13 @@
 
         </activity>
         <activity
+            android:name=".drugs.food.DrugsAlarmActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
             android:name=".drugs.food.DrugsScendInfoActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateHidden|adjustResize"

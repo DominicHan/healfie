@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/allBack"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="106dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="21dp"
+            android:src="@mipmap/ic_back_normal"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="60dp"
+            android:text="鬧鐘設置"
+            android:textColor="@color/textBlack"
+            android:textSize="27sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:background="@color/allBack"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/rl_drugs_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="28dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp">
+
+                <com.fn.healfie.component.RoundImageView
+                    android:id="@+id/rv_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="#00000000"
+                    android:scaleType="fitXY" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:paddingBottom="10dp">
+
+                <RelativeLayout
+                    android:id="@+id/rl_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="67dp"
+                    android:background="@drawable/white_shapebottom">
+
+                    <TextView
+                        android:id="@+id/tv_alarm_drugs"
+                        android:layout_marginLeft="30dp"
+                        android:layout_centerVertical="true"
+                        android:textSize="23sp"
+                        android:textColor="@color/textBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/allBack"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:background="@drawable/white_shapetop"
+                    android:layout_width="match_parent"
+                    android:layout_height="57dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="提醒開始日期："
+                        android:textColor="@color/textBlack"
+                        android:layout_marginStart="30dp"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:background="@null"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="50dp"
+                        android:hint="请选择日期"
+                        android:textColor="@color/textBlack"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="30dp"
+                        android:src="@mipmap/ic_back1_normal" />
+                </RelativeLayout>
+                <View
+                    android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:background="@color/lineGray"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"/>
+                <RelativeLayout
+                    android:background="@drawable/white_shapebottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="57dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="提醒結束日期："
+                        android:layout_marginStart="30dp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:textSize="15sp" />
+                    <EditText
+                        android:background="@null"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="50dp"
+                        android:hint="请选择日期"
+                        android:textColor="@color/textBlack"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="30dp"
+                        android:src="@mipmap/ic_back1_normal" />
+                </RelativeLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/allBack"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:background="@drawable/white_shapetop"
+                    android:layout_width="match_parent"
+                    android:layout_height="57dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="服藥時間點："
+                        android:textColor="@color/textBlack"
+                        android:layout_marginStart="30dp"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:background="@null"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="50dp"
+                        android:hint="未設置"
+                        android:textColor="@color/textBlack"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="30dp"
+                        android:src="@mipmap/ic_back1_normal" />
+                </RelativeLayout>
+                <View
+                    android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:background="@color/lineGray"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"/>
+                <RelativeLayout
+                    android:background="@drawable/white_shapebottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="57dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="重複提醒："
+                        android:layout_marginStart="30dp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/textBlack"
+                        android:textSize="15sp" />
+                    <EditText
+                        android:background="@null"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="50dp"
+                        android:hint="未設置"
+                        android:textColor="@color/textBlack"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="30dp"
+                        android:src="@mipmap/ic_back1_normal" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_ok"
+                android:layout_width="310dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="45dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/shape"
+                android:text="確定"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+
+

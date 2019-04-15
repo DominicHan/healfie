@@ -24,6 +24,7 @@ import com.fn.healfie.adapter.CreateDrugsAdapter;
 import com.fn.healfie.adapter.CreateFoodAdapter;
 import com.fn.healfie.app.MyApp;
 import com.fn.healfie.component.camera.CameraActivity;
+import com.fn.healfie.component.dialog.AddRemindDialog;
 import com.fn.healfie.component.dialog.ToLoginDialog;
 import com.fn.healfie.connect.MyConnect;
 import com.fn.healfie.consts.MyUrl;
@@ -54,28 +55,39 @@ import java.util.HashMap;
  * content 創建食物
  */
 
-public class CreateDrugsActivity extends BaseActivity implements BaseOnClick, ToLoginDialog.DialogClick {
+public class CreateDrugsActivity extends BaseActivity implements BaseOnClick, ToLoginDialog.DialogClick, AddRemindDialog.DialogClick {
 
     MyApp myApp;
     private ToLoginDialog toLoginDialog;
     Activity activity = this;
     ArrayList<CreateFoodBean> list;
     String path;
+    String cnName;
+    String enName;
     String from="";
     CreateDrugsActivityBinding binding;
     PopupWindow popupWindow;
+    private AddRemindDialog addRemindDialog;
     Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
                     DrugsInfoBean bean = JsonUtil.getBean(msg.obj.toString(), DrugsInfoBean.class);
+                    if (bean == null) {
+                        Log.e("CreateDrugsActivity", msg.obj.toString());
+                    }
                     if (bean.getResultCode().equals("200")) {
                         if (from.equals("info")) {
                             ToastUtil.showToast(activity, "編輯成功");
                         } else {
                             ToastUtil.showToast(activity, "添加成功");
                         }
-                        finish();
+                        if (bean.getItem().getNeedRemind() == 1) {
+                            Log.e("CreateDrugsActivity", bean.getItem().getNeedRemind()+"");
+                            showAddRemindDialog();
+                        } else {
+                            finish();
+                        }
                     } else if (bean.getResultCode().equals("-10010")) {
                         showDialog();
                         sendLogin(new ConnectLoginBack() {
@@ -201,9 +213,11 @@ public class CreateDrugsActivity extends BaseActivity implements BaseOnClick, To
                         map.put("image", bitmapToBase64(mSrcBitmap));
                         break;
                     case "中文名 :":
+                        cnName = list.get(i).getValue();
                         map.put("cnName", list.get(i).getValue());
                         break;
                     case "英文名 :":
+                        enName = list.get(i).getValue();
                         map.put("enName", list.get(i).getValue());
                         break;
                     case "服藥方式 :":
@@ -314,6 +328,14 @@ public class CreateDrugsActivity extends BaseActivity implements BaseOnClick, To
         }
     }
 
+    private void showAddRemindDialog() {
+        if (addRemindDialog != null)
+            getFragmentManager().beginTransaction().remove(toLoginDialog);
+        addRemindDialog = new AddRemindDialog();
+        addRemindDialog.setDialogClick(this);
+        addRemindDialog.show(getFragmentManager(), "");
+    }
+
     private void showGenderDialog() {
         if (toLoginDialog != null)
             getFragmentManager().beginTransaction().remove(toLoginDialog);
@@ -330,4 +352,17 @@ public class CreateDrugsActivity extends BaseActivity implements BaseOnClick, To
     }
 
 
+    @Override
+    public void onAddRemindClick() {
+        //Log.e("CreateDrugsActivity", "onAddRemindClick");
+        Intent intent = new Intent(this,DrugsAlarmActivity.class);
+        intent.putExtra(CameraActivity.CAMERA_PATH_VALUE1, path);
+        intent.putExtra("drugsTitle", cnName + "（" + enName + "）");
+        startActivity(intent);
+    }
+
+    @Override
+    public void onAddRemindCancel() {
+        finish();
+    }
 }
